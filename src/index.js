@@ -27,5 +27,5 @@ import Hex from "./map/Hex";
   document.body.appendChild(app.canvas);
 
   const hex = new Hex(200, 200, 50, app);
-  await hex.render();
+  hex.initialize();
 })();

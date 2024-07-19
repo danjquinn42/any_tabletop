@@ -8,16 +8,35 @@ class Hex {
   radius;
   coordinateSet = [];
   color;
+  defaultColor;
   app;
+
+  _background;
+  _mask;
+  _outline;
 
   constructor(x, y, radius, app) {
     this.x = x;
     this.y = y;
     this.radius = radius;
     this.app = app;
-    this.color = "#7a838a";
+    this.defaultColor = "#7a838a";
+    this.color = this.defaultColor;
+    this.hovercolor = "#9baab2";
 
     this.updateCoordinates();
+  }
+
+  initialize() {
+    this.render();
+    this._background.eventMode = "static";
+    this._background.cursor = "pointer";
+    this._background.on("pointerover", () => {
+      this.isMouseOver(true);
+    });
+    this._background.on("pointerout", () => {
+      this.isMouseOver(false);
+    });
   }
 
   updateCoordinates() {
@@ -28,20 +47,30 @@ class Hex {
     }
   }
 
-  async render() {
+  isMouseOver(hover) {
+    this.color = hover ? this.hovercolor : this.defaultColor;
+    this.render();
+  }
+
+  render() {
+    this.addBackground();
+
+    this._mask = this.drawHexagon();
+    this._mask.fill();
+    this.app.stage.addChild(this._mask);
+
+    this.addIcon(this._mask);
+
+    this._outline = this.drawHexagon();
+    this._outline.stroke({ width: 2, color: "#000000" });
+    this.app.stage.addChild(this._outline);
+  }
+
+  addBackground(hover) {
     const background = this.drawHexagon();
-    background.fill(this.color);
+    background.fill(hover ? this.hovercolor : this.color);
     this.app.stage.addChild(background);
-
-    const mask = this.drawHexagon();
-    mask.fill(this.color);
-
-    this.addIcon(mask);
-
-    const outline = this.drawHexagon();
-    outline.stroke({ width: 2, color: "#000000" });
-    this.app.stage.addChild(mask);
-    this.app.stage.addChild(outline);
+    this._background = background;
   }
 
   addIcon(mask) {
