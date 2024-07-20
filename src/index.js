@@ -1,5 +1,6 @@
 import { Application } from "pixi.js";
 import HexGrid from "./map/HexGrid";
+import "./index.css";
 
 // Asynchronous IIFE
 (async () => {
@@ -15,8 +16,9 @@ import HexGrid from "./map/HexGrid";
   });
 
   // Then adding the application's canvas to the DOM body.
-  document.body.appendChild(app.canvas);
+  // document.body.appendChild(app.canvas);
+  document.body.prepend(app.canvas);
 
-  const map = new HexGrid(50, 50, 40, app);
+  const map = new HexGrid(40, app);
   map.draw();
 })();

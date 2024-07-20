@@ -158,6 +158,14 @@ class Hex {
     labelText.anchor.set(0.5, 0.5);
 
     label.addChild(labelText);
+
+    const labelToggle = document.getElementById("label_toggle");
+    const updateVisibility = () => {
+      label.visible = labelToggle.checked;
+    };
+    updateVisibility();
+    labelToggle.addEventListener("change", updateVisibility);
+
     return label;
   }
 

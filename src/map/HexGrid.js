@@ -17,9 +17,9 @@ class HexGrid {
 
   dragData;
 
-  constructor(startingX, startingY, radius, app) {
-    this.startingX = startingX;
-    this.startingY = startingY;
+  constructor(radius, app) {
+    this.startingX = (-radius * HexGrid.ROW_COUNT) / 3;
+    this.startingY = (-radius * HexGrid.COLUMN_COUNT) / 1.5;
     this.radius = radius;
     this.app = app;
   }
@@ -52,11 +52,13 @@ class HexGrid {
     this.frame = new Graphics();
     const h = 1.5 * this.radius;
     const d = Math.sqrt(3) * this.radius;
+    let frameWidth = h * HexGrid.COLUMN_COUNT + h;
+    let frameHeight = d * HexGrid.ROW_COUNT + d;
     this.frame.rect(
       this.startingX,
       this.startingY - h,
-      h * HexGrid.COLUMN_COUNT + h,
-      d * HexGrid.ROW_COUNT + d,
+      frameWidth,
+      frameHeight,
     );
     this.frame.fill("#123456");
     this.app.stage.addChild(this.frame);
@@ -68,6 +70,16 @@ class HexGrid {
     this.frame.on("mouseleave", () => (this.isDragging = false));
     this.frame.on("pointerdown", (e) => this.onDragStart(e));
     this.frame.on("pointermove", () => this.onDragMove());
+
+    const zoomSlider = document.getElementById("zoom_range");
+    const zoom = () => {
+      const zoomFactor = zoomSlider.value / 4;
+      this.frame.width = frameWidth * zoomFactor;
+      this.frame.height = frameHeight * zoomFactor;
+    };
+    zoom();
+
+    zoomSlider.addEventListener("change", zoom);
   }
 
   onDragStart(event) {

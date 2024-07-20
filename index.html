@@ -3,6 +3,27 @@
   <head>
     <meta charset="utf-8" />
     <title>Ada Campaign World</title>
+    <!--    <link rel="stylesheet" href="/src/index.css" type="text/css">-->
   </head>
-  <body></body>
+  <body>
+    <div class="zoom_slider">
+      <label class="sliderLabel">-</label>
+      <label for="zoom_range">
+        <input
+          type="range"
+          min="2"
+          max="16"
+          value="4"
+          class="slider"
+          id="zoom_range"
+        />
+      </label>
+      <span class="sliderLabel">+</span>
+    </div>
+
+    <label class="switch">
+      <input type="checkbox" id="label_toggle" />
+      <span class="slider round">Enable Labels</span>
+    </label>
+  </body>
 </html>
