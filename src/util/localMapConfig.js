@@ -1,4 +1,10 @@
-import mountain from "../assets/mountain_range.svg";
+import mountain_range from "../assets/icon_mountain_range.svg";
+import mountain from "../assets/icon_mountain.svg";
+import farm from "../assets/icon_farm.svg";
+import forest from "../assets/icon_forest_1.svg";
+import trees from "../assets/icon_trees_1.svg";
+import walled_town from "../assets/icon_town_1.svg";
+import castle from "../assets/icon_castle_1.svg";
 
 const TerrainType = {
   BEACH: "BEACH",
@@ -22,11 +28,11 @@ export const DEFAULT_STYLES = {
     color: "#face6e",
   },
   [TerrainType.FARM]: {
-    icon: null,
+    icon: farm,
     color: "#5d4432",
   },
   [TerrainType.FOREST]: {
-    icon: null,
+    icon: forest,
     color: "#025e1e",
   },
   [TerrainType.HEATH]: {
@@ -46,7 +52,7 @@ export const DEFAULT_STYLES = {
     color: "#42a81a",
   },
   [TerrainType.MOUNTAIN]: {
-    icon: mountain,
+    icon: mountain_range,
     color: "#807b7b",
   },
   [TerrainType.SETTLEMENT]: {
@@ -66,7 +72,7 @@ export const DEFAULT_STYLES = {
     color: "#236fbb",
   },
   [TerrainType.WOOD]: {
-    icon: null,
+    icon: trees,
     color: "#1d9142",
   },
 };
@@ -1112,7 +1118,7 @@ const HEX_CONFIG = {
     terrain: TerrainType.MOUNTAIN,
     styleOverrides: {
       color: null,
-      icon: null,
+      icon: mountain,
     },
   },
   "5_14": {
@@ -1644,7 +1650,7 @@ const HEX_CONFIG = {
     terrain: TerrainType.SETTLEMENT,
     styleOverrides: {
       color: null,
-      icon: null,
+      icon: castle,
     },
   },
   "8_9": {
@@ -3967,8 +3973,8 @@ const HEX_CONFIG = {
   "20_16": {
     terrain: TerrainType.SETTLEMENT,
     styleOverrides: {
-      color: null,
-      icon: null,
+      color: "#f8d28b",
+      icon: walled_town,
     },
   },
   "20_17": {

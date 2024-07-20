@@ -17,6 +17,6 @@ import HexGrid from "./map/HexGrid";
   // Then adding the application's canvas to the DOM body.
   document.body.appendChild(app.canvas);
 
-  const map = new HexGrid(50, 50, 30, app);
+  const map = new HexGrid(50, 50, 40, app);
   map.draw();
 })();
