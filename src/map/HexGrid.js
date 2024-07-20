@@ -53,10 +53,10 @@ class HexGrid {
     const h = 1.5 * this.radius;
     const d = Math.sqrt(3) * this.radius;
     this.frame.rect(
-        this.startingX,
-        this.startingY - h,
-        h * HexGrid.COLUMN_COUNT + h,
-        d * HexGrid.ROW_COUNT + d,
+      this.startingX,
+      this.startingY - h,
+      h * HexGrid.COLUMN_COUNT + h,
+      d * HexGrid.ROW_COUNT + d,
     );
     this.frame.fill("#123456");
     this.app.stage.addChild(this.frame);

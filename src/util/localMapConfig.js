@@ -19,7 +19,7 @@ const TerrainType = {
 export const DEFAULT_STYLES = {
   [TerrainType.BEACH]: {
     icon: null,
-    color: "#face6e"
+    color: "#face6e",
   },
   [TerrainType.FARM]: {
     icon: null,
