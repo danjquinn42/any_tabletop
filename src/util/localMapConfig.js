@@ -1,3 +1,5 @@
+import mountain from "../assets/mountain_range.svg";
+
 const TerrainType = {
   BEACH: "BEACH",
   FARM: "FARM",
@@ -14,62 +16,62 @@ const TerrainType = {
   WOOD: "WOOD",
 };
 
-export const defaultStyles = {
+export const DEFAULT_STYLES = {
   [TerrainType.BEACH]: {
-    icon: "mountain_range.svg",
+    icon: null,
     color: "#face6e"
   },
   [TerrainType.FARM]: {
-    icon: "mountain_range.svg",
+    icon: null,
     color: "#5d4432",
   },
   [TerrainType.FOREST]: {
-    icon: "mountain_range.svg",
+    icon: null,
     color: "#025e1e",
   },
   [TerrainType.HEATH]: {
-    icon: "mountain_range.svg",
+    icon: null,
     color: "#967f64",
   },
   [TerrainType.HILLS]: {
-    icon: "mountain_range.svg",
+    icon: null,
     color: "#52795e",
   },
   [TerrainType.MARSH]: {
-    icon: "mountain_range.svg",
+    icon: null,
     color: "#9ab733",
   },
   [TerrainType.MEADOW]: {
-    icon: "mountain_range.svg",
+    icon: null,
     color: "#42a81a",
   },
   [TerrainType.MOUNTAIN]: {
-    icon: "mountain_range.svg",
+    icon: mountain,
     color: "#807b7b",
   },
   [TerrainType.SETTLEMENT]: {
-    icon: "mountain_range.svg",
+    icon: null,
     color: "#807b7b",
   },
   [TerrainType.SPECIAL]: {
-    icon: "mountain_range.svg",
-    color: "#EEEEEE",
+    icon: null,
+    color: "#daad00",
   },
   [TerrainType.SWAMP]: {
-    icon: "mountain_range.svg",
+    icon: null,
     color: "#769f00",
   },
   [TerrainType.WATER]: {
-    icon: "mountain_range.svg",
+    icon: null,
     color: "#236fbb",
   },
   [TerrainType.WOOD]: {
-    icon: "mountain_range.svg",
+    icon: null,
     color: "#1d9142",
   },
 };
 
-export const hexContent = {
+const HEX_CONFIG = {
   "0_0": {
     terrain: TerrainType.WATER,
     styleOverrides: {
@@ -6119,3 +6121,5 @@ export const hexContent = {
     },
   },
 };
+
+export default HEX_CONFIG;

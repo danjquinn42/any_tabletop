@@ -29,8 +29,22 @@ class HexGrid {
 
     let y = this.startingY + this.radius * Math.sin(HEX_ANGLE);
     for (let i = 0; i < HexGrid.ROW_COUNT; ++i) {
-      this.drawRow(y);
+      this.drawRow(y, i);
       y += 2 * this.radius * Math.sin(HEX_ANGLE);
+    }
+  }
+
+  drawRow(y, rowNumber) {
+    let x = this.startingX;
+    for (let i = 0; i < HexGrid.COLUMN_COUNT; ++i) {
+      y =
+        i % 2 === 0
+          ? y - this.radius * Math.sin(HEX_ANGLE)
+          : y + this.radius * Math.sin(HEX_ANGLE);
+      x += this.radius * (1 + Math.cos(HEX_ANGLE));
+      const id = `${rowNumber}_${i}`;
+      const hex = new Hex(x, y, this.radius, this.frame, id);
+      hex.initialize();
     }
   }
 
@@ -39,10 +53,10 @@ class HexGrid {
     const h = 1.5 * this.radius;
     const d = Math.sqrt(3) * this.radius;
     this.frame.rect(
-      this.startingX - h,
-      this.startingY - h,
-      h * HexGrid.COLUMN_COUNT + h,
-      d * HexGrid.ROW_COUNT + d,
+        this.startingX,
+        this.startingY - h,
+        h * HexGrid.COLUMN_COUNT + h,
+        d * HexGrid.ROW_COUNT + d,
     );
     this.frame.fill("#123456");
     this.app.stage.addChild(this.frame);
@@ -70,19 +84,6 @@ class HexGrid {
 
     this.frame.x = newPosition.x;
     this.frame.y = newPosition.y;
-  }
-
-  drawRow(y) {
-    let x = this.startingX;
-    for (let i = 0; i < HexGrid.COLUMN_COUNT; ++i) {
-      const hex = new Hex(x, y, this.radius, this.frame); //`${rowNumber}_${i}`
-      hex.initialize();
-      y =
-        i % 2 === 0
-          ? y - this.radius * Math.sin(HEX_ANGLE)
-          : y + this.radius * Math.sin(HEX_ANGLE);
-      x += this.radius * (1 + Math.cos(HEX_ANGLE));
-    }
   }
 }
 
