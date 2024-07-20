@@ -1,4 +1,4 @@
-import { Assets, Graphics, Sprite } from "pixi.js";
+import { Assets, Graphics, Sprite, ColorMatrixFilter } from "pixi.js";
 import { HEX_ANGLE } from "../util/constants";
 import mountain from "../assets/mountain_range.svg";
 
@@ -8,8 +8,6 @@ class Hex {
   radius;
   coordinateSet = [];
   defaultColor;
-  hoverColor;
-  clickColor;
   background;
   frame;
 
@@ -19,23 +17,22 @@ class Hex {
     this.radius = radius;
     this.frame = frame;
     this.defaultColor = "#7a838a";
-    this.hoverColor = "#9baab2";
-    this.clickColor = "#87a3ad";
   }
 
   initialize() {
     this.updateCoordinates();
     this.render();
 
+    const filter = new ColorMatrixFilter();
+    this.background.filters = [filter];
+
     this.background.eventMode = "static";
     this.background.cursor = "pointer";
-    this.background.on("pointerover", () => this.changeColor(this.hoverColor));
-    this.background.on("pointerleave", () =>
-      this.changeColor(this.defaultColor),
-    );
-    this.background.on("pointerout", () => this.changeColor(this.defaultColor));
-    this.background.on("pointerup", () => this.changeColor(this.hoverColor));
-    this.background.on("pointerdown", () => this.changeColor(this.clickColor));
+    this.background.on("pointerleave", () => this.onLoseFocus(filter));
+    this.background.on("pointerout", () => this.onLoseFocus(filter));
+    this.background.on("pointerover", () => this.onHover(filter));
+    this.background.on("pointerup", () => this.onHover(filter));
+    this.background.on("pointerdown", () => this.onMouseDown(filter));
   }
 
   updateCoordinates() {
@@ -46,10 +43,16 @@ class Hex {
     }
   }
 
-  changeColor(color) {
-    this.background.clear();
-    this.drawHexagon(this.background);
-    this.background.fill(color);
+  onHover(filter) {
+    filter.contrast(0.6);
+  }
+
+  onMouseDown(filter) {
+    filter.contrast(0.9);
+  }
+
+  onLoseFocus(filter) {
+    filter.contrast(0);
   }
 
   render() {
