@@ -63,6 +63,10 @@ class HexGrid {
     this.frame.fill("#123456");
     this.app.stage.addChild(this.frame);
 
+    this.addEventHandlers(frameWidth, frameHeight);
+  }
+
+  addEventHandlers(frameWidth, frameHeight) {
     this.frame.eventMode = "static";
     this.frame.cursor = "pointer";
     this.app.stage.hitArea = this.app.screen;
