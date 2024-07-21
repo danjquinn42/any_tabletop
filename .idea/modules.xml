@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/ada_frontend_js.iml" filepath="$PROJECT_DIR$/.idea/ada_frontend_js.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ada.iml" filepath="$PROJECT_DIR$/.idea/ada.iml" />
     </modules>
   </component>
 </project>
