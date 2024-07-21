@@ -18,8 +18,8 @@ class HexGrid {
   dragData;
 
   constructor(radius, app) {
-    this.startingX = (-radius * HexGrid.ROW_COUNT) / 3;
-    this.startingY = (-radius * HexGrid.COLUMN_COUNT) / 1.5;
+    this.startingX = 0;
+    this.startingY = (-radius * HexGrid.COLUMN_COUNT) / 2;
     this.radius = radius;
     this.app = app;
   }
@@ -77,7 +77,7 @@ class HexGrid {
 
     const zoomSlider = document.getElementById("zoom_range");
     const zoom = () => {
-      const zoomFactor = zoomSlider.value / 4;
+      const zoomFactor = zoomSlider.value / 40;
       this.frame.width = frameWidth * zoomFactor;
       this.frame.height = frameHeight * zoomFactor;
     };
