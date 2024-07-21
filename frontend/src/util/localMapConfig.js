@@ -14,9 +14,10 @@ import big_tree from "../assets/icon_big_tree.svg";
 
 const TerrainType = {
   BEACH: "BEACH",
+  BLIGHT: "BLIGHT",
+  DESERT: "DESERT",
   FARM: "FARM",
   FOREST: "FOREST",
-  HEATH: "HEATH",
   HILLS: "HILLS",
   MARSH: "MARSH",
   MEADOW: "MEADOW",
@@ -30,7 +31,7 @@ const TerrainType = {
 
 const colorPallet = {
   gold: "#b69321",
-  sand: "#face6e",
+  sand: "#b29655",
   dirt: "#946f50",
   clay: "#967f64",
   stone: "#807b7b",
@@ -47,6 +48,14 @@ export const DEFAULT_STYLES = {
     icon: null,
     color: colorPallet.sand,
   },
+  [TerrainType.BLIGHT]: {
+    icon: null,
+    color: colorPallet.clay,
+  },
+  [TerrainType.DESERT]: {
+    icon: null,
+    color: colorPallet.sand,
+  },
   [TerrainType.FARM]: {
     icon: farm,
     color: colorPallet.dirt,
@@ -54,10 +63,6 @@ export const DEFAULT_STYLES = {
   [TerrainType.FOREST]: {
     icon: forest,
     color: colorPallet.deepGreen,
-  },
-  [TerrainType.HEATH]: {
-    icon: null,
-    color: colorPallet.clay,
   },
   [TerrainType.HILLS]: {
     icon: hills,
@@ -155,7 +160,7 @@ const HEX_CONFIG = {
     },
   },
   "0_8": {
-    terrain: TerrainType.MOUNTAIN,
+    terrain: TerrainType.HILLS,
     styleOverrides: {
       color: null,
       icon: null,
@@ -337,14 +342,14 @@ const HEX_CONFIG = {
     },
   },
   "1_7": {
-    terrain: TerrainType.WOOD,
+    terrain: TerrainType.HILLS,
     styleOverrides: {
       color: null,
       icon: null,
     },
   },
   "1_8": {
-    terrain: TerrainType.WOOD,
+    terrain: TerrainType.HILLS,
     styleOverrides: {
       color: null,
       icon: null,
@@ -505,7 +510,7 @@ const HEX_CONFIG = {
     },
   },
   "2_4": {
-    terrain: TerrainType.MEADOW,
+    terrain: TerrainType.WOOD,
     styleOverrides: {
       color: null,
       icon: null,
@@ -540,7 +545,7 @@ const HEX_CONFIG = {
     },
   },
   "2_9": {
-    terrain: TerrainType.WOOD,
+    terrain: TerrainType.HILLS,
     styleOverrides: {
       color: null,
       icon: null,
@@ -652,7 +657,7 @@ const HEX_CONFIG = {
     },
   },
   "2_25": {
-    terrain: TerrainType.HEATH,
+    terrain: TerrainType.BLIGHT,
     styleOverrides: {
       color: null,
       icon: null,
@@ -848,7 +853,7 @@ const HEX_CONFIG = {
     },
   },
   "3_26": {
-    terrain: TerrainType.HEATH,
+    terrain: TerrainType.BLIGHT,
     styleOverrides: {
       color: null,
       icon: null,
@@ -1205,7 +1210,7 @@ const HEX_CONFIG = {
     },
   },
   "5_23": {
-    terrain: TerrainType.HEATH,
+    terrain: TerrainType.BLIGHT,
     styleOverrides: {
       color: null,
       icon: null,
@@ -1219,14 +1224,14 @@ const HEX_CONFIG = {
     },
   },
   "5_25": {
-    terrain: TerrainType.HEATH,
+    terrain: TerrainType.BLIGHT,
     styleOverrides: {
       color: null,
       icon: null,
     },
   },
   "5_26": {
-    terrain: TerrainType.HEATH,
+    terrain: TerrainType.BLIGHT,
     styleOverrides: {
       color: null,
       icon: null,
@@ -1366,56 +1371,56 @@ const HEX_CONFIG = {
     },
   },
   "6_19": {
-    terrain: TerrainType.HEATH,
+    terrain: TerrainType.BLIGHT,
     styleOverrides: {
       color: null,
       icon: null,
     },
   },
   "6_20": {
-    terrain: TerrainType.HEATH,
+    terrain: TerrainType.BLIGHT,
     styleOverrides: {
       color: null,
       icon: null,
     },
   },
   "6_21": {
-    terrain: TerrainType.HEATH,
+    terrain: TerrainType.BLIGHT,
     styleOverrides: {
       color: null,
       icon: null,
     },
   },
   "6_22": {
-    terrain: TerrainType.HEATH,
+    terrain: TerrainType.BLIGHT,
     styleOverrides: {
       color: null,
       icon: null,
     },
   },
   "6_23": {
-    terrain: TerrainType.HEATH,
+    terrain: TerrainType.BLIGHT,
     styleOverrides: {
       color: null,
       icon: null,
     },
   },
   "6_24": {
-    terrain: TerrainType.HEATH,
+    terrain: TerrainType.BLIGHT,
     styleOverrides: {
       color: null,
       icon: null,
     },
   },
   "6_25": {
-    terrain: TerrainType.HEATH,
+    terrain: TerrainType.BLIGHT,
     styleOverrides: {
       color: null,
       icon: null,
     },
   },
   "6_26": {
-    terrain: TerrainType.HEATH,
+    terrain: TerrainType.BLIGHT,
     styleOverrides: {
       color: null,
       icon: null,
@@ -1562,7 +1567,7 @@ const HEX_CONFIG = {
     },
   },
   "7_20": {
-    terrain: TerrainType.HEATH,
+    terrain: TerrainType.BLIGHT,
     styleOverrides: {
       color: null,
       icon: null,
@@ -1576,7 +1581,7 @@ const HEX_CONFIG = {
     },
   },
   "7_22": {
-    terrain: TerrainType.HEATH,
+    terrain: TerrainType.BLIGHT,
     styleOverrides: {
       color: null,
       icon: null,
@@ -1597,14 +1602,14 @@ const HEX_CONFIG = {
     },
   },
   "7_25": {
-    terrain: TerrainType.HEATH,
+    terrain: TerrainType.BLIGHT,
     styleOverrides: {
       color: null,
       icon: null,
     },
   },
   "7_26": {
-    terrain: TerrainType.HEATH,
+    terrain: TerrainType.BLIGHT,
     styleOverrides: {
       color: null,
       icon: null,
@@ -1632,7 +1637,7 @@ const HEX_CONFIG = {
     },
   },
   "8_3": {
-    terrain: TerrainType.MEADOW,
+    terrain: TerrainType.HILLS,
     styleOverrides: {
       color: null,
       icon: null,
@@ -1653,7 +1658,7 @@ const HEX_CONFIG = {
     },
   },
   "8_6": {
-    terrain: TerrainType.SPECIAL,
+    terrain: TerrainType.HILLS,
     styleOverrides: {
       color: null,
       icon: null,
@@ -1779,7 +1784,7 @@ const HEX_CONFIG = {
     },
   },
   "8_24": {
-    terrain: TerrainType.HEATH,
+    terrain: TerrainType.BLIGHT,
     styleOverrides: {
       color: null,
       icon: null,
@@ -3993,7 +3998,7 @@ const HEX_CONFIG = {
   "20_16": {
     terrain: TerrainType.SETTLEMENT,
     styleOverrides: {
-      color: "#f8d28b",
+      color: null,
       icon: walled_town,
     },
   },
@@ -5468,21 +5473,21 @@ const HEX_CONFIG = {
     },
   },
   "28_11": {
-    terrain: TerrainType.HILLS,
+    terrain: TerrainType.DESERT,
     styleOverrides: {
       color: null,
       icon: null,
     },
   },
   "28_12": {
-    terrain: TerrainType.HILLS,
+    terrain: TerrainType.DESERT,
     styleOverrides: {
       color: null,
       icon: null,
     },
   },
   "28_13": {
-    terrain: TerrainType.WOOD,
+    terrain: TerrainType.DESERT,
     styleOverrides: {
       color: null,
       icon: null,
@@ -5622,7 +5627,7 @@ const HEX_CONFIG = {
     },
   },
   "29_6": {
-    terrain: TerrainType.HILLS,
+    terrain: TerrainType.DESERT,
     styleOverrides: {
       color: null,
       icon: null,
@@ -5650,28 +5655,28 @@ const HEX_CONFIG = {
     },
   },
   "29_10": {
-    terrain: TerrainType.HILLS,
+    terrain: TerrainType.DESERT,
     styleOverrides: {
       color: null,
       icon: null,
     },
   },
   "29_11": {
-    terrain: TerrainType.HILLS,
+    terrain: TerrainType.DESERT,
     styleOverrides: {
       color: null,
       icon: null,
     },
   },
   "29_12": {
-    terrain: TerrainType.HILLS,
+    terrain: TerrainType.DESERT,
     styleOverrides: {
       color: null,
       icon: null,
     },
   },
   "29_13": {
-    terrain: TerrainType.WOOD,
+    terrain: TerrainType.DESERT,
     styleOverrides: {
       color: null,
       icon: null,
@@ -5832,14 +5837,14 @@ const HEX_CONFIG = {
     },
   },
   "30_9": {
-    terrain: TerrainType.HILLS,
+    terrain: TerrainType.DESERT,
     styleOverrides: {
       color: null,
       icon: null,
     },
   },
   "30_10": {
-    terrain: TerrainType.WOOD,
+    terrain: TerrainType.DESERT,
     styleOverrides: {
       color: null,
       icon: null,
