@@ -5,6 +5,12 @@ import forest from "../assets/icon_forest_1.svg";
 import trees from "../assets/icon_trees_1.svg";
 import walled_town from "../assets/icon_town_1.svg";
 import castle from "../assets/icon_castle_1.svg";
+import hills from "../assets/icon_hills.svg";
+import star from "../assets/icon_star.svg";
+import huts from "../assets/icon_huts.svg";
+import small_town from "../assets/icon_houses.svg";
+import medium_town from "../assets/icon_medium_town.svg";
+import big_tree from "../assets/icon_big_tree.svg"
 
 const TerrainType = {
   BEACH: "BEACH",
@@ -22,71 +28,85 @@ const TerrainType = {
   WOOD: "WOOD",
 };
 
+const colorPallet = {
+  gold: "#b69321",
+  sand: "#face6e",
+  dirt: "#946f50",
+  clay: "#967f64",
+  stone: "#807b7b",
+  lightStone: "#9f8e8e",
+  deepGreen: "#025e1e",
+  mediumGreen: "#067a19",
+  grassyGreen: "#448a48",
+  algeaGreen: "#6ba92f",
+  sicklyGreen: "#719319",
+  azure: "#236fbb",
+}
 export const DEFAULT_STYLES = {
   [TerrainType.BEACH]: {
     icon: null,
-    color: "#face6e",
+    color: colorPallet.sand,
   },
   [TerrainType.FARM]: {
     icon: farm,
-    color: "#5d4432",
+    color: colorPallet.dirt,
   },
   [TerrainType.FOREST]: {
     icon: forest,
-    color: "#025e1e",
+    color: colorPallet.deepGreen,
   },
   [TerrainType.HEATH]: {
     icon: null,
-    color: "#967f64",
+    color: colorPallet.clay,
   },
   [TerrainType.HILLS]: {
-    icon: null,
-    color: "#52795e",
+    icon: hills,
+    color: colorPallet.grassyGreen,
   },
   [TerrainType.MARSH]: {
     icon: null,
-    color: "#9ab733",
+    color: colorPallet.algeaGreen,
   },
   [TerrainType.MEADOW]: {
     icon: null,
-    color: "#42a81a",
+    color: colorPallet.grassyGreen,
   },
   [TerrainType.MOUNTAIN]: {
     icon: mountain_range,
-    color: "#807b7b",
+    color: colorPallet.stone,
   },
   [TerrainType.SETTLEMENT]: {
-    icon: null,
-    color: "#807b7b",
+    icon: small_town,
+    color: colorPallet.lightStone,
   },
   [TerrainType.SPECIAL]: {
-    icon: null,
-    color: "#daad00",
+    icon: star,
+    color: colorPallet.gold,
   },
   [TerrainType.SWAMP]: {
     icon: null,
-    color: "#769f00",
+    color: colorPallet.sicklyGreen,
   },
   [TerrainType.WATER]: {
     icon: null,
-    color: "#236fbb",
+    color: colorPallet.azure,
   },
   [TerrainType.WOOD]: {
     icon: trees,
-    color: "#1d9142",
+    color: colorPallet.mediumGreen,
   },
 };
 
 const HEX_CONFIG = {
   "0_0": {
-    terrain: TerrainType.WATER,
+    terrain: TerrainType.MOUNTAIN,
     styleOverrides: {
       color: null,
       icon: null,
     },
   },
   "0_1": {
-    terrain: TerrainType.MEADOW,
+    terrain: TerrainType.MOUNTAIN,
     styleOverrides: {
       color: null,
       icon: null,
@@ -163,14 +183,14 @@ const HEX_CONFIG = {
     },
   },
   "0_12": {
-    terrain: TerrainType.WOOD,
+    terrain: TerrainType.HILLS,
     styleOverrides: {
       color: null,
       icon: null,
     },
   },
   "0_13": {
-    terrain: TerrainType.WATER,
+    terrain: TerrainType.HILLS,
     styleOverrides: {
       color: null,
       icon: null,
@@ -268,14 +288,14 @@ const HEX_CONFIG = {
     },
   },
   "1_0": {
-    terrain: TerrainType.WOOD,
+    terrain: TerrainType.MOUNTAIN,
     styleOverrides: {
       color: null,
       icon: null,
     },
   },
   "1_1": {
-    terrain: TerrainType.WATER,
+    terrain: TerrainType.MOUNTAIN,
     styleOverrides: {
       color: null,
       icon: null,
@@ -331,7 +351,7 @@ const HEX_CONFIG = {
     },
   },
   "1_9": {
-    terrain: TerrainType.WATER,
+    terrain: TerrainType.HILLS,
     styleOverrides: {
       color: null,
       icon: null,
@@ -345,7 +365,7 @@ const HEX_CONFIG = {
     },
   },
   "1_11": {
-    terrain: TerrainType.WATER,
+    terrain: TerrainType.WOOD,
     styleOverrides: {
       color: null,
       icon: null,
@@ -366,7 +386,7 @@ const HEX_CONFIG = {
     },
   },
   "1_14": {
-    terrain: TerrainType.WOOD,
+    terrain: TerrainType.MOUNTAIN,
     styleOverrides: {
       color: null,
       icon: null,
@@ -457,21 +477,21 @@ const HEX_CONFIG = {
     },
   },
   "2_0": {
-    terrain: TerrainType.WATER,
+    terrain: TerrainType.HILLS,
     styleOverrides: {
       color: null,
       icon: null,
     },
   },
   "2_1": {
-    terrain: TerrainType.MEADOW,
+    terrain: TerrainType.HILLS,
     styleOverrides: {
       color: null,
       icon: null,
     },
   },
   "2_2": {
-    terrain: TerrainType.WATER,
+    terrain: TerrainType.MARSH,
     styleOverrides: {
       color: null,
       icon: null,
@@ -506,7 +526,7 @@ const HEX_CONFIG = {
     },
   },
   "2_7": {
-    terrain: TerrainType.WATER,
+    terrain: TerrainType.WOOD,
     styleOverrides: {
       color: null,
       icon: null,
@@ -527,14 +547,14 @@ const HEX_CONFIG = {
     },
   },
   "2_10": {
-    terrain: TerrainType.WATER,
+    terrain: TerrainType.HILLS,
     styleOverrides: {
       color: null,
       icon: null,
     },
   },
   "2_11": {
-    terrain: TerrainType.WOOD,
+    terrain: TerrainType.HILLS,
     styleOverrides: {
       color: null,
       icon: null,
@@ -646,7 +666,7 @@ const HEX_CONFIG = {
     },
   },
   "3_0": {
-    terrain: TerrainType.WOOD,
+    terrain: TerrainType.HILLS,
     styleOverrides: {
       color: null,
       icon: null,
@@ -695,7 +715,7 @@ const HEX_CONFIG = {
     },
   },
   "3_7": {
-    terrain: TerrainType.WATER,
+    terrain: TerrainType.MARSH,
     styleOverrides: {
       color: null,
       icon: null,
@@ -716,14 +736,14 @@ const HEX_CONFIG = {
     },
   },
   "3_10": {
-    terrain: TerrainType.WOOD,
+    terrain: TerrainType.MOUNTAIN,
     styleOverrides: {
       color: null,
       icon: null,
     },
   },
   "3_11": {
-    terrain: TerrainType.WOOD,
+    terrain: TerrainType.MOUNTAIN,
     styleOverrides: {
       color: null,
       icon: null,
@@ -1111,7 +1131,7 @@ const HEX_CONFIG = {
     terrain: TerrainType.SETTLEMENT,
     styleOverrides: {
       color: null,
-      icon: null,
+      icon: castle,
     },
   },
   "5_13": {
@@ -1650,7 +1670,7 @@ const HEX_CONFIG = {
     terrain: TerrainType.SETTLEMENT,
     styleOverrides: {
       color: null,
-      icon: castle,
+      icon: null,
     },
   },
   "8_9": {
@@ -2130,7 +2150,7 @@ const HEX_CONFIG = {
     },
   },
   "10_23": {
-    terrain: TerrainType.MARSH,
+    terrain: TerrainType.FARM,
     styleOverrides: {
       color: null,
       icon: null,
@@ -2221,7 +2241,7 @@ const HEX_CONFIG = {
     },
   },
   "11_9": {
-    terrain: TerrainType.FOREST,
+    terrain: TerrainType.MOUNTAIN,
     styleOverrides: {
       color: null,
       icon: null,
@@ -2322,7 +2342,7 @@ const HEX_CONFIG = {
     terrain: TerrainType.SETTLEMENT,
     styleOverrides: {
       color: null,
-      icon: null,
+      icon: huts,
     },
   },
   "11_24": {
@@ -2417,7 +2437,7 @@ const HEX_CONFIG = {
     },
   },
   "12_10": {
-    terrain: TerrainType.MEADOW,
+    terrain: TerrainType.MOUNTAIN,
     styleOverrides: {
       color: null,
       icon: null,
@@ -2634,14 +2654,14 @@ const HEX_CONFIG = {
     },
   },
   "13_14": {
-    terrain: TerrainType.SPECIAL,
+    terrain: TerrainType.WOOD,
     styleOverrides: {
       color: null,
-      icon: null,
+      icon: big_tree,
     },
   },
   "13_15": {
-    terrain: TerrainType.WOOD,
+    terrain: TerrainType.FOREST,
     styleOverrides: {
       color: null,
       icon: null,
@@ -2839,7 +2859,7 @@ const HEX_CONFIG = {
   "14_16": {
     terrain: TerrainType.SETTLEMENT,
     styleOverrides: {
-      color: null,
+      color: colorPallet.mediumGreen,
       icon: null,
     },
   },
@@ -3194,7 +3214,7 @@ const HEX_CONFIG = {
     },
   },
   "16_13": {
-    terrain: TerrainType.MEADOW,
+    terrain: TerrainType.FOREST,
     styleOverrides: {
       color: null,
       icon: null,
@@ -3250,7 +3270,7 @@ const HEX_CONFIG = {
     },
   },
   "16_21": {
-    terrain: TerrainType.BEACH,
+    terrain: TerrainType.SWAMP,
     styleOverrides: {
       color: null,
       icon: null,
@@ -3376,7 +3396,7 @@ const HEX_CONFIG = {
     },
   },
   "17_12": {
-    terrain: TerrainType.FARM,
+    terrain: TerrainType.WOOD,
     styleOverrides: {
       color: null,
       icon: null,
@@ -3432,7 +3452,7 @@ const HEX_CONFIG = {
     },
   },
   "17_20": {
-    terrain: TerrainType.BEACH,
+    terrain: TerrainType.SWAMP,
     styleOverrides: {
       color: null,
       icon: null,
@@ -3712,7 +3732,7 @@ const HEX_CONFIG = {
     },
   },
   "19_6": {
-    terrain: TerrainType.MEADOW,
+    terrain: TerrainType.FARM,
     styleOverrides: {
       color: null,
       icon: null,
@@ -3831,7 +3851,7 @@ const HEX_CONFIG = {
     },
   },
   "19_23": {
-    terrain: TerrainType.BEACH,
+    terrain: TerrainType.FARM,
     styleOverrides: {
       color: null,
       icon: null,
@@ -3894,7 +3914,7 @@ const HEX_CONFIG = {
     },
   },
   "20_5": {
-    terrain: TerrainType.WOOD,
+    terrain: TerrainType.FARM,
     styleOverrides: {
       color: null,
       icon: null,
@@ -4121,7 +4141,7 @@ const HEX_CONFIG = {
     terrain: TerrainType.SETTLEMENT,
     styleOverrides: {
       color: null,
-      icon: null,
+      icon: medium_town,
     },
   },
   "21_11": {

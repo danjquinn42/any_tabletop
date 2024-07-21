@@ -15,7 +15,6 @@ class Hex {
   y;
   radius;
   coordinateSet = [];
-  defaultColor;
   background;
   frame;
   id;
@@ -39,17 +38,6 @@ class Hex {
   }
 
   initialize() {
-    const config = HEX_CONFIG[this.id];
-    if (!config) {
-      throw new Error("undefined color id " + this.id);
-    }
-
-    if (!!config.color) {
-      this.defaultColor = config.color;
-    } else {
-      this.defaultColor = DEFAULT_STYLES[config.terrain].color;
-    }
-
     this.updateCoordinates();
     this.render();
 
@@ -88,7 +76,7 @@ class Hex {
   render() {
     const background = new Graphics();
     this.drawHexagon(background);
-    background.fill(this.defaultColor);
+    background.fill(this.styles.color);
     this.background = background;
 
     const mask = new Graphics();
