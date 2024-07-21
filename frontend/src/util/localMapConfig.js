@@ -10,7 +10,7 @@ import star from "../assets/icon_star.svg";
 import huts from "../assets/icon_huts.svg";
 import small_town from "../assets/icon_houses.svg";
 import medium_town from "../assets/icon_medium_town.svg";
-import big_tree from "../assets/icon_big_tree.svg"
+import big_tree from "../assets/icon_big_tree.svg";
 
 const TerrainType = {
   BEACH: "BEACH",
@@ -41,7 +41,7 @@ const colorPallet = {
   algeaGreen: "#6ba92f",
   sicklyGreen: "#719319",
   azure: "#236fbb",
-}
+};
 export const DEFAULT_STYLES = {
   [TerrainType.BEACH]: {
     icon: null,
