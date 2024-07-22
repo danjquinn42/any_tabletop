@@ -7,8 +7,8 @@ import {
   TextStyle,
 } from "pixi.js";
 import { HEX_ANGLE } from "../util/constants";
-import HEX_CONFIG, { DEFAULT_STYLES } from "../util/localMapConfig";
-import { isNull, merge, mergeWith } from "lodash";
+import { isNil, merge, mergeWith } from "lodash";
+import { DEFAULT_STYLES, iconMap } from "../util/localMapConfig";
 
 class Hex {
   x;
@@ -20,18 +20,16 @@ class Hex {
   id;
   styles;
 
-  constructor(x, y, radius, frame, id) {
+  constructor(x, y, radius, frame, id, config) {
     this.x = x;
     this.y = y;
     this.radius = radius;
     this.frame = frame;
     this.id = id;
-
-    const config = HEX_CONFIG[id];
-    const styleOverrides = config.styleOverrides;
-    const defaultStyle = merge({}, DEFAULT_STYLES[config.terrain]);
+    const styleOverrides = config;
+    const defaultStyle = merge({}, DEFAULT_STYLES[config.terrainType]);
     this.styles = mergeWith(defaultStyle, styleOverrides, (d, s) => {
-      if (isNull(s)) {
+      if (isNil(s)) {
         return d;
       }
     });
@@ -94,8 +92,8 @@ class Hex {
   }
 
   addIcon(mask) {
-    const svg = this.styles.icon;
-    if (isNull(svg)) {
+    const svg = iconMap[this.styles.icon];
+    if (isNil(svg)) {
       const label = this.createLabel();
       this.background.addChild(label);
     } else {

@@ -16,12 +16,15 @@ class HexGrid {
   frame;
 
   dragData;
+  hexConfig;
 
-  constructor(radius, app) {
+  constructor(radius, app, hexConfig) {
+    this.hexConfig = hexConfig;
     this.startingX = 0;
     this.startingY = (-radius * HexGrid.COLUMN_COUNT) / 2;
     this.radius = radius;
     this.app = app;
+    this.frame = new Graphics();
   }
 
   draw() {
@@ -43,13 +46,19 @@ class HexGrid {
           : y + this.radius * Math.sin(HEX_ANGLE);
       x += this.radius * (1 + Math.cos(HEX_ANGLE));
       const id = `${rowNumber}_${i}`;
-      const hex = new Hex(x, y, this.radius, this.frame, id);
+      const hex = new Hex(
+        x,
+        y,
+        this.radius,
+        this.frame,
+        id,
+        this.hexConfig[id],
+      );
       hex.initialize();
     }
   }
 
   createFrame() {
-    this.frame = new Graphics();
     const h = 1.5 * this.radius;
     const d = Math.sqrt(3) * this.radius;
     let frameWidth = h * HexGrid.COLUMN_COUNT + h;
