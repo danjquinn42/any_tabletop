@@ -19,13 +19,15 @@ class Hex {
   frame;
   id;
   styles;
+  labelToggle;
 
-  constructor(x, y, radius, frame, id, config) {
+  constructor(x, y, radius, frame, id, config, labelToggle) {
     this.x = x;
     this.y = y;
     this.radius = radius;
     this.frame = frame;
     this.id = id;
+    this.labelToggle = labelToggle;
     const styleOverrides = config;
     const defaultStyle = merge({}, DEFAULT_STYLES[config.terrainType]);
     this.styles = mergeWith(defaultStyle, styleOverrides, (d, s) => {
@@ -145,12 +147,7 @@ class Hex {
 
     label.addChild(labelText);
 
-    const labelToggle = document.getElementById("label_toggle");
-    const updateVisibility = () => {
-      label.visible = labelToggle.checked;
-    };
-    updateVisibility();
-    labelToggle.addEventListener("change", updateVisibility);
+    this.labelToggle.bindTo(label);
 
     return label;
   }

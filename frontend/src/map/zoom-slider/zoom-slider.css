@@ -1,0 +1,14 @@
+.zoom_slider {
+  position: absolute;
+  padding: 8px 12px;
+  background: white;
+  border-radius: 8px;
+  writing-mode: vertical-lr;
+  direction: rtl;
+  top: 20px;
+  right: 20px;
+}
+
+.sliderLabel {
+  writing-mode: horizontal-tb;
+}
