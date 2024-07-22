@@ -2,7 +2,8 @@ import { Application } from "pixi.js";
 import HexGrid from "./map/HexGrid";
 import "./index.css";
 import { getAllHexes } from "./api/hex";
-import { iconMap } from "./util/localMapConfig";
+import { createApp } from "vue";
+import App from "./App.vue";
 
 // Asynchronous IIFE
 (async () => {
@@ -24,4 +25,5 @@ import { iconMap } from "./util/localMapConfig";
 
   const map = new HexGrid(40, app, hexConfig);
   map.draw();
+  createApp(App).mount("#app");
 })();

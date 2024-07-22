@@ -1,13 +1,18 @@
 {
+  "name": "ada-frontend",
+  "version": "1.0.0",
+  "description": "Ada Frontend",
   "dependencies": {
     "babel": "^6.23.0",
     "dotenv": "^16.4.5",
     "lodash": "^4.17.21",
-    "pixi.js": "^8.2.5"
+    "pixi.js": "^8.2.5",
+    "vue": "^3.4.33"
   },
   "devDependencies": {
     "@babel/core": "^7.24.9",
     "@babel/preset-env": "^7.24.8",
+    "@vitejs/plugin-vue": "^5.0.5",
     "@webpack-cli/generators": "^3.0.7",
     "babel-loader": "^9.1.3",
     "css-loader": "^7.1.2",
@@ -16,21 +21,23 @@
     "html-webpack-plugin": "^5.6.0",
     "live-server": "^1.2.0",
     "mini-css-extract-plugin": "^2.9.0",
-    "prettier": "^3.3.3",
+    "prettier": "3.3.3",
     "style-loader": "^4.0.0",
+    "vite": "^5.3.4",
+    "vue-loader": "^17.4.2",
+    "vue-template-compiler": "^2.7.16",
     "webpack": "^5.93.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.0.4",
     "workbox-webpack-plugin": "^7.1.0"
   },
-  "version": "1.0.0",
-  "description": "Ada Frontend",
-  "name": "ada-frontend",
   "scripts": {
-    "build": "webpack --mode=production --node-env=production",
+    "build": "vite build",
     "build:dev": "webpack --mode=development",
     "build:prod": "webpack --mode=production --node-env=production",
     "watch": "webpack --watch",
-    "serve": "webpack serve"
+    "serve": "webpack serve",
+    "dev": "vite",
+    "preview": "vite preview"
   }
 }
