@@ -1,20 +1,8 @@
 import { Application } from "pixi.js";
 import HexGrid from "./map/HexGrid";
-
 import "./index.css";
-import "./map/zoom-slider/zoom-slider.css";
-
 import { getAllHexes } from "./api/hex";
-
-import ZoomSlider from "./map/zoom-slider/zoom-slider";
-import { loadComponent } from "./component/Component";
-import LabelToggle from "./map/label-toggle/label-toggle";
-import { forEach } from "lodash";
-
-const rootLevelComponents = {
-  zoomSlider: new ZoomSlider(),
-  labelToggle: new LabelToggle(),
-};
+import { iconMap } from "./util/localMapConfig";
 
 // Asynchronous IIFE
 (async () => {
@@ -34,15 +22,6 @@ const rootLevelComponents = {
   document.body.prepend(app.canvas);
   const hexConfig = await getAllHexes();
 
-  const map = new HexGrid(
-    app,
-    hexConfig,
-    rootLevelComponents.zoomSlider,
-    rootLevelComponents.labelToggle,
-  );
+  const map = new HexGrid(40, app, hexConfig);
   map.draw();
 })();
-
-document.addEventListener("DOMContentLoaded", async () => {
-  forEach(rootLevelComponents, (c) => loadComponent(c));
-});
