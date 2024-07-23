@@ -71,7 +71,7 @@ export default {
       const pixiApp = new Application();
 
       await pixiApp.init({
-        background: "#EEEEEE",
+        background: "#121212",
         resizeTo: window,
         resolution: window.devicePixelRatio || 1,
         autoDensity: true,
