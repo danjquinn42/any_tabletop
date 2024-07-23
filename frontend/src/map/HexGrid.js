@@ -71,7 +71,7 @@ class HexGrid {
       frameWidth,
       frameHeight,
     );
-    this.frame.fill("#123456");
+    this.frame.fill("#121212");
     this.app.stage.addChild(this.frame);
 
     this.addEventHandlers();
@@ -108,8 +108,18 @@ class HexGrid {
     if (!this.isDragging) return;
     const newPosition = this.dragData.global;
 
-    this.frame.x = newPosition.x;
-    this.frame.y = newPosition.y;
+    let bounds = this.frame.getBounds();
+    const moveTakesXPastLeftEdge =
+      bounds.minX >= 0 && this.frame.x - newPosition.x < 0;
+    const moveTakesYPastTopEdge =
+      bounds.minY >= 0 && this.frame.y - newPosition.y < 0;
+
+    if (!moveTakesXPastLeftEdge) {
+      this.frame.x = newPosition.x;
+    }
+    if (!moveTakesYPastTopEdge) {
+      this.frame.y = newPosition.y;
+    }
   }
 }
 

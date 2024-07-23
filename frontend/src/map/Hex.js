@@ -85,7 +85,7 @@ class Hex {
 
     const outline = new Graphics();
     this.drawHexagon(outline);
-    outline.stroke({ width: 2, color: "#123456" });
+    outline.stroke({ width: 2, color: "#121212" });
 
     this.frame.addChild(background);
     background.addChild(outline);
