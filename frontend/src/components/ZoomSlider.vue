@@ -46,8 +46,8 @@ export default {
   border-radius: 8px;
   writing-mode: vertical-lr;
   direction: rtl;
-  top: 20px;
-  right: 20px;
+  top: 88px;
+  right: 28px;
 }
 
 .sliderLabel {

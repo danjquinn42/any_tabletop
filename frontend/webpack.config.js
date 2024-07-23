@@ -6,10 +6,10 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const WorkboxWebpackPlugin = require("workbox-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 const { VueLoaderPlugin } = require("vue-loader");
+const UnplugElementPlus = require("unplugin-element-plus/webpack");
+const webpack = require("webpack");
 
-const isProduction = process.env.NODE_ENV == "production";
-
-const stylesHandler = MiniCssExtractPlugin.loader;
+const isProduction = process.env.NODE_ENV === "production";
 
 const config = {
   entry: "./src/index.js",
@@ -24,13 +24,19 @@ const config = {
     new HtmlWebpackPlugin({
       template: "index.html",
     }),
-
     new MiniCssExtractPlugin(),
 
-    new Dotenv(),
-    new VueLoaderPlugin(),
     // Add your plugins here
     // Learn more about plugins from https://webpack.js.org/configuration/plugins/
+    new Dotenv(),
+    new VueLoaderPlugin(),
+    UnplugElementPlus({}),
+    new webpack.DefinePlugin({
+      // Drop Options API from bundle
+      __VUE_OPTIONS_API__: true,
+      __VUE_PROD_DEVTOOLS__: false,
+      __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false,
+    }),
   ],
   module: {
     rules: [
@@ -40,7 +46,7 @@ const config = {
       },
       {
         test: /\.css$/i,
-        use: [stylesHandler, "css-loader"],
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
@@ -58,7 +64,7 @@ const config = {
 };
 
 module.exports = () => {
-  if (process.env.NODE_ENV == "production") {
+  if (isProduction) {
     config.mode = "production";
 
     config.plugins.push(new WorkboxWebpackPlugin.GenerateSW());

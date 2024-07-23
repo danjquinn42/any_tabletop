@@ -106,7 +106,7 @@ class HexGrid {
   }
   onDragMove() {
     if (!this.isDragging) return;
-    const newPosition = this.dragData.page;
+    const newPosition = this.dragData.global;
 
     this.frame.x = newPosition.x;
     this.frame.y = newPosition.y;

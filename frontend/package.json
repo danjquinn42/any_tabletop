@@ -5,6 +5,7 @@
   "dependencies": {
     "babel": "^6.23.0",
     "dotenv": "^16.4.5",
+    "element-plus": "^2.7.7",
     "lodash": "^4.17.21",
     "pixi.js": "^8.2.5",
     "vue": "^3.4.33"
@@ -23,6 +24,9 @@
     "mini-css-extract-plugin": "^2.9.0",
     "prettier": "3.3.3",
     "style-loader": "^4.0.0",
+    "unplugin-auto-import": "^0.18.1",
+    "unplugin-element-plus": "^0.8.0",
+    "unplugin-vue-components": "^0.27.3",
     "vite": "^5.3.4",
     "vue-loader": "^17.4.2",
     "vue-template-compiler": "^2.7.16",
@@ -32,7 +36,7 @@
     "workbox-webpack-plugin": "^7.1.0"
   },
   "scripts": {
-    "build": "vite build",
+    "build": "webpack --mode=production --node-env=production",
     "build:dev": "webpack --mode=development",
     "build:prod": "webpack --mode=production --node-env=production",
     "watch": "webpack --watch",
