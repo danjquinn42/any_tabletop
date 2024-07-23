@@ -12,4 +12,5 @@ export const getAllHexes = () =>
     })
     .catch((error) => {
       console.error("Error:", error);
+      return {};
     });
