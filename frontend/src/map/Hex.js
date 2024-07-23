@@ -83,12 +83,7 @@ class Hex {
 
     this.addIcon(mask);
 
-    const outline = new Graphics();
-    this.drawHexagon(outline);
-    outline.stroke({ width: 2, color: "#121212" });
-
     this.frame.addChild(background);
-    background.addChild(outline);
   }
 
   addIcon(mask) {

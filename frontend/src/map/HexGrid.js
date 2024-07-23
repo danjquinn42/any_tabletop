@@ -35,7 +35,7 @@ class HexGrid {
     let y = this.startingY + this.radius * Math.sin(HEX_ANGLE);
     for (let i = 0; i < HexGrid.ROW_COUNT; ++i) {
       this.drawRow(y, i);
-      y += 2 * this.radius * Math.sin(HEX_ANGLE);
+      y += 2 * this.radius * Math.sin(HEX_ANGLE) + this.radius / 10;
     }
   }
 
@@ -44,9 +44,15 @@ class HexGrid {
     for (let i = 0; i < HexGrid.COLUMN_COUNT; ++i) {
       y =
         i % 2 === 0
-          ? y - this.radius * Math.sin(HEX_ANGLE)
-          : y + this.radius * Math.sin(HEX_ANGLE);
-      x += this.radius * (1 + Math.cos(HEX_ANGLE));
+          ? y -
+            this.radius * Math.sin(HEX_ANGLE) -
+            (this.radius * Math.cos(HEX_ANGLE)) / 10
+          : y +
+            this.radius * Math.sin(HEX_ANGLE) +
+            (this.radius * Math.cos(HEX_ANGLE)) / 10;
+      x +=
+        this.radius * (1 + Math.cos(HEX_ANGLE)) +
+        (this.radius * Math.sin(HEX_ANGLE)) / 10;
       const id = `${rowNumber}_${i}`;
       const hex = new Hex(
         x,
