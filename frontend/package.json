@@ -19,6 +19,8 @@
     "css-loader": "^7.1.2",
     "dotenv-webpack": "^8.1.0",
     "eslint": "^9.7.0",
+    "favicons": "^7.2.0",
+    "favicons-webpack-plugin": "^6.0.1",
     "html-webpack-plugin": "^5.6.0",
     "live-server": "^1.2.0",
     "mini-css-extract-plugin": "^2.9.0",

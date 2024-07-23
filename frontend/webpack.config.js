@@ -8,6 +8,7 @@ const Dotenv = require("dotenv-webpack");
 const { VueLoaderPlugin } = require("vue-loader");
 const UnplugElementPlus = require("unplugin-element-plus/webpack");
 const webpack = require("webpack");
+const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -37,6 +38,7 @@ const config = {
       __VUE_PROD_DEVTOOLS__: false,
       __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false,
     }),
+    new FaviconsWebpackPlugin("./src/assets/favicon.png"),
   ],
   module: {
     rules: [

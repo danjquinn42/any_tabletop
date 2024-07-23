@@ -5,7 +5,10 @@
     mode="horizontal"
     @select="handleSelect"
   >
-    <el-menu-item index="map">Map of Ada</el-menu-item>
+    <el-text size="large" class="title">Ada</el-text>
+    <el-image class="map-icon" src="../assets/favicon.png"></el-image>
+    <el-text size="large"></el-text>
+    <el-menu-item index="map">Map</el-menu-item>
     <el-sub-menu index="docs">
       <template #title>Docs</template>
       <el-menu-item index="how-to">How to play</el-menu-item>
@@ -25,12 +28,12 @@
 </template>
 
 <script>
-import { ElMenu, ElMenuItem, ElSubMenu } from "element-plus";
+import { ElMenu, ElMenuItem, ElImage, ElSubMenu, ElText } from "element-plus";
 import { ref } from "vue";
 
 export default {
   name: "top-navigation",
-  components: { ElSubMenu, ElMenuItem, ElMenu },
+  components: { ElImage, ElText, ElSubMenu, ElMenuItem, ElMenu },
   data: function () {
     return {
       activeIndex: ref("1"),
@@ -44,4 +47,14 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.title {
+  font-weight: bold;
+}
+
+.map-icon {
+  margin: 16px;
+  width: 24px;
+  height: 24px;
+}
+</style>

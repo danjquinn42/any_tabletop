@@ -23,6 +23,7 @@ import {
   ElMain,
   ElMenu,
   ElMenuItem,
+  ElText,
   ElSubMenu,
 } from "element-plus";
 import { Application } from "pixi.js";
@@ -36,6 +37,7 @@ import HexGrid from "./map/HexGrid";
 export default {
   name: "App",
   components: {
+    ElText,
     TopNavigation,
     ElMain,
     ElSubMenu,

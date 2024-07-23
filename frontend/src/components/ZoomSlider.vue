@@ -42,7 +42,7 @@ export default {
 .zoom_slider {
   position: absolute;
   padding: 8px 12px;
-  background: white;
+  background: #121212;
   border-radius: 8px;
   writing-mode: vertical-lr;
   direction: rtl;
