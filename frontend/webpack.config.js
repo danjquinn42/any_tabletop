@@ -20,6 +20,9 @@ const config = {
   devServer: {
     open: true,
     host: "localhost",
+    historyApiFallback: true,
+    static: path.join(__dirname, "dist"),
+    hot: true,
   },
   plugins: [
     new HtmlWebpackPlugin({

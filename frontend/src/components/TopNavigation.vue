@@ -1,21 +1,23 @@
 <template>
   <el-menu
-    :default-active="activeIndex"
+    :default-active="$router.path"
     class="el-menu-demo"
     mode="horizontal"
     @select="handleSelect"
+    router
   >
     <el-text size="large" class="title">Ada</el-text>
     <el-image class="map-icon" src="../assets/favicon.png"></el-image>
     <el-text size="large"></el-text>
-    <el-menu-item index="map">Map</el-menu-item>
-    <el-sub-menu index="docs">
-      <template #title>Docs</template>
-      <el-menu-item index="how-to">How to play</el-menu-item>
-      <el-menu-item index="species">Species</el-menu-item>
-      <el-menu-item index="classes">Classes</el-menu-item>
-      <el-menu-item index="statblocks">Stat Blocks</el-menu-item>
-      <el-sub-menu index="about">
+    <el-menu-item index="/">Map</el-menu-item>
+    <el-sub-menu index="docs-menu"
+      ><template #title>Docs</template>
+      <el-menu-item index="docs">About</el-menu-item>
+      <el-menu-item disabled index="docs/how-to">How to play</el-menu-item>
+      <el-menu-item disabled index="docs/species">Species</el-menu-item>
+      <el-menu-item disabled index="docs/classes">Classes</el-menu-item>
+      <el-menu-item disabled index="docs/statblocks">Stat Blocks</el-menu-item>
+      <el-sub-menu disabled index="about">
         <template #title>About the World</template>
         <el-menu-item index="history">History</el-menu-item>
         <el-menu-item index="organizations">Organizations</el-menu-item>
@@ -29,15 +31,12 @@
 
 <script>
 import { ElMenu, ElMenuItem, ElImage, ElSubMenu, ElText } from "element-plus";
-import { ref } from "vue";
 
 export default {
   name: "top-navigation",
   components: { ElImage, ElText, ElSubMenu, ElMenuItem, ElMenu },
   data: function () {
-    return {
-      activeIndex: ref("1"),
-    };
+    return {};
   },
   methods: {
     handleSelect(key, keyPath) {

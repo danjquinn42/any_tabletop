@@ -1,11 +1,4 @@
-import {
-  Assets,
-  Graphics,
-  Sprite,
-  ColorMatrixFilter,
-  Text,
-  TextStyle,
-} from "pixi.js";
+import { Assets, Graphics, Sprite, ColorMatrixFilter } from "pixi.js";
 import { HEX_ANGLE } from "../util/constants";
 import { isNil, merge, mergeWith } from "lodash";
 import { DEFAULT_STYLES, iconMap } from "../util/localMapConfig";
@@ -87,12 +80,12 @@ class Hex {
   }
 
   addIcon(mask) {
+    if (isNil(this.styles.icon)) return;
+    if (isNil(iconMap[this.styles.icon]))
+      throw new Error(`no icon matching ${this.styles.icon}`);
     const svg = iconMap[this.styles.icon];
-    if (isNil(svg)) {
-      const label = this.createLabel();
-      this.background.addChild(label);
-    } else {
-      Assets.load(svg).then((texture) => {
+    Assets.load(svg)
+      .then((texture) => {
         const imageSprite = new Sprite(texture);
 
         const hexBounds = mask.getBounds();
@@ -106,48 +99,8 @@ class Hex {
 
         this.background.addChild(imageSprite);
         this.background.addChild(mask);
-
-        const label = this.createLabel();
-        this.background.addChild(label);
-      });
-    }
-  }
-  createLabel() {
-    const label = new Graphics();
-    label.roundRect(
-      this.x - this.radius * 0.5,
-      this.y + this.radius * 0.5,
-      this.radius,
-      this.radius * 0.4,
-      4,
-    );
-    label.fill("#000000");
-
-    const style = new TextStyle({
-      fontFamily: "Arial",
-      fontSize: `${label.height - 3}em`,
-      fill: "#EEEEEE",
-      align: "center",
-    });
-    const labelText = new Text({
-      text: this.id,
-      style,
-    });
-
-    labelText.x = this.coordinateSet[0].x + this.radius / 2;
-    labelText.y = this.coordinateSet[0].y + this.radius * 1.5;
-    labelText.anchor.set(0.5, 0.5);
-
-    label.addChild(labelText);
-
-    const labelToggle = document.getElementById("label_toggle");
-    const updateVisibility = () => {
-      label.visible = labelToggle.checked;
-    };
-    updateVisibility();
-    labelToggle.addEventListener("change", updateVisibility);
-
-    return label;
+      })
+      .catch((e) => console.log(`failed to load icon ${this.styles.icon}`, e));
   }
 
   drawHexagon(graphic) {
