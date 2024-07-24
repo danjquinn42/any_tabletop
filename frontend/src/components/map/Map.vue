@@ -1,9 +1,14 @@
 <template>
-  <canvas id="pixi" class="map"></canvas>
-  <zoom-slider @zoom-factor-update="zoomFactorUpdate" />
+  <el-container>
+    <el-main class="main">
+      <canvas id="pixi" class="map"></canvas>
+      <zoom-slider @zoom-factor-update="zoomFactorUpdate" />
+    </el-main>
+  </el-container>
 </template>
 
 <script>
+import { ElMain, ElContainer } from "element-plus";
 import { Application } from "pixi.js";
 import { getAllHexes } from "../../api/hex";
 import HexGrid from "../../pixiclasses/HexGrid";
@@ -11,7 +16,7 @@ import ZoomSlider from "./ZoomSlider.vue";
 
 export default {
   name: "map-canvas",
-  components: { ZoomSlider },
+  components: { ElContainer, ElMain, ZoomSlider },
   methods: {
     // provides a hook for the pixijs app to get updates from zoom slider
     whenZoomUpdates(callback) {
@@ -52,7 +57,7 @@ export default {
   left: 0;
   /* to override PixiJs updating canvas size when window resizes */
   width: 100% !important;
-  height: 100% !important;
+  height: 90vh !important;
   overflow: hidden;
 }
 </style>

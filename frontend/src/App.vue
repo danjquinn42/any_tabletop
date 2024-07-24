@@ -3,26 +3,20 @@
     <el-header>
       <top-navigation></top-navigation>
     </el-header>
-    <el-main>
-      <RouterView />
-    </el-main>
-    <el-footer>Footer</el-footer>
+    <RouterView />
+    <el-footer class="footer"
+      ><el-text>Created by Daniel Quinn</el-text></el-footer
+    >
   </el-container>
 </template>
 
 <script>
-import "element-plus/es/components/page-header/style/css";
 import {
   ElPageHeader,
-  ElButton,
   ElContainer,
   ElHeader,
   ElFooter,
-  ElMain,
-  ElMenu,
-  ElMenuItem,
   ElText,
-  ElSubMenu,
 } from "element-plus";
 import "./index.css";
 import TopNavigation from "./components/TopNavigation.vue";
@@ -33,16 +27,25 @@ export default {
   components: {
     ElText,
     TopNavigation,
-    ElMain,
-    ElSubMenu,
-    ElMenuItem,
-    ElMenu,
     ElHeader,
     ElFooter,
     ElContainer,
-    ElButton,
     ElPageHeader,
     ZoomSlider,
   },
 };
 </script>
+<style scoped>
+.footer {
+  background: #121212;
+  bottom: 0;
+  margin: 8px;
+  height: 16px;
+  width: 100%;
+  text-align: center;
+}
+.footer > * {
+  color: #6c6e72;
+  width: 100%;
+}
+</style>

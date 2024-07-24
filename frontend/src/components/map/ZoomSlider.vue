@@ -47,7 +47,7 @@ export default {
   writing-mode: vertical-lr;
   direction: rtl;
   top: 88px;
-  right: 28px;
+  right: 44px;
 }
 
 .sliderLabel {
