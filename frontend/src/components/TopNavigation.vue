@@ -1,11 +1,5 @@
 <template>
-  <el-menu
-    :default-active="$router.path"
-    class="el-menu-demo"
-    mode="horizontal"
-    @select="handleSelect"
-    router
-  >
+  <el-menu :default-active="$router.path" mode="horizontal" router>
     <el-text size="large" class="title">Ada</el-text>
     <el-image class="map-icon" src="../assets/favicon.png"></el-image>
     <el-text size="large"></el-text>
@@ -13,16 +7,11 @@
     <el-sub-menu index="docs-menu"
       ><template #title>Docs</template>
       <el-menu-item index="/docs/about">About</el-menu-item>
-      <el-menu-item index="/docs/how-to">How to play</el-menu-item>
-      <el-menu-item disabled index="/docs/species">Species</el-menu-item>
-      <el-menu-item disabled index="/docs/classes">Classes</el-menu-item>
-      <el-menu-item disabled index="/docs/statblocks">Stat Blocks</el-menu-item>
-      <el-sub-menu disabled index="/docs/theWorld">
-        <template #title>The World</template>
-        <el-menu-item index="history">History</el-menu-item>
-        <el-menu-item index="organizations">Organizations</el-menu-item>
-        <el-menu-item index="lore">Lore</el-menu-item>
-      </el-sub-menu>
+      <el-menu-item index="/docs/how-to-play">How to play</el-menu-item>
+      <el-menu-item index="/docs/species">Species</el-menu-item>
+      <el-menu-item index="/docs/classes">Classes</el-menu-item>
+      <el-menu-item index="/docs/statblocks">Statblocks</el-menu-item>
+      <el-menu-item index="/docs/the-world">The World</el-menu-item>
     </el-sub-menu>
     <el-menu-item index="play" disabled>Play</el-menu-item>
     <el-menu-item index="mods" disabled>Mods</el-menu-item>
@@ -37,11 +26,6 @@ export default {
   components: { ElImage, ElText, ElSubMenu, ElMenuItem, ElMenu },
   data: function () {
     return {};
-  },
-  methods: {
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
-    },
   },
 };
 </script>

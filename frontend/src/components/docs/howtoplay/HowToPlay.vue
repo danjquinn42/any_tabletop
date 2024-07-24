@@ -2,9 +2,7 @@
   <el-text>
     <p>
       The default module is written for DnD 5th edition. Check out
-      <el-link href="https://www.dndbeyond.com/how-to-play-dnd"
-        >DnD Beyond</el-link
-      >
+      <a href="https://www.dndbeyond.com/how-to-play-dnd">DnD Beyond</a>
       or get a copy of the Players Handbook. There are tons of free resources
       online for learning how to play.
     </p>

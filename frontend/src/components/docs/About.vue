@@ -1,5 +1,5 @@
 <template>
-  <el-text>
+  <el-text class="light">
     <p>
       Ada is a campaign setting for TTRPGs. Out of the box there's very little
       here. Install mods to add more content to the world or create your own.

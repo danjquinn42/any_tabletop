@@ -3,8 +3,8 @@
     <el-header>
       <top-navigation></top-navigation>
     </el-header>
-    <RouterView />
-    <el-footer class="footer"
+    <RouterView class="app-main-content" />
+    <el-footer class="app-footer"
       ><el-text>Created by Daniel Quinn</el-text></el-footer
     >
   </el-container>
@@ -35,8 +35,19 @@ export default {
   },
 };
 </script>
-<style scoped>
-.footer {
+<style>
+a:link {
+  color: #66b1ff;
+}
+a:visited {
+  color: #3375b9;
+}
+
+.app-main-content {
+  min-height: 80vh;
+}
+
+.app-footer {
   background: #121212;
   bottom: 0;
   margin: 8px;
@@ -44,7 +55,7 @@ export default {
   width: 100%;
   text-align: center;
 }
-.footer > * {
+.app-footer > * {
   color: #6c6e72;
   width: 100%;
 }
