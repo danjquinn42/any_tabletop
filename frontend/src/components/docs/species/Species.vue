@@ -1,7 +1,8 @@
 <template>
   <el-card>
     <template #header>
-      <h1>{{ name }}</h1>
+      <h1 class="species-name">{{ name }}</h1>
+      <h4 class="species-type">( {{ size }} {{ creatureType }} )</h4>
     </template>
     <el-row :gutter="16" class="topLayout">
       <el-col
@@ -108,7 +109,7 @@ export default {
   data: function () {
     return {
       name: "Luchóg",
-      subtitle: "Mousefolk",
+      creatureType: "mousefolk",
       imageSource: "https://picsum.photos/300/400",
       statsTitle: "Features",
       features: [
@@ -123,13 +124,6 @@ export default {
             "All languages spoken on the river (see: Motehr River's Blessings)",
         },
       ],
-      abilityScoreIncrease: "+2 WIS +1 INT",
-      avgLifespan: "45 years",
-      size: "medium: 4-5 ft tall",
-      speed: "30ft",
-      proficiencies: "nature",
-      languages:
-        "All languages spoken on the river (see: Motehr River's Blessings)",
       article: [
         {
           subsections: [
@@ -208,6 +202,15 @@ export default {
 <style scoped>
 .topLayout {
   width: 100%;
+}
+
+.species-name {
+  display: inline;
+  width: content-box;
+  margin-right: 1rem;
+}
+.species-type {
+  display: inline;
 }
 
 .divider {

@@ -79,6 +79,12 @@ h4 {
   font-style: italic;
 }
 
+h4 {
+  font-size: small;
+  font-weight: 400;
+  font-style: italic;
+}
+
 p {
   font-size: small;
 }
