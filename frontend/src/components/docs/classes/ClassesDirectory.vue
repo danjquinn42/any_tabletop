@@ -8,7 +8,7 @@
 import { ElText } from "element-plus";
 
 export default {
-  name: "Classes",
+  name: "ClassesDirectory",
   components: { ElText },
 };
 </script>

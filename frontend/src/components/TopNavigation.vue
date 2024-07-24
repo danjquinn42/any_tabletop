@@ -19,6 +19,9 @@
 </template>
 
 <script>
+import "element-plus/theme-chalk/el-menu.css";
+import "element-plus/theme-chalk/el-menu-item.css";
+import "element-plus/theme-chalk/el-sub-menu.css";
 import { ElMenu, ElMenuItem, ElImage, ElSubMenu, ElText } from "element-plus";
 
 export default {

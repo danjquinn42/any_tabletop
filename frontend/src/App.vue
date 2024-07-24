@@ -59,4 +59,31 @@ a:visited {
   color: #6c6e72;
   width: 100%;
 }
+
+h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-style: italic;
+}
+h3 {
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+h4 {
+  font-size: 1.3rem;
+  font-weight: 400;
+  font-style: italic;
+}
+
+p {
+  font-size: small;
+}
+
+article {
+  font-size: small;
+}
 </style>

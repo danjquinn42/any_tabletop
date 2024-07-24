@@ -8,7 +8,7 @@
 import { ElText } from "element-plus";
 
 export default {
-  name: "StatBlocks",
+  name: "StatBlocksDirectory",
   components: { ElText },
 };
 </script>

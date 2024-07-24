@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 import About from "../components/docs/About.vue";
-import Classes from "../components/docs/classes/ClassesDirectory.vue";
+import ClassesDirectory from "../components/docs/classes/ClassesDirectory.vue";
 import HowToPlay from "../components/docs/howtoplay/HowToPlay.vue";
-import Species from "../components/docs/species/SpeciesDirectory.vue";
-import StatBlocks from "../components/docs/statblocks/StatBlocksDirectory.vue";
-import TheWorld from "../components/docs/theworld/TheWorldDirectory.vue";
+import SpeciesDirectory from "../components/docs/species/SpeciesDirectory.vue";
+import StatBlocksDirectory from "../components/docs/statblocks/StatBlocksDirectory.vue";
+import TheWorldDirectory from "../components/docs/theworld/TheWorldDirectory.vue";
 import Map from "../components/map/Map.vue";
 import Docs from "../components/docs/Docs.vue";
 
@@ -27,7 +27,7 @@ const routes = [
       {
         path: "classes",
         name: "classes",
-        component: Classes,
+        component: ClassesDirectory,
       },
       {
         path: "how-to-play",
@@ -37,17 +37,17 @@ const routes = [
       {
         path: "species",
         name: "species",
-        component: Species,
+        component: SpeciesDirectory,
       },
       {
         path: "statblocks",
         name: "statblocks",
-        component: StatBlocks,
+        component: StatBlocksDirectory,
       },
       {
         path: "the-world",
         name: "the world",
-        component: TheWorld,
+        component: TheWorldDirectory,
       },
       {
         path: "",
