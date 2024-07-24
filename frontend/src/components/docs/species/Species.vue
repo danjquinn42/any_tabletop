@@ -53,9 +53,9 @@
         :lg="7"
         :xl="5"
       >
-        <h3>Traits</h3>
+        <h3>{{ statsTitle }}</h3>
         <el-descriptions
-          v-for="trait in traits"
+          v-for="feature in features"
           :column="1"
           border
           class=".table"
@@ -64,9 +64,9 @@
             label-align="right"
             width="150px"
             class="table-item"
-            :label="trait.name"
+            :label="feature.name"
           >
-            {{ trait.value }}
+            {{ feature.value }}
           </el-descriptions-item>
         </el-descriptions>
       </el-col>
@@ -107,10 +107,11 @@ export default {
   },
   data: function () {
     return {
-      name: "Luchóg (luh - HOAG)",
+      name: "Luchóg",
       subtitle: "Mousefolk",
       imageSource: "https://picsum.photos/300/400",
-      traits: [
+      statsTitle: "Features",
+      features: [
         { name: "Ability Scores", value: "+2 WIS +1 INT" },
         { name: "Avg Lifespan", value: "45 years" },
         { name: "Size", value: "medium: 4-5ft tall" },
@@ -131,7 +132,33 @@ export default {
         "All languages spoken on the river (see: Motehr River's Blessings)",
       article: [
         {
-          sectionHeading: "",
+          subsections: [
+            {
+              content: [
+                "Luchóg (pronounced luh-HOAG) are the indigenous inhabitants of Ada. " +
+                  "The vast majority of them live on Leffy Isle in the lake at the source of the Adanna River. " +
+                  "Culturally, they value honest dealing, shrewd negotiation, and humility. " +
+                  'Their patron is the spirit of the Adanna River who they call "Mother River".',
+              ],
+            },
+          ],
+        },
+        {
+          sectionHeading: "Mousefolk",
+          subsections: [
+            {
+              content: [
+                "Standing about four or five feet tall, Luchóg look like short, humanoid mice. " +
+                  "They have may have fur from tawny, black, white, brown, gold, or calico. ",
+                "People south of the lake primarily know the Luchóg as river merchants and sailors. " +
+                  'Because of this, they are commonly referred to as "river rats". The term is considered ' +
+                  "a pejorative, but most Luchóg take little notice.",
+              ],
+            },
+          ],
+        },
+        {
+          sectionHeading: "Lifestyle",
           subsections: [
             {
               subHeading: "",
@@ -148,7 +175,7 @@ export default {
           ],
         },
         {
-          sectionHeading: "Features",
+          sectionHeading: "Traits",
           subsections: [
             {
               subHeading: "Mother River's Blessings",

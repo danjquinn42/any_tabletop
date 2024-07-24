@@ -66,15 +66,15 @@ h1 {
 }
 h2 {
   font-size: 1.5rem;
-  font-weight: 600;
+  font-weight: 500;
   font-style: italic;
 }
 h3 {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 400;
 }
 h4 {
-  font-size: 1.3rem;
+  font-size: 1rem;
   font-weight: 400;
   font-style: italic;
 }
