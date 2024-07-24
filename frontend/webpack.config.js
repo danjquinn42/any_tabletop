@@ -13,14 +13,18 @@ const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
 const isProduction = process.env.NODE_ENV === "production";
 
 const config = {
-  entry: "./src/index.js",
+  entry: "./src/main.js",
   output: {
     path: path.resolve(__dirname, "dist"),
+    filename: "main.js",
+    publicPath: "/",
   },
   devServer: {
     open: true,
     host: "localhost",
-    historyApiFallback: true,
+    historyApiFallback: {
+      index: "/index.html", // Ensure all routes fallback to index.html
+    },
     static: path.join(__dirname, "dist"),
     hot: true,
   },

@@ -1,29 +1,19 @@
 <template>
-  <el-container>
-    <el-aside width="200px">
-      <el-scrollbar>
-        <el-menu :default-openeds="['1', '3']">
-          <el-menu-item index="About">
-            <template #title>About</template>
-          </el-menu-item>
-        </el-menu>
-      </el-scrollbar>
-    </el-aside>
-    <el-main> </el-main>
-  </el-container>
+  <el-text>
+    <p>
+      Ada is a campaign setting for TTRPGs. Out of the box there's very little
+      here. Install mods to add more content to the world or create your own.
+    </p>
+  </el-text>
 </template>
+
 <script>
-import {
-  ElMain,
-  ElAside,
-  ElContainer,
-  ElMenu,
-  ElMenuItem,
-  ElScrollbar,
-} from "element-plus";
+import { ElText } from "element-plus";
 
 export default {
   name: "About",
-  components: { ElMenuItem, ElMenu, ElScrollbar, ElAside, ElMain, ElContainer },
+  components: { ElText },
 };
 </script>
+
+<style scoped></style>

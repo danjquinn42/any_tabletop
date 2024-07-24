@@ -12,13 +12,13 @@
     <el-menu-item index="/">Map</el-menu-item>
     <el-sub-menu index="docs-menu"
       ><template #title>Docs</template>
-      <el-menu-item index="about">About</el-menu-item>
-      <el-menu-item disabled index="docs/how-to">How to play</el-menu-item>
-      <el-menu-item disabled index="docs/species">Species</el-menu-item>
-      <el-menu-item disabled index="docs/classes">Classes</el-menu-item>
-      <el-menu-item disabled index="docs/statblocks">Stat Blocks</el-menu-item>
-      <el-sub-menu disabled index="about">
-        <template #title>About the World</template>
+      <el-menu-item index="/docs/about">About</el-menu-item>
+      <el-menu-item index="/docs/how-to">How to play</el-menu-item>
+      <el-menu-item disabled index="/docs/species">Species</el-menu-item>
+      <el-menu-item disabled index="/docs/classes">Classes</el-menu-item>
+      <el-menu-item disabled index="/docs/statblocks">Stat Blocks</el-menu-item>
+      <el-sub-menu disabled index="/docs/theWorld">
+        <template #title>The World</template>
         <el-menu-item index="history">History</el-menu-item>
         <el-menu-item index="organizations">Organizations</el-menu-item>
         <el-menu-item index="lore">Lore</el-menu-item>
