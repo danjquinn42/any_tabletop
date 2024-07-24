@@ -26,7 +26,7 @@ import {
 } from "element-plus";
 import "./index.css";
 import TopNavigation from "./components/TopNavigation.vue";
-import ZoomSlider from "./components/ZoomSlider.vue";
+import ZoomSlider from "./components/map/ZoomSlider.vue";
 
 export default {
   name: "App",

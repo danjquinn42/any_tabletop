@@ -5,8 +5,8 @@
 
 <script>
 import { Application } from "pixi.js";
-import { getAllHexes } from "../api/hex";
-import HexGrid from "../map/HexGrid";
+import { getAllHexes } from "../../api/hex";
+import HexGrid from "../../pixiclasses/HexGrid";
 import ZoomSlider from "./ZoomSlider.vue";
 
 export default {

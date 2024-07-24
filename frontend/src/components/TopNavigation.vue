@@ -12,7 +12,7 @@
     <el-menu-item index="/">Map</el-menu-item>
     <el-sub-menu index="docs-menu"
       ><template #title>Docs</template>
-      <el-menu-item index="docs">About</el-menu-item>
+      <el-menu-item index="about">About</el-menu-item>
       <el-menu-item disabled index="docs/how-to">How to play</el-menu-item>
       <el-menu-item disabled index="docs/species">Species</el-menu-item>
       <el-menu-item disabled index="docs/classes">Classes</el-menu-item>

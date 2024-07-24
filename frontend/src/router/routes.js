@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Map from "../components/Map.vue";
-import Docs from "../components/Docs.vue";
+import Map from "../components/map/Map.vue";
+import Docs from "../components/docs/About.vue";
 
 const routes = [
   {
@@ -9,7 +9,7 @@ const routes = [
     component: Map,
   },
   {
-    path: "/docs",
+    path: "/about",
     name: "docs",
     component: Docs,
   },
