@@ -3,7 +3,7 @@
     <el-header>
       <top-navigation></top-navigation>
     </el-header>
-    <RouterView class="app-main-content" />
+    <RouterView />
     <el-footer class="app-footer"
       ><el-text>Created by Daniel Quinn</el-text></el-footer
     >
@@ -35,7 +35,7 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 a:link {
   color: #66b1ff;
 }
@@ -43,13 +43,8 @@ a:visited {
   color: #3375b9;
 }
 
-.app-main-content {
-  min-height: 80vh;
-}
-
 .app-footer {
   background: #121212;
-  bottom: 0;
   margin: 8px;
   height: 16px;
   width: 100%;
@@ -58,38 +53,5 @@ a:visited {
 .app-footer > * {
   color: #6c6e72;
   width: 100%;
-}
-
-h1 {
-  font-size: 1.8rem;
-  font-weight: 600;
-}
-h2 {
-  font-size: 1.5rem;
-  font-weight: 500;
-  font-style: italic;
-}
-h3 {
-  font-size: 1.4rem;
-  font-weight: 400;
-}
-h4 {
-  font-size: 1rem;
-  font-weight: 400;
-  font-style: italic;
-}
-
-h4 {
-  font-size: small;
-  font-weight: 400;
-  font-style: italic;
-}
-
-p {
-  font-size: small;
-}
-
-article {
-  font-size: small;
 }
 </style>

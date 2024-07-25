@@ -15,6 +15,10 @@
     </el-sub-menu>
     <el-menu-item index="play" disabled>Play</el-menu-item>
     <el-menu-item index="mods" disabled>Mods</el-menu-item>
+    <el-sub-menu index="create-menu"
+      ><template #title>Create</template>
+      <el-menu-item index="/edit/species/new">New Species</el-menu-item>
+    </el-sub-menu>
   </el-menu>
 </template>
 

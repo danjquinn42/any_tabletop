@@ -5,6 +5,7 @@ import HowToPlay from "../components/docs/howtoplay/HowToPlay.vue";
 import SpeciesDirectory from "../components/docs/species/SpeciesDirectory.vue";
 import StatBlocksDirectory from "../components/docs/statblocks/StatBlocksDirectory.vue";
 import TheWorldDirectory from "../components/docs/theworld/TheWorldDirectory.vue";
+import EditSpecies from "../components/edit/species/EditSpecies.vue";
 import Map from "../components/map/Map.vue";
 import Docs from "../components/docs/Docs.vue";
 
@@ -51,10 +52,15 @@ const routes = [
       },
       {
         path: "",
-        name: "default",
+        name: "docs default",
         component: About,
       },
     ],
+  },
+  {
+    path: "/edit/species/:id",
+    name: "edit-species",
+    component: EditSpecies,
   },
 ];
 
