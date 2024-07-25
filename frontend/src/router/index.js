@@ -75,18 +75,6 @@ const routes = [
       },
     ],
   },
-  // {
-  //   path: "/edit/docs",
-  //   name: "edit docs",
-  //   component: Docs,
-  //   children: [
-  //     {
-  //       path: "species/:id",
-  //       name: "edit species",
-  //       component: EditSpecies,
-  //     }
-  //   ]
-  // },
 ];
 
 const router = createRouter({
