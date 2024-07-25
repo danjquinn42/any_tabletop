@@ -12,7 +12,7 @@
         :sm="24"
         :md="14"
         :lg="16"
-        :xl="14"
+        :xl="16"
       >
         <el-image v-if="imageSource" class="example-image" :src="imageSource">
           <div class="img-sizer"></div>
@@ -52,7 +52,7 @@
         :sm="18"
         :md="10"
         :lg="7"
-        :xl="5"
+        :xl="7"
       >
         <h3>{{ statsTitle }}</h3>
         <el-descriptions
@@ -110,12 +110,13 @@ export default {
     return {
       name: "Luchóg",
       creatureType: "mousefolk",
+      size: "medium",
       imageSource: "https://picsum.photos/300/400",
-      statsTitle: "Features",
+      statsTitle: "Stats",
       features: [
         { name: "Ability Scores", value: "+2 WIS +1 INT" },
         { name: "Avg Lifespan", value: "45 years" },
-        { name: "Size", value: "medium: 4-5ft tall" },
+        { name: "Size", value: "medium" },
         { name: "Speed", value: "30ft" },
         { name: "Proficiencies", value: "nature" },
         {
@@ -241,10 +242,17 @@ export default {
   margin: 1em;
 }
 
+@media only screen and (min-width: 1200px) {
+  .example-image {
+    width: 30%;
+    margin-left: 1em;
+  }
+}
+
+
 @media only screen and (max-width: 992px) {
   .example-image {
     width: 30%;
-    /*margin: 1em;*/
     padding: 0;
   }
 }
@@ -255,7 +263,6 @@ export default {
     margin: 1em auto;
   }
 }
-
 .required-list {
   padding: 0;
 }

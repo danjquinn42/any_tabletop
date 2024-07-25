@@ -19,7 +19,8 @@ export default {
 .scroll {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
+  align-self: flex-start;
   height: 90vh;
   padding-right: 16px;
   margin-bottom: 16px;
@@ -30,5 +31,6 @@ export default {
 
 .species {
   margin: 64px 16px;
+  max-width: 1500px;
 }
 </style>
