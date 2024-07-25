@@ -58,10 +58,35 @@ const routes = [
     ],
   },
   {
-    path: "/edit/species/:id",
-    name: "edit-species",
-    component: EditSpecies,
+    path: "/edit",
+    name: "edit",
+    children: [
+      {
+        path: "docs",
+        name: "edit docs",
+        component: Docs,
+        children: [
+          {
+            path: "species/:id",
+            name: "edit species",
+            component: EditSpecies,
+          },
+        ],
+      },
+    ],
   },
+  // {
+  //   path: "/edit/docs",
+  //   name: "edit docs",
+  //   component: Docs,
+  //   children: [
+  //     {
+  //       path: "species/:id",
+  //       name: "edit species",
+  //       component: EditSpecies,
+  //     }
+  //   ]
+  // },
 ];
 
 const router = createRouter({

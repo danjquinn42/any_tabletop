@@ -2,19 +2,19 @@
   <el-container>
     <el-aside width="200px">
       <el-menu :default-active="$router.path" mode="vertical" router>
-        <el-menu-item index="about">
+        <el-menu-item :index="getRoute('about')">
           <template #title>About</template>
         </el-menu-item>
-        <el-menu-item index="how-to-play">
+        <el-menu-item :index="getRoute('how-to-play')">
           <template #title>How To Play</template>
         </el-menu-item>
-        <el-menu-item index="species">
+        <el-menu-item :index="getRoute('species')">
           <template #title>Species</template>
         </el-menu-item>
-        <el-menu-item index="classes">
+        <el-menu-item :index="getRoute('classes')">
           <template #title>Classes</template>
         </el-menu-item>
-        <el-menu-item index="statblocks"
+        <el-menu-item :index="getRoute('statblocks')"
           ><template #title>Statblocks</template></el-menu-item
         >
         <el-menu-item index="the-world">
@@ -42,6 +42,16 @@ import {
 
 export default {
   name: "Docs",
+  data: function () {
+    return {
+      isEditMode: this.$route.matched[0].name === "edit",
+    };
+  },
+  methods: {
+    getRoute(index) {
+      return this.isEditMode ? `/edit/docs/${index}/new` : index;
+    },
+  },
   components: { ElMenuItem, ElMenu, ElScrollbar, ElAside, ElMain, ElContainer },
 };
 </script>

@@ -1,7 +1,4 @@
 const apiRoot = process.env.API_URL;
-
-console.log("API ROOT ", apiRoot);
-
 export const getAllHexes = () =>
   fetch(apiRoot + "hex/get")
     .then((response) => {

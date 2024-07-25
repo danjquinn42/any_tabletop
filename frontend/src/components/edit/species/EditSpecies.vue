@@ -10,6 +10,7 @@
                   class="h1-input"
                   v-model="form.name"
                   placeholder="Species Name"
+                  size="large"
                 />
               </el-form-item>
             </template>
@@ -67,7 +68,7 @@
 
         <!-- Preview  -->
         <h3>Preview</h3>
-        <Species class="preview" :species-data="form"> </Species>
+        <Species class="preview" :data="form" :template="template"> </Species>
       </el-main>
     </el-container>
     <div class="space-filler"></div>
@@ -138,13 +139,13 @@ export default {
       template: {
         statsTitle: "Stats",
         stats: [
-          { value: "", label: "abilityScores", name: "Ability Scores" },
-          { value: "", label: "avgLifespan", name: "Avg Lifespan" },
-          { value: "", label: "size", name: "Size" },
-          { value: "", label: "creatureType", name: "Creature Type" },
-          { value: "", label: "speed", name: "Speed" },
-          { value: "", label: "proficiencies", name: "Proficiencies" },
-          { value: "", label: "languages", name: "Languages" },
+          { label: "abilityScores", name: "Ability Scores" },
+          { label: "avgLifespan", name: "Avg Lifespan" },
+          { label: "size", name: "Size" },
+          { label: "creatureType", name: "Creature Type" },
+          { label: "speed", name: "Speed" },
+          { label: "proficiencies", name: "Proficiencies" },
+          { label: "languages", name: "Languages" },
         ],
       },
     };
