@@ -1,5 +1,13 @@
 import { DND_LANGUAGES, DND_SIZES, DND_SKILLS } from "./constants";
-import { InputTypeNumber, InputTypeSelect, InputTypeText } from "./inputTypes";
+import {
+  Article,
+  FormItem,
+  InputTypeNumber,
+  InputTypeSelect,
+  InputTypeText,
+  InputTypeTextArea,
+  NotAnInput,
+} from "./inputTypes";
 
 export const MOCK_DATA = {
   species: {
@@ -142,35 +150,12 @@ export class Stat {
   input;
 }
 
-export class FormItem {
-  label;
-  type;
-  input;
-  constructor(label, type, input) {
-    this.label = label;
-    this.type = type;
-    this.input = input;
-  }
-
-  withLabel(label) {
-    this.label = label;
-    return this;
-  }
-
-  withType(type) {
-    this.type = type;
-    return this;
-  }
-
-  withInput(input) {
-    this.input = input;
-    return this;
-  }
-}
-
 export const MOCK_TEMPLATES = {
   species: {
     title: new FormItem("Species Name", "string", new InputTypeText()),
     stats: new StatsTableTemplate(),
+    description: new Article("Species Name"),
+    features: new Article(new FormItem("Features", "null", new NotAnInput())),
+    // characters inherit [#/all of these features] ( or each feature has toggle?
   },
 };

@@ -2,6 +2,7 @@ export class InputType {
   type;
   prefix;
   postfix;
+  inheritedBy = []; // TODO implement template inheritance
   constructor(type) {
     this.type = type;
   }
@@ -64,6 +65,12 @@ export class InputTypeSelect extends InputType {
   }
 }
 
+export class InputTypeButton extends InputType {
+  constructor() {
+    super("addMoreButton");
+  }
+}
+
 export class InputTypeNumber extends InputType {
   min;
   max;
@@ -85,6 +92,86 @@ export class InputTypeNumber extends InputType {
 
   withStep(number) {
     this.step = number;
+    return this;
+  }
+}
+
+export class FormItem {
+  label;
+  type;
+  input;
+  constructor(label, type, input) {
+    this.label = label;
+    this.type = type;
+    this.input = input;
+  }
+
+  withLabel(label) {
+    this.label = label;
+    return this;
+  }
+
+  withType(type) {
+    this.type = type;
+    return this;
+  }
+
+  withInput(input) {
+    this.input = input;
+    return this;
+  }
+}
+
+export class NotAnInput extends InputType {
+  constructor() {
+    super("notAnInput");
+  }
+}
+
+export class InputTypeSection extends InputType {
+  header = new FormItem("Title", "string", new InputTypeText());
+  body = new FormItem("", "string", new InputTypeTextArea());
+  deletable;
+
+  constructor(canDelete = true) {
+    super("section");
+    this.deletable = canDelete;
+  }
+  withDeletable(bool) {
+    this.deletable = bool;
+  }
+}
+export class Article {
+  title;
+  sections;
+
+  addSectionButton;
+  imageInput;
+
+  constructor(
+    title = new FormItem("Title", "string", new InputTypeText()),
+    firstSection = new InputTypeSection(false),
+    addSectionButton = new FormItem(
+      "Add another section",
+      "form-state",
+      new InputTypeButton(),
+    ),
+  ) {
+    this.title = title;
+    this.sections = [firstSection];
+    this.addSectionButton = addSectionButton;
+  }
+
+  addSection(section) {
+    this.sections.push(section.withDeletable(true));
+  }
+  withAddSection(button) {
+    this.addSectionButton = button;
+    return this;
+  }
+
+  withInput(imageInput) {
+    this.imageInput = imageInput;
     return this;
   }
 }
