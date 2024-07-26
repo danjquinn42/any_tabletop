@@ -9,7 +9,7 @@
                 <el-input
                   class="h1-input"
                   v-model="form.name"
-                  placeholder="Species Name"
+                  :placeholder="template.title.label"
                   size="large"
                 />
               </el-form-item>
@@ -25,9 +25,6 @@
                 :lg="16"
                 :xl="16"
               >
-                <el-form-item label-width="auto">
-                  <el-input></el-input>
-                </el-form-item>
               </el-col>
 
               <!-- Stats Input  -->

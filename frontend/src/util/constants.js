@@ -31,3 +31,13 @@ export const DND_SKILLS = [
   "Stealth",
   "Survival",
 ];
+
+export const DND_SIZES = [
+  "Tiny",
+  "Small",
+  "Medium",
+  "Large",
+  "Huge",
+  "Gargantuan",
+  "Colossal",
+];

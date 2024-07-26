@@ -3,7 +3,7 @@
     <template #header>
       <h1 class="species-name">{{ data.name }}</h1>
       <h5 class="species-type">
-        ( {{ data.stats.Size.value }} {{ data.stats.CreatureType.value }} )
+        ( {{ data.stats.size.value }} {{ data.stats.creatureType.value }} )
       </h5>
     </template>
     <el-row :gutter="16" class="topLayout">

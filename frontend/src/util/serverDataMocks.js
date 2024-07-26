@@ -1,30 +1,28 @@
-import { DND_LANGUAGES, DND_SKILLS } from "./constants";
+import { DND_LANGUAGES, DND_SIZES, DND_SKILLS } from "./constants";
 import { InputTypeNumber, InputTypeSelect, InputTypeText } from "./inputTypes";
 
 export const MOCK_DATA = {
   species: {
     luchog: {
       name: "Luchóg",
-      creatureType: "mousefolk",
-      size: "medium",
       imageSource: "https://picsum.photos/300/400",
       stats: {
-        AbilityScores: {
+        abilityScores: {
           label: "Ability Scores",
           value: "+2 WIS +1 INT",
         },
-        AvgLifespan: { label: "Avg Lifespan", value: 45 },
-        Size: { label: "Size", value: "medium" },
-        CreatureType: {
+        avgLifespan: { label: "Avg Lifespan", value: 45 },
+        size: { label: "Size", value: "medium" },
+        creatureType: {
           label: "Creature Type",
           value: "mousefolk",
         },
-        Speed: { label: "Speed", value: "30ft" },
-        Proficiencies: {
+        speed: { label: "Speed", value: "30ft" },
+        proficiencies: {
           label: "Proficiencies",
           value: ["nature", "religion"],
         },
-        Languages: {
+        languages: {
           label: "Languages",
           value: [
             "All languages spoken on the river (see: Mother River's Blessings)",
@@ -108,66 +106,71 @@ export const MOCK_DATA = {
 export class StatsTableTemplate {
   label = "Stats";
   list = {
-    AbilityScores: {
-      label: "Ability Scores",
-      type: "string",
-      input: new InputTypeText(),
-    },
-    AvgLifespan: {
-      label: "Avg Lifespan",
-      type: "string",
-      input: new InputTypeText().withLimit(200),
-    },
-    Size: {
-      label: "Size",
-      type: "string",
-      input: new InputTypeSelect([
-        "Tiny",
-        "Small",
-        "Medium",
-        "Large",
-        "Huge",
-        "Gargantuan",
-        "Colossal",
-      ]),
-    },
-    CreatureType: {
-      label: "Creature Type",
-      type: "string",
-      input: new InputTypeText(),
-    },
-    Speed: {
-      label: "Speed",
-      type: "number",
-      input: new InputTypeNumber(0, 100).withPostfix("ft").withStep(5),
-    },
-    Proficiencies: {
-      label: "Proficiencies",
-      type: "list",
-      input: new InputTypeSelect(DND_SKILLS).withMultiSelect(),
-    },
-    Languages: {
-      label: "Languages",
-      type: "list",
-      input: new InputTypeSelect(DND_LANGUAGES)
-        .withMultiSelect()
-        .withAllowOther(),
-    },
+    abilityScores: new FormItem(
+      "Ability Scores",
+      "string",
+      new InputTypeText(),
+    ),
+    avgLifespan: new FormItem(
+      "Avg Lifespan",
+      "string",
+      new InputTypeText().withLimit(200),
+    ),
+    size: new FormItem("Size", "string", new InputTypeSelect(DND_SIZES)),
+    creatureType: new FormItem("Creature Type", "string", new InputTypeText()),
+    speed: new FormItem(
+      "Speed",
+      "number",
+      new InputTypeNumber(0, 100).withPostfix("ft").withStep(5),
+    ),
+    proficiencies: new FormItem(
+      "Proficiencies",
+      "list",
+      new InputTypeSelect(DND_SKILLS).withMultiSelect(),
+    ),
+    languages: new FormItem(
+      "Languages",
+      "list",
+      new InputTypeSelect(DND_LANGUAGES).withMultiSelect().withAllowOther(),
+    ),
   };
 }
 
-export class TitleTemplate {
+export class Stat {
   label;
-  placeholder;
-  constructor(label, placeholder) {
+  type;
+  input;
+}
+
+export class FormItem {
+  label;
+  type;
+  input;
+  constructor(label, type, input) {
     this.label = label;
-    this.placeholder = placeholder;
+    this.type = type;
+    this.input = input;
+  }
+
+  withLabel(label) {
+    this.label = label;
+    return this;
+  }
+
+  withType(type) {
+    this.type = type;
+    return this;
+  }
+
+  withInput(input) {
+    this.input = input;
+    return this;
   }
 }
 
 export const MOCK_TEMPLATES = {
   species: {
-    title: new StatsTableTemplate("Species Name", "Species Name"),
+    title: new FormItem("Species Name", "string", new InputTypeText()),
     stats: new StatsTableTemplate(),
   },
 };
