@@ -5,7 +5,7 @@
         <el-form :model="form" label-width="auto">
           <el-card :gutter="16" class="form-card">
             <template #header>
-              <el-form-item class="h1-input">
+              <el-form-item class="h1-input" label-width="auto">
                 <el-input
                   class="h1-input"
                   v-model="form.name"
@@ -14,7 +14,7 @@
                 />
               </el-form-item>
             </template>
-            <el-row :gutter="16" class="topLayout">
+            <el-row class="topLayout">
               <!--  Article Input   -->
               <el-col
                 class="article-col"
@@ -25,7 +25,7 @@
                 :lg="16"
                 :xl="16"
               >
-                <el-form-item>
+                <el-form-item label-width="auto">
                   <el-input></el-input>
                 </el-form-item>
               </el-col>
@@ -37,29 +37,13 @@
                 :xs="24"
                 :sm="18"
                 :md="10"
-                :lg="7"
+                :lg="8"
                 :xl="7"
               >
-                <h3>{{ template.statsTitle }}</h3>
-                <el-descriptions
-                  v-for="(stat, i) in template.stats"
-                  :column="1"
-                  border
-                >
-                  <el-descriptions-item
-                    label-align="right"
-                    width="150px"
-                    class="table-item"
-                    :label="stat.name"
-                  >
-                    <el-form-item class="stat-item">
-                      <el-input
-                        v-model="form.stats[i].value"
-                        placeholder="stat value"
-                      ></el-input>
-                    </el-form-item>
-                  </el-descriptions-item>
-                </el-descriptions>
+                <StatsTableEditor
+                  :stats="form.stats"
+                  :template="template.stats"
+                />
               </el-col>
             </el-row>
             <el-button type="primary">Submit</el-button>
@@ -76,44 +60,28 @@
 </template>
 
 <script>
-import "../../global-styles.css";
 import {
   ElButton,
   ElCard,
   ElCol,
+  ElContainer,
   ElForm,
   ElFormItem,
   ElInput,
-  ElInputNumber,
-  ElOption,
-  ElRow,
-  ElSelect,
-  ElText,
-  ElContainer,
   ElMain,
+  ElRow,
   ElScrollbar,
-  ElDescriptions,
-  ElDescriptionsItem,
 } from "element-plus";
+import { MOCK_TEMPLATES } from "../../../util/serverDataMocks";
 import Species from "../../docs/species/Species.vue";
-
-// TODO: replace with templated list
-const initialStats = [
-  { value: "", name: "foobar", label: "abilityScores" },
-  { value: "", name: "foobar", label: "avgLifespan" },
-  { value: "", name: "foobar", label: "size" },
-  { value: "", name: "foobar", label: "creatureType" },
-  { value: "", name: "foobar", label: "speed" },
-  { value: "", name: "foobar", label: "proficiencies" },
-  { value: "", name: "foobar", label: "languages" },
-];
+import "../../global-styles.css";
+import StatsTableEditor from "./StatsTableEditor.vue";
 
 export default {
   name: "EditSpecies",
   components: {
+    StatsTableEditor,
     ElScrollbar,
-    ElDescriptions,
-    ElDescriptionsItem,
     ElContainer,
     ElMain,
     Species,
@@ -122,11 +90,7 @@ export default {
     ElRow,
     ElCol,
     ElForm,
-    ElText,
     ElInput,
-    ElOption,
-    ElSelect,
-    ElInputNumber,
     ElFormItem,
   },
   data: function () {
@@ -134,20 +98,9 @@ export default {
       id: this.$route.params.id,
       form: {
         name: "",
-        stats: initialStats,
+        stats: MOCK_TEMPLATES.species.stats.list,
       },
-      template: {
-        statsTitle: "Stats",
-        stats: [
-          { label: "abilityScores", name: "Ability Scores" },
-          { label: "avgLifespan", name: "Avg Lifespan" },
-          { label: "size", name: "Size" },
-          { label: "creatureType", name: "Creature Type" },
-          { label: "speed", name: "Speed" },
-          { label: "proficiencies", name: "Proficiencies" },
-          { label: "languages", name: "Languages" },
-        ],
-      },
+      template: MOCK_TEMPLATES.species,
     };
   },
 };
@@ -165,9 +118,6 @@ export default {
   width: 100%;
 }
 
-.stat-item {
-  margin: 0;
-}
 .scroll {
   width: 100%;
   justify-content: left;

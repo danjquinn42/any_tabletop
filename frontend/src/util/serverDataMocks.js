@@ -1,3 +1,6 @@
+import { DND_LANGUAGES, DND_SKILLS } from "./constants";
+import { InputTypeNumber, InputTypeSelect, InputTypeText } from "./inputTypes";
+
 export const MOCK_DATA = {
   species: {
     luchog: {
@@ -5,19 +8,29 @@ export const MOCK_DATA = {
       creatureType: "mousefolk",
       size: "medium",
       imageSource: "https://picsum.photos/300/400",
-      stats: [
-        { name: "Ability Scores", value: "+2 WIS +1 INT" },
-        { name: "Avg Lifespan", value: "45 years" },
-        { name: "Size", value: "medium" },
-        { name: "Creature Type", value: "mousefolk" },
-        { name: "Speed", value: "30ft" },
-        { name: "Proficiencies", value: "nature" },
-        {
-          name: "Languages",
-          value:
-            "All languages spoken on the river (see: Mother River's Blessings)",
+      stats: {
+        AbilityScores: {
+          label: "Ability Scores",
+          value: "+2 WIS +1 INT",
         },
-      ],
+        AvgLifespan: { label: "Avg Lifespan", value: 45 },
+        Size: { label: "Size", value: "medium" },
+        CreatureType: {
+          label: "Creature Type",
+          value: "mousefolk",
+        },
+        Speed: { label: "Speed", value: "30ft" },
+        Proficiencies: {
+          label: "Proficiencies",
+          value: ["nature", "religion"],
+        },
+        Languages: {
+          label: "Languages",
+          value: [
+            "All languages spoken on the river (see: Mother River's Blessings)",
+          ],
+        },
+      },
       article: [
         {
           subsections: [
@@ -92,19 +105,69 @@ export const MOCK_DATA = {
   },
 };
 
+export class StatsTableTemplate {
+  label = "Stats";
+  list = {
+    AbilityScores: {
+      label: "Ability Scores",
+      type: "string",
+      input: new InputTypeText(),
+    },
+    AvgLifespan: {
+      label: "Avg Lifespan",
+      type: "string",
+      input: new InputTypeText().withLimit(200),
+    },
+    Size: {
+      label: "Size",
+      type: "string",
+      input: new InputTypeSelect([
+        "Tiny",
+        "Small",
+        "Medium",
+        "Large",
+        "Huge",
+        "Gargantuan",
+        "Colossal",
+      ]),
+    },
+    CreatureType: {
+      label: "Creature Type",
+      type: "string",
+      input: new InputTypeText(),
+    },
+    Speed: {
+      label: "Speed",
+      type: "number",
+      input: new InputTypeNumber(0, 100).withPostfix("ft").withStep(5),
+    },
+    Proficiencies: {
+      label: "Proficiencies",
+      type: "list",
+      input: new InputTypeSelect(DND_SKILLS).withMultiSelect(),
+    },
+    Languages: {
+      label: "Languages",
+      type: "list",
+      input: new InputTypeSelect(DND_LANGUAGES)
+        .withMultiSelect()
+        .withAllowOther(),
+    },
+  };
+}
+
+export class TitleTemplate {
+  label;
+  placeholder;
+  constructor(label, placeholder) {
+    this.label = label;
+    this.placeholder = placeholder;
+  }
+}
+
 export const MOCK_TEMPLATES = {
   species: {
-    title: {
-      // type:typ
-      label: "Species Name",
-      placeHolder: "Species Name",
-    },
-    statsTitle: "Stats",
+    title: new StatsTableTemplate("Species Name", "Species Name"),
+    stats: new StatsTableTemplate(),
   },
 };
-
-// const INPUT_TYPE {
-//     text: {
-//         limit:
-//     }
-// }

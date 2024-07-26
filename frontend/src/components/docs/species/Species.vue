@@ -2,7 +2,9 @@
   <el-card>
     <template #header>
       <h1 class="species-name">{{ data.name }}</h1>
-      <h5 class="species-type">( {{ data.size }} {{ data.creatureType }} )</h5>
+      <h5 class="species-type">
+        ( {{ data.stats.Size.value }} {{ data.stats.CreatureType.value }} )
+      </h5>
     </template>
     <el-row :gutter="16" class="topLayout">
       <el-col
@@ -22,44 +24,28 @@
         :xs="24"
         :sm="18"
         :md="10"
-        :lg="7"
+        :lg="8"
         :xl="7"
       >
-        <h3>{{ template.statsTitle }}</h3>
-        <el-descriptions v-for="feature in data.stats" :column="1" border>
-          <el-descriptions-item
-            label-align="right"
-            width="150px"
-            class="table-item"
-            :label="feature.name"
-          >
-            {{ feature.value }}
-          </el-descriptions-item>
-        </el-descriptions>
+        <StatsTable :stats="data.stats" :template="template.stats" />
       </el-col>
     </el-row>
   </el-card>
 </template>
 
 <script>
-import {
-  ElCard,
-  ElCol,
-  ElDescriptions,
-  ElDescriptionsItem,
-  ElRow,
-} from "element-plus";
+import { ElCard, ElCol, ElRow } from "element-plus";
 import "../../global-styles.css";
 import SpeciesArticle from "./SpeciesArticle.vue";
+import StatsTable from "./StatsTable.vue";
 
 export default {
   name: "Species",
   components: {
+    StatsTable,
     SpeciesArticle,
     ElRow,
     ElCol,
-    ElDescriptionsItem,
-    ElDescriptions,
     ElCard,
   },
   props: {

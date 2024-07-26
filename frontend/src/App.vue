@@ -22,6 +22,30 @@ import "./index.css";
 import TopNavigation from "./components/TopNavigation.vue";
 import ZoomSlider from "./components/map/ZoomSlider.vue";
 
+// Add debouce to window ResizeObserve to avoid excessive calls
+// This is to prevent the error
+// "ResizeObserver loop completed with undelivered notifications"
+// which was seen frequently when building the form editor
+const debounce = (callback, delay) => {
+  let tid;
+  return function (...args) {
+    const ctx = self;
+    tid && clearTimeout(tid);
+    tid = setTimeout(() => {
+      callback.apply(ctx, args);
+    }, delay);
+  };
+};
+
+const _resizeObserver = window.ResizeObserver;
+
+window.ResizeObserver = class ResizeObserver extends _resizeObserver {
+  constructor(callback) {
+    callback = debounce(callback, 20);
+    super(callback);
+  }
+};
+
 export default {
   name: "App",
   components: {
