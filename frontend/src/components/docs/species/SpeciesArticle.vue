@@ -77,7 +77,7 @@ export default {
 
 @media only screen and (min-width: 1200px) {
   .example-image {
-    width: 30%;
+    width: 40%;
     margin-left: 1em;
   }
 }
@@ -91,8 +91,10 @@ export default {
 
 @media only screen and (max-width: 768px) {
   .example-image {
+    display: block;
     width: 100%;
-    margin: 1em auto;
+    margin: 0 auto;
+    float: none;
   }
 }
 

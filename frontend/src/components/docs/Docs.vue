@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-aside width="200px">
+    <el-aside width="auto">
       <el-menu :default-active="$router.path" mode="vertical" router>
         <el-menu-item :index="getRoute('about')">
           <template #title>About</template>
@@ -36,6 +36,7 @@ import "element-plus/theme-chalk/el-sub-menu.css";
 import {
   ElMain,
   ElAside,
+  ElButton,
   ElContainer,
   ElMenu,
   ElMenuItem,
@@ -54,7 +55,15 @@ export default {
       return this.isEditMode ? `/edit/docs/${index}/new` : index;
     },
   },
-  components: { ElMenuItem, ElMenu, ElScrollbar, ElAside, ElMain, ElContainer },
+  components: {
+    ElButton,
+    ElMenuItem,
+    ElMenu,
+    ElScrollbar,
+    ElAside,
+    ElMain,
+    ElContainer,
+  },
 };
 </script>
 <style>
