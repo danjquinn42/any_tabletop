@@ -1,59 +1,50 @@
 <template>
-  <el-scrollbar class="scroll" always>
-    <el-container class="main">
-      <el-main>
-        <el-form :model="form" label-width="auto">
-          <el-card :gutter="16" class="form-card">
-            <template #header>
-              <el-form-item class="h1-input" label-width="auto">
-                <el-input
-                  class="h1-input"
-                  v-model="form.name"
-                  :placeholder="template.title.label"
-                  size="large"
-                />
-              </el-form-item>
-            </template>
-            <el-row class="topLayout">
-              <!--  Article Input   -->
-              <el-col
-                class="article-col"
-                :span="24"
-                :xs="24"
-                :sm="24"
-                :md="14"
-                :lg="16"
-                :xl="16"
-              >
-              </el-col>
+  <el-form :model="form" label-width="auto">
+    <el-card :gutter="16" class="form-card">
+      <template #header>
+        <el-form-item class="h1-input" label-width="auto">
+          <el-input
+            class="h1-input"
+            v-model="form.name"
+            :placeholder="template.title.label"
+            size="large"
+          />
+        </el-form-item>
+      </template>
+      <el-row class="topLayout">
+        <!--  Article Input   -->
+        <el-col
+          class="article-col"
+          :span="24"
+          :xs="24"
+          :sm="24"
+          :md="14"
+          :lg="16"
+          :xl="16"
+        >
+        </el-col>
 
-              <!-- Stats Input  -->
-              <el-col
-                class="stats-col"
-                :span="24"
-                :xs="24"
-                :sm="18"
-                :md="10"
-                :lg="8"
-                :xl="7"
-              >
-                <StatsTableEditor
-                  :stats="form.stats"
-                  :template="template.stats"
-                />
-              </el-col>
-            </el-row>
-            <el-button type="primary">Submit</el-button>
-          </el-card>
-        </el-form>
+        <!-- Stats Input  -->
+        <el-col
+          class="stats-col"
+          :span="24"
+          :xs="24"
+          :sm="18"
+          :md="10"
+          :lg="8"
+          :xl="7"
+        >
+          <StatsTableEditor :stats="form.stats" :template="template.stats" />
+        </el-col>
+      </el-row>
+      <el-button type="primary">Submit</el-button>
+    </el-card>
+  </el-form>
 
-        <!-- Preview  -->
-        <h3>Preview</h3>
-        <Species class="preview" :data="form" :template="template"> </Species>
-      </el-main>
-    </el-container>
-    <div class="space-filler"></div>
-  </el-scrollbar>
+  <!-- Preview  -->
+  <h3>Preview</h3>
+  <Species class="preview" :data="form" :template="template"> </Species>
+  <div class="space-filler"></div>
 </template>
 
 <script>
@@ -67,7 +58,6 @@ import {
   ElInput,
   ElMain,
   ElRow,
-  ElScrollbar,
 } from "element-plus";
 import { MOCK_TEMPLATES } from "../../../util/serverDataMocks";
 import Species from "../../docs/species/Species.vue";
@@ -78,7 +68,6 @@ export default {
   name: "EditSpecies",
   components: {
     StatsTableEditor,
-    ElScrollbar,
     ElContainer,
     ElMain,
     Species,
@@ -108,21 +97,8 @@ export default {
   width: 100%;
   margin: 3em 0 3em 0;
 }
-.main {
-  max-width: 1500px;
-}
 .topLayout {
   width: 100%;
-}
-
-.scroll {
-  width: 100%;
-  justify-content: left;
-  align-self: flex-start;
-  height: 100vh;
-  margin-right: 160px;
-  margin-bottom: 1600px;
-  background: var(--el-color-primary-light-9);
 }
 
 .space-filler {

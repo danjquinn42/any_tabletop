@@ -22,9 +22,11 @@
         </el-menu-item>
       </el-menu>
     </el-aside>
-    <el-main>
-      <RouterView />
-    </el-main>
+    <el-scrollbar class="scroll" always>
+      <el-main class="main">
+        <RouterView />
+      </el-main>
+    </el-scrollbar>
   </el-container>
 </template>
 <script>
@@ -55,3 +57,17 @@ export default {
   components: { ElMenuItem, ElMenu, ElScrollbar, ElAside, ElMain, ElContainer },
 };
 </script>
+<style>
+.main {
+  width: 100%;
+}
+.scroll {
+  width: 100%;
+  justify-content: left;
+  align-self: flex-start;
+  height: 100vh;
+  margin-right: 16px;
+  margin-bottom: 1600px;
+  background: var(--el-color-primary-light-9);
+}
+</style>
