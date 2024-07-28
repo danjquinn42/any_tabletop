@@ -5,21 +5,6 @@
         <el-menu-item :index="getRoute('about')">
           <template #title>About</template>
         </el-menu-item>
-        <el-menu-item :index="getRoute('how-to-play')">
-          <template #title>How To Play</template>
-        </el-menu-item>
-        <el-menu-item :index="getRoute('species')">
-          <template #title>Species</template>
-        </el-menu-item>
-        <el-menu-item :index="getRoute('classes')">
-          <template #title>Classes</template>
-        </el-menu-item>
-        <el-menu-item :index="getRoute('statblocks')"
-          ><template #title>Statblocks</template></el-menu-item
-        >
-        <el-menu-item index="the-world">
-          <template #title>The World</template>
-        </el-menu-item>
       </el-menu>
     </el-aside>
     <el-scrollbar class="scroll" always>

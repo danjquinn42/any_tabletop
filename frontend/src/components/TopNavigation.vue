@@ -7,17 +7,11 @@
     <el-sub-menu index="docs-menu"
       ><template #title>Docs</template>
       <el-menu-item index="/docs/about">About</el-menu-item>
-      <el-menu-item index="/docs/how-to-play">How to play</el-menu-item>
-      <el-menu-item index="/docs/species">Species</el-menu-item>
-      <el-menu-item index="/docs/classes">Classes</el-menu-item>
-      <el-menu-item index="/docs/statblocks">Statblocks</el-menu-item>
-      <el-menu-item index="/docs/the-world">The World</el-menu-item>
     </el-sub-menu>
     <el-menu-item index="play" disabled>Play</el-menu-item>
     <el-menu-item index="mods" disabled>Mods</el-menu-item>
     <el-sub-menu index="create-menu"
       ><template #title>Create</template>
-      <el-menu-item index="/edit/docs/species/new">New Species</el-menu-item>
     </el-sub-menu>
   </el-menu>
 </template>
