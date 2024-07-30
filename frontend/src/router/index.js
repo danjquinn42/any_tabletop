@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import About from "../components/docs/About.vue";
 import SpeciesDirectory from "../components/docs/species/SpeciesDirectory.vue";
+import CreateComponent from "../components/edit/createcomponent/CreateComponent.vue";
 import EditSpecies from "../components/edit/species/EditSpecies.vue";
 import Map from "../components/map/Map.vue";
 import Docs from "../components/docs/Docs.vue";
@@ -48,6 +49,11 @@ const routes = [
             component: EditSpecies,
           },
         ],
+      },
+      {
+        path: "component/new",
+        name: "new component",
+        component: CreateComponent,
       },
     ],
   },

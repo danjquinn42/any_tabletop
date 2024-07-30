@@ -21,6 +21,7 @@ import {
 import "./index.css";
 import TopNavigation from "./components/TopNavigation.vue";
 import ZoomSlider from "./components/map/ZoomSlider.vue";
+import "element-plus/es/components/descriptions/style/css";
 
 // Add debouce to window ResizeObserve to avoid excessive calls
 // This is to prevent the error
