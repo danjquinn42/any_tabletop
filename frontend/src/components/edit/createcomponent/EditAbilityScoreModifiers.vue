@@ -228,6 +228,7 @@ import {
   ElRadioGroup,
 } from "element-plus";
 import { dropRight, keyBy, merge, random, replace } from "lodash";
+import AbilityScoreModifierClass from "../../componentClasses/AbilityScoreModifierClass";
 import AbilityScoreModifiers from "./AbilityScoreModifiers.vue";
 import { create, all } from "mathjs";
 
@@ -305,27 +306,28 @@ export default {
         this.form.stats = dropRight(this.form.stats, Math.abs(difference));
       }
     },
-    statsAsObject() {
-      return keyBy(this.form.stats, "label");
+    statsAsObject(stats = this.form.stats) {
+      return keyBy(stats, "label");
     },
     onFormSubmit() {
       console.log("Submitted");
-      const scrubbedStats = this.form.stats.map((s) => ({ ...s, value: null }));
-      const payload = {
-        maxValue: this.form.maxValue,
-        minValue: this.form.minValue,
-        derivedFormulaInput: this.form.includeModifiers
-          ? this.form.derivedFormulaInput
-          : null,
-        roundDown: this.form.roundDown,
-        excludeStats: this.form.excludeStats,
-        displaySign: this.form.displaySign,
-        stats: scrubbedStats,
-      };
-      console.log(payload);
-    },
-    logChange(e) {
-      console.log(e);
+      const scrubbedStats = this.form.stats.map((s) => ({
+        label: s.label,
+        reference: s.scoreReference,
+        modReference: s.modReference,
+      }));
+      const result = new AbilityScoreModifierClass();
+      result
+        .withMaxValue(this.form.maxValue)
+        .withMinValue(this.form.minValue)
+        .withDerivedFormulaInput(
+          this.form.includeModifiers ? this.form.derivedFormulaInput : null,
+        )
+        .withRoundDown(this.roundDown)
+        .withExcludeStats(this.excludeStats)
+        .withDisplaySign(this.form.displaySign)
+        .withStats(this.statsAsObject(scrubbedStats));
+      console.log(result);
     },
   },
   mounted() {
