@@ -3,10 +3,18 @@
     <div v-for="stat in statsAsList()" class="stat-item-with-value">
       <h6 class="stat-name">{{ stat.label }}</h6>
       <div class="stat-value">
-        <div class="stat-modifier">
+        <div v-if="includeModifiers && includeStats" class="stat-modifier">
           {{ evaluateFormula(derivedValueFormula, stat.value || 0) }}
         </div>
-        <div v-if="!excludeStats" class="stat-score">{{ stat.value || 0 }}</div>
+        <div class="stat-modifier" v-if="includeModifiers && !includeStats">
+          {{ displayModifier(stat.value || 0) }}
+        </div>
+        <div
+          v-if="includeStats"
+          :class="includeModifiers ? 'stat-score' : 'stat-modifier'"
+        >
+          {{ stat.value || 0 }}
+        </div>
       </div>
     </div>
   </div>
@@ -27,9 +35,13 @@ export default {
       type: Boolean,
       default: false,
     },
-    excludeStats: {
+    includeStats: {
       type: Boolean,
-      default: false,
+      default: true,
+    },
+    includeModifiers: {
+      type: Boolean,
+      default: true,
     },
     editLabels: {
       type: Boolean,
@@ -49,17 +61,20 @@ export default {
     },
   },
   methods: {
+    displayModifier: function (result) {
+      const finalResult = this.roundDown
+        ? Math.floor(result)
+        : round(result, 2);
+      if (this.displaySign && finalResult >= 0) {
+        return `+${finalResult}`;
+      }
+      return finalResult.toString();
+    },
     evaluateFormula(formula, stat) {
       try {
         const expr = formula.replace(/\$value/g, stat);
         const result = math.evaluate(expr);
-        const finalResult = this.roundDown
-          ? Math.floor(result)
-          : round(result, 2);
-        if (this.displaySign && finalResult >= 0) {
-          return `+${finalResult}`;
-        }
-        return finalResult.toString();
+        return this.displayModifier(result);
       } catch (error) {
         console.error("Error evaluating formula:", error);
         return "Error";

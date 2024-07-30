@@ -36,31 +36,42 @@
               </el-input-number>
             </el-form-item>
 
-            <el-form-item class="input">
+            <el-form-item class="input" label="Use default references">
+              <el-checkbox v-model="form.useDefaultReferences"></el-checkbox>
+            </el-form-item>
+
+            <el-form-item class="input" label="Include stats">
+              <el-checkbox
+                :disabled="!form.includeModifiers"
+                v-model="form.includeStats"
+              ></el-checkbox>
+            </el-form-item>
+
+            <el-form-item class="input" label="Include modifiers">
+              <el-checkbox
+                :disabled="!form.includeStats"
+                v-model="form.includeModifiers"
+              ></el-checkbox>
+            </el-form-item>
+
+            <el-form-item
+              v-if="form.includeModifiers"
+              class="input"
+              label="Display + sign on modifiers"
+            >
+              <el-checkbox v-model="form.displaySign"></el-checkbox>
+            </el-form-item>
+
+            <el-form-item
+              v-if="form.includeModifiers && form.includeStats"
+              class="input"
+            >
               <template #label>Modifier Value Formula</template>
               <el-input v-model="form.derivedFormulaInput" :precision="0">
               </el-input>
               <el-form-item class="tied-input" label="Round Down">
                 <el-checkbox v-model="form.roundDown"></el-checkbox>
               </el-form-item>
-            </el-form-item>
-
-            <el-form-item
-              class="input"
-              label="Hide Stats (only show modifiers)"
-            >
-              <el-checkbox v-model="form.excludeStats"></el-checkbox>
-            </el-form-item>
-
-            <el-form-item class="input" label="Display + sign on modifiers">
-              <el-checkbox v-model="form.displaySign"></el-checkbox>
-            </el-form-item>
-
-            <el-form-item
-              class="input"
-              label="Use default references for scores and modifiers"
-            >
-              <el-checkbox v-model="form.useDefaultReferences"></el-checkbox>
             </el-form-item>
           </div>
         </el-col>
@@ -70,7 +81,9 @@
             <el-row>
               <el-col :span="8" :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
                 <span class="input-col-wrapper">
-                  <span class="input-col-label input">Ability Score Label (unique)</span>
+                  <span class="input-col-label input"
+                    >Score Label (unique)</span
+                  >
                   <span v-for="(_, index) in form.stats">
                     <el-form-item class="input" aria-label="Stat Label">
                       <el-input
@@ -82,7 +95,15 @@
                 </span>
               </el-col>
 
-              <el-col :span="8" :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+              <el-col
+                v-if="form.includeStats"
+                :span="8"
+                :xs="8"
+                :sm="8"
+                :md="8"
+                :lg="8"
+                :xl="8"
+              >
                 <span class="input-col-wrapper">
                   <span class="input-col-label input">
                     Score Reference (unique)
@@ -120,7 +141,15 @@
                 </span>
               </el-col>
 
-              <el-col :span="8" :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+              <el-col
+                v-if="form.includeModifiers"
+                :span="8"
+                :xs="8"
+                :sm="8"
+                :md="8"
+                :lg="8"
+                :xl="8"
+              >
                 <span class="input-col-wrapper">
                   <span class="input-col-label input">
                     Modifier Reference (unique)
@@ -164,7 +193,8 @@
         <div class="container">
           <AbilityScoreModifiers
             :display-sign="form.displaySign"
-            :exclude-stats="form.excludeStats"
+            :include-stats="form.includeStats"
+            :include-modifiers="form.includeModifiers"
             :stats="statsAsObject()"
             :round-down="form.roundDown"
             :derivedValueFormula="form.derivedFormulaInput"
@@ -194,6 +224,8 @@ import {
   ElCheckbox,
   ElTooltip,
   ElDivider,
+  ElRadio,
+  ElRadioGroup,
 } from "element-plus";
 import { dropRight, keyBy, merge, random, replace } from "lodash";
 import AbilityScoreModifiers from "./AbilityScoreModifiers.vue";
@@ -203,6 +235,8 @@ const math = create(all);
 export default {
   name: "EditAbilityScoreModifiers",
   components: {
+    ElRadio,
+    ElRadioGroup,
     ElButton,
     QuestionFilled,
     ElDivider,
@@ -231,46 +265,10 @@ export default {
         derivedFormulaInput: "$value / 2 - 5",
         useDefaultReferences: true,
         roundDown: true,
-        excludeStats: false,
+        includeStats: true,
+        includeModifiers: true,
         displaySign: true,
-        stats: [
-          {
-            label: "STR",
-            value: 16,
-            scoreReference: "STR-score",
-            modReference: "STR-mod",
-          },
-          {
-            label: "DEX",
-            value: 14,
-            scoreReference: "DEX-score",
-            modReference: "DEX-mod",
-          },
-          {
-            label: "CON",
-            value: 16,
-            scoreReference: "CON-score",
-            modReference: "CON-mod",
-          },
-          {
-            label: "INT",
-            value: 8,
-            scoreReference: "INT-score",
-            modReference: "INT-mod",
-          },
-          {
-            label: "WIS",
-            value: 10,
-            scoreReference: "WIS-score",
-            modReference: "WIS-mod",
-          },
-          {
-            label: "CHA",
-            value: 8,
-            scoreReference: "CHA-score",
-            modReference: "CHAT-mod",
-          },
-        ],
+        stats: [{}],
       }),
     },
   },
@@ -316,7 +314,9 @@ export default {
       const payload = {
         maxValue: this.form.maxValue,
         minValue: this.form.minValue,
-        derivedFormulaInput: this.form.derivedFormulaInput,
+        derivedFormulaInput: this.form.includeModifiers
+          ? this.form.derivedFormulaInput
+          : null,
         roundDown: this.form.roundDown,
         excludeStats: this.form.excludeStats,
         displaySign: this.form.displaySign,
@@ -324,11 +324,12 @@ export default {
       };
       console.log(payload);
     },
+    logChange(e) {
+      console.log(e);
+    },
   },
   mounted() {
     merge(this.form, this.abilityScoreModifierData);
-    console.log("form", this.form);
-    console.log("abilitiyScoreModifierData", this.abilityScoreModifierData);
     this.numberOfElements = this.form.stats.length;
     this.previousNumberOfElements = this.numberOfElements;
   },

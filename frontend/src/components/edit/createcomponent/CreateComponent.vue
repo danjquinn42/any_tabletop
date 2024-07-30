@@ -3,7 +3,7 @@
     <el-header>Create New Component</el-header>
 
     <el-card class="preview-container" @click="createCoreStatsVisible = true">
-      <template #header><span>Ability Scores Modifiers</span></template>
+      <template #header><span>Scores And Modifiers</span></template>
       <div class="preview">
         <AbilityScoreModifiers
           display-sign
