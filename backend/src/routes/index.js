@@ -8,7 +8,7 @@ const driver = neo4j.driver(
 const session = driver.session();
 
 const express = require("express");
-const getAllHexes = require("./hex/get.js");
+const getAllHexes = require("./hex/get.ts");
 const router = express.Router();
 
 // test route
@@ -17,7 +17,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/hex/get", async (req, res) => {
-  const hexes = await getAllHexes(session, driver).then((result) => result);
+  const hexes = await getAllHexes(session).then((result) => result);
   const response = {};
   hexes.records.forEach((r) => {
     r._fields.forEach((f) => {

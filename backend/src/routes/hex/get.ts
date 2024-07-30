@@ -1,4 +1,4 @@
-async function getAllHexes(session) {
+async function getAllHexes(session: any) {
   // try {
   return await session.run("MATCH (n:HEX) RETURN n");
 }
