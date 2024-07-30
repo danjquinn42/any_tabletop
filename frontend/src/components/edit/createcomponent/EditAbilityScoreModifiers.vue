@@ -1,8 +1,15 @@
 <template>
   <el-card>
     <el-form>
+      <el-form-item
+        class="input"
+        aria-label="Component Name"
+        label="Component Name"
+      >
+        <el-input v-model="form.componentName"></el-input>
+      </el-form-item>
       <el-row>
-        <el-col :span="24" :xs="24" :sm="24" :md="8" :lg="8" :xl="8">
+        <el-col :span="24" :xs="24" :sm="10" :md="8" :lg="8" :xl="8">
           <div class="left-col-wrapper">
             <el-form-item class="input" label="Number of Elements">
               <el-input-number
@@ -37,7 +44,10 @@
             </el-form-item>
 
             <el-form-item class="input" label="Use default references">
-              <el-checkbox v-model="form.useDefaultReferences"></el-checkbox>
+              <el-checkbox
+                @change="resetReferences"
+                v-model="form.useDefaultReferences"
+              ></el-checkbox>
             </el-form-item>
 
             <el-form-item class="input" label="Include stats">
@@ -66,7 +76,7 @@
               v-if="form.includeModifiers && form.includeStats"
               class="input"
             >
-              <template #label>Modifier Value Formula</template>
+              <template #label>Modifier Formula</template>
               <el-input v-model="form.derivedFormulaInput" :precision="0">
               </el-input>
               <el-form-item class="tied-input" label="Round Down">
@@ -81,9 +91,7 @@
             <el-row>
               <el-col :span="8" :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
                 <span class="input-col-wrapper">
-                  <span class="input-col-label input"
-                    >Score Label (unique)</span
-                  >
+                  <span class="input-col-label input">Score Label</span>
                   <span v-for="(_, index) in form.stats">
                     <el-form-item class="input" aria-label="Stat Label">
                       <el-input
@@ -106,14 +114,14 @@
               >
                 <span class="input-col-wrapper">
                   <span class="input-col-label input">
-                    Score Reference (unique)
+                    Score ID
                     <el-tooltip
                       class="question-icon box-item"
                       effect="dark"
                       placement="bottom"
                       ><template #content
-                        >The Stat Reference is used to access the value of this
-                        item within templates.
+                        >This is used to access the stats value for use in other
+                        components or templates.
                         <br />
                         Can only contain letters (a-z, A-Z), dash (-), and
                         underscore (_).
@@ -134,7 +142,7 @@
                           (value) => `$${value.replace(/[^\w\_\-]|\d/g, '')}`
                         "
                         :parser="(value) => replace(value, '$', '')"
-                        v-model="form.stats[index].scoreReference"
+                        v-model="form.stats[index].reference"
                       ></el-input>
                     </el-form-item>
                   </span>
@@ -152,14 +160,14 @@
               >
                 <span class="input-col-wrapper">
                   <span class="input-col-label input">
-                    Modifier Reference (unique)
+                    Modifier ID
                     <el-tooltip
                       class="question-icon box-item"
                       effect="dark"
                       placement="bottom"
                       ><template #content
-                        >This is used to access the modifiers value in other
-                        components.
+                        >This is used to access the modifiers value for use in
+                        other components or templates.
                         <br />
                         Can only contain letters (a-z, A-Z), dash (-), and
                         underscore (_).
@@ -203,10 +211,6 @@
         </div>
       </el-row>
     </el-form>
-    <el-form-item>
-      <el-button type="primary" @click="onFormSubmit">Save</el-button>
-      <el-button>Cancel</el-button>
-    </el-form-item>
   </el-card>
 </template>
 <script>
@@ -260,9 +264,10 @@ export default {
     abilityScoreModifierData: {
       type: Object,
       default: () => ({
-        maxValue: 0,
-        minValue: 30,
-        derivedFormulaInput: "$value / 2 - 5",
+        componentName: "",
+        minValue: 0,
+        maxValue: 30,
+        derivedFormulaInput: "$score / 2 - 5",
         useDefaultReferences: true,
         roundDown: true,
         includeStats: true,
@@ -284,8 +289,13 @@ export default {
     updateReferences(label, statIndex) {
       if (!this.form.useDefaultReferences) return;
       console.log("__LABEL__", label);
-      this.form.stats[statIndex].scoreReference = label + "-score";
+      this.form.stats[statIndex].reference = label + "-score";
       this.form.stats[statIndex].modReference = label + "-mod";
+    },
+    resetReferences() {
+      this.form.stats.forEach((s, i) => {
+        this.updateReferences(s.label, i);
+      });
     },
     updateStatsList() {
       const difference = this.numberOfElements - this.previousNumberOfElements;
@@ -325,9 +335,6 @@ export default {
       };
       console.log(payload);
     },
-    logChange(e) {
-      console.log(e);
-    },
   },
   mounted() {
     merge(this.form, this.abilityScoreModifierData);
@@ -362,12 +369,9 @@ export default {
 }
 
 .input-col-label {
+  width: 100%;
+  display: block;
   font-size: var(--el-form-label-font-size);
   color: var(--el-text-color-regular);
-}
-
-.question-icon {
-  /*position: absolute;*/
-  /*left: -0.5rem;*/
 }
 </style>

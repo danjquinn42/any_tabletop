@@ -15,20 +15,20 @@
   </el-main>
 
   <el-dialog
+    width="95%"
     v-model="createCoreStatsVisible"
-    title="Create Stats With Derived Values"
+    title="Scores And Modifiers"
   >
+    <EditAbilityScoreModifiers />
     <template #footer>
       <div class="dialog-footer">
         <el-button @click="createCoreStatsVisible = false">Cancel</el-button>
         <el-button type="primary" @click="createCoreStatsVisible = false">
-          Create
+          Save
         </el-button>
       </div>
     </template>
   </el-dialog>
-
-  <EditAbilityScoreModifiers />
 </template>
 
 <script>

@@ -57,7 +57,7 @@ export default {
     },
     derivedValueFormula: {
       type: String,
-      default: "($value - 10) / 2",
+      default: "($score - 10) / 2",
     },
   },
   methods: {
@@ -72,7 +72,7 @@ export default {
     },
     evaluateFormula(formula, stat) {
       try {
-        const expr = formula.replace(/\$value/g, stat);
+        const expr = formula.replace(/\$score/g, stat);
         const result = math.evaluate(expr);
         return this.displayModifier(result);
       } catch (error) {
@@ -123,6 +123,7 @@ export default {
   margin: 0.5rem auto;
 }
 
+/* IS USED. The linter misses this class' use because it is set dynamically*/
 .stat-score {
   border: solid var(--el-border-color) 1px;
   background: var(--el-bg-color-page);
