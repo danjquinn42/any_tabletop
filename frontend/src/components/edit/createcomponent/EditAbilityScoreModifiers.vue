@@ -318,7 +318,8 @@ export default {
           ? this.form.derivedFormulaInput
           : null,
         roundDown: this.form.roundDown,
-        excludeStats: this.form.excludeStats,
+        includeStats: this.form.includeStats,
+        includeModifiers: this.form.includeModifiers,
         displaySign: this.form.displaySign,
         stats: scrubbedStats,
       };
