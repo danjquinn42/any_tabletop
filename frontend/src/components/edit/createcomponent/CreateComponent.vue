@@ -5,7 +5,7 @@
     <el-card class="preview-container" @click="createCoreStatsVisible = true">
       <template #header><span>Ability Scores Modifiers</span></template>
       <div class="preview">
-        <StatsWithDerivedValues
+        <AbilityScoreModifiers
           display-sign
           class="preview"
           :stats="exampleCoreStats"
@@ -28,25 +28,25 @@
     </template>
   </el-dialog>
 
-  <NewModifiersComponent :create-core-stats="createCoreStats" />
+  <EditAbilityScoreModifiers />
 </template>
 
 <script>
 import { ElButton, ElCard, ElDialog, ElHeader, ElMain } from "element-plus";
 import "element-plus/es/components/descriptions/style/css";
 import { map } from "lodash";
-import NewModifiersComponent from "./NewModifiersComponent.vue";
-import StatsWithDerivedValues from "./StatsWithDerivedValues.vue";
+import EditAbilityScoreModifiers from "./EditAbilityScoreModifiers.vue";
+import AbilityScoreModifiers from "./AbilityScoreModifiers.vue";
 
 export default {
   name: "CreateComponent",
   components: {
-    NewModifiersComponent,
+    EditAbilityScoreModifiers,
     ElDialog,
     ElHeader,
     ElMain,
     ElCard,
-    StatsWithDerivedValues,
+    AbilityScoreModifiers,
     ElButton,
   },
   data: function () {
@@ -78,15 +78,9 @@ export default {
         },
       },
       createCoreStatsVisible: false,
-      createCoreStats: {
-        numberOfElements: 1,
-      },
     };
   },
   methods: {
-    derivedValue(value) {
-      return Math.floor((value - 10) / 2);
-    },
     statsAsList() {
       return map(this.stats, (v) => v);
     },

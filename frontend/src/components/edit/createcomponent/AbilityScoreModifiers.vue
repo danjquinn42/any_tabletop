@@ -1,21 +1,12 @@
 <template>
   <div class="container">
     <div v-for="stat in statsAsList()" class="stat-item-with-value">
-      <el-input
-        v-if="editLabels"
-        class="stat-name"
-        placeholder="Score Label"
-        v-model="stat.label"
-      ></el-input>
-      <h6 v-else class="stat-name">{{ stat.label }}</h6>
-
+      <h6 class="stat-name">{{ stat.label }}</h6>
       <div class="stat-value">
-        <el-input-number class="stat-modifier"></el-input-number>
         <div class="stat-modifier">
-          {{ evaluateFormula(derivedValueFormula, stat.value) }}
+          {{ evaluateFormula(derivedValueFormula, stat.value || 0) }}
         </div>
-
-        <div v-if="!excludeStats" class="stat-score">{{ stat.value }}</div>
+        <div v-if="!excludeStats" class="stat-score">{{ stat.value || 0 }}</div>
       </div>
     </div>
   </div>
@@ -28,7 +19,7 @@ import { create, all } from "mathjs";
 const math = create(all);
 
 export default {
-  name: "StatsWithDerivedValues",
+  name: "AbilityScoreModifiers",
   components: { ElInput, ElDescriptionsItem, ElDescriptions },
   props: {
     stats: {},
@@ -62,12 +53,19 @@ export default {
       try {
         const expr = formula.replace(/\$value/g, stat);
         const result = math.evaluate(expr);
-        return this.roundDown ? Math.floor(result) : round(result, 2);
+        const finalResult = this.roundDown
+          ? Math.floor(result)
+          : round(result, 2);
+        if (this.displaySign && finalResult >= 0) {
+          return `+${finalResult}`;
+        }
+        return finalResult.toString();
       } catch (error) {
         console.error("Error evaluating formula:", error);
         return "Error";
       }
     },
+
     statsAsList() {
       return map(this.stats, (v) => v);
     },
