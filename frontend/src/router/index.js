@@ -44,13 +44,13 @@ const routes = [
             path: "game/:gameId/component/new",
             name: "create new component",
             props: true,
-            component: CreateComponent
+            component: CreateComponent,
           },
           {
             path: "game/:gameId/ScoreComponentConfig/:componentId",
             name: "edit component",
             props: true,
-            component: EditAbilityScoreModifiers
+            component: EditAbilityScoreModifiers,
           },
         ],
       },

@@ -1,5 +1,5 @@
 <template>
-  <el-card>
+  <el-card class="card">
     <el-form>
       <el-form-item
         class="input"
@@ -9,84 +9,92 @@
         <el-input v-model="form.componentName"></el-input>
       </el-form-item>
       <el-row>
-        <el-col :span="24" :xs="24" :sm="10" :md="8" :lg="8" :xl="8">
-          <div class="left-col-wrapper">
-            <el-form-item class="input" label="Number of Elements">
-              <el-input-number
-                v-model="numberOfElements"
-                :value-on-clear="1"
-                :min="0"
-                :max="1000"
-                :precision="0"
-                @change="updateStatsList"
-              >
-              </el-input-number>
-            </el-form-item>
-            <el-form-item class="input" label="Min Value">
-              <el-input-number
-                aria-label="Minimum Score"
-                v-model="form.minValue"
-                :min="0"
-                :max="1000"
-                :precision="0"
-              >
-              </el-input-number>
-            </el-form-item>
-            <el-form-item class="input" label="Max Value">
-              <el-input-number
-                aria-label="Maximum Score"
-                v-model="form.maxValue"
-                :min="0"
-                :max="1000"
-                :precision="0"
-              >
-              </el-input-number>
-            </el-form-item>
+        <el-col :span="24" :xs="24" :sm="24" :md="8" :lg="8" :xl="8">
+          <el-row>
+            <el-col :span="24" :xs="24" :sm="12" :md="24" :lg="24" :xl="24">
+              <div class="left-col-wrapper">
+                <el-form-item class="input" label="Number of Elements">
+                  <el-input-number
+                    v-model="numberOfElements"
+                    :value-on-clear="1"
+                    :min="0"
+                    :max="1000"
+                    :precision="0"
+                    @change="updateStatsList"
+                  >
+                  </el-input-number>
+                </el-form-item>
+                <el-form-item class="input" label="Min Value">
+                  <el-input-number
+                    aria-label="Minimum Score"
+                    v-model="form.minValue"
+                    :min="0"
+                    :max="1000"
+                    :precision="0"
+                  >
+                  </el-input-number>
+                </el-form-item>
+                <el-form-item class="input" label="Max Value">
+                  <el-input-number
+                    aria-label="Maximum Score"
+                    v-model="form.maxValue"
+                    :min="0"
+                    :max="1000"
+                    :precision="0"
+                  >
+                  </el-input-number>
+                </el-form-item>
+              </div>
+            </el-col>
 
-            <el-form-item class="input" label="Use default references">
-              <el-checkbox
-                @change="resetReferences"
-                v-model="form.useDefaultReferences"
-              ></el-checkbox>
-            </el-form-item>
+            <el-col :span="24" :xs="24" :sm="12" :md="24" :lg="24" :xl="24">
+              <div class="left-col-wrapper">
+                <el-form-item class="input" label="Use default references">
+                  <el-checkbox
+                    @change="resetReferences"
+                    v-model="form.useDefaultReferences"
+                  ></el-checkbox>
+                </el-form-item>
 
-            <el-form-item class="input" label="Include stats">
-              <el-checkbox
-                :disabled="!form.includeModifiers"
-                v-model="form.includeStats"
-              ></el-checkbox>
-            </el-form-item>
+                <el-form-item class="input" label="Include stats">
+                  <el-checkbox
+                    :disabled="!form.includeModifiers"
+                    v-model="form.includeStats"
+                  ></el-checkbox>
+                </el-form-item>
 
-            <el-form-item class="input" label="Include modifiers">
-              <el-checkbox
-                :disabled="!form.includeStats"
-                v-model="form.includeModifiers"
-              ></el-checkbox>
-            </el-form-item>
+                <el-form-item class="input" label="Include modifiers">
+                  <el-checkbox
+                    :disabled="!form.includeStats"
+                    v-model="form.includeModifiers"
+                  ></el-checkbox>
+                </el-form-item>
 
-            <el-form-item
-              v-if="form.includeModifiers"
-              class="input"
-              label="Display + sign on modifiers"
-            >
-              <el-checkbox v-model="form.displaySign"></el-checkbox>
-            </el-form-item>
+                <el-form-item
+                  v-if="form.includeModifiers"
+                  class="input"
+                  label="Display + sign on modifiers"
+                >
+                  <el-checkbox v-model="form.displaySign"></el-checkbox>
+                </el-form-item>
 
-            <el-form-item
-              v-if="form.includeModifiers && form.includeStats"
-              class="input"
-            >
-              <template #label>Modifier Formula</template>
-              <el-input v-model="form.derivedFormulaInput" :precision="0">
-              </el-input>
-              <el-form-item class="tied-input" label="Round Down">
-                <el-checkbox v-model="form.roundDown"></el-checkbox>
-              </el-form-item>
-            </el-form-item>
-          </div>
+                <el-form-item
+                  v-if="form.includeModifiers && form.includeStats"
+                  class="input"
+                >
+                  <template #label>Modifier Formula</template>
+                  <el-input v-model="form.derivedFormulaInput" :precision="0">
+                  </el-input>
+                  <el-form-item class="tied-input" label="Round Down">
+                    <el-checkbox v-model="form.roundDown"></el-checkbox>
+                  </el-form-item>
+                </el-form-item>
+              </div>
+            </el-col>
+          </el-row>
         </el-col>
 
-        <el-col :span="24" :xs="24" :sm="14" :md="16" :lg="16" :xl="16">
+        <el-col :span="24" :xs="24" :sm="24" :md="16" :lg="16" :xl="16">
           <span>
             <el-row>
               <el-col :span="8" :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
@@ -235,7 +243,15 @@ import {
   ElRadio,
   ElRadioGroup,
 } from "element-plus";
-import {dropRight, find, isEmpty, keyBy, merge, random, replace} from "lodash";
+import {
+  dropRight,
+  find,
+  isEmpty,
+  keyBy,
+  merge,
+  random,
+  replace,
+} from "lodash";
 import AbilityScoreModifiers from "./AbilityScoreModifiers.vue";
 import { create, all } from "mathjs";
 
@@ -283,7 +299,7 @@ export default {
     mod: {
       type: Object,
       default: {},
-    }
+    },
   },
   data: function () {
     return {
@@ -355,17 +371,17 @@ export default {
         const componentId = this.$route.params.componentId;
         if (componentId === "new") return;
 
-        const game = find(this.mod.games, g => g.id === gameId);
-        const config = find(game.configs, c => c.id === componentId);
+        const game = find(this.mod.games, (g) => g.id === gameId);
+        const config = find(game.configs, (c) => c.id === componentId);
         this.form = {
           ...config,
-          componentName: config.name
+          componentName: config.name,
         };
       }
     },
   },
   watch: {
-    mod: function() {
+    mod: function () {
       this.updateProps();
     },
   },

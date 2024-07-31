@@ -16,15 +16,14 @@
           >
           <el-sub-menu :index="game.name + 'components'">
             <template #title>Components</template>
+            <el-menu-item :index="getRoute(`game/${game.id}/component/new`)"
+              >Create New Component</el-menu-item
+            >
             <el-menu-item
-                :index="getRoute(`game/${game.id}/component/new`)"
-            >Create New Component</el-menu-item>
-            <el-menu-item
-                v-for="comp in game.configs"
-                :index="getRoute(`game/${game.id}/${comp.label}/${comp.id}`)"
-            >{{
-              comp.name
-            }}</el-menu-item>
+              v-for="comp in game.configs"
+              :index="getRoute(`game/${game.id}/${comp.label}/${comp.id}`)"
+              >{{ comp.name }}</el-menu-item
+            >
           </el-sub-menu>
         </el-sub-menu>
       </el-menu>

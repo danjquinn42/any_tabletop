@@ -16,6 +16,7 @@
 
   <el-dialog
     width="95%"
+    style="max-width: 1400px"
     v-model="createCoreStatsVisible"
     title="Scores And Modifiers"
   >
