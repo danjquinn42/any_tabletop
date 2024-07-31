@@ -187,7 +187,7 @@
                           (value) => `$${value.replace(/[^\w\_\-]|\d/g, '')}`
                         "
                         :parser="(value) => replace(value, '$', '')"
-                        v-model="form.stats[index].modReference"
+                        v-model="form.stats[index].modifierReference"
                       ></el-input>
                     </el-form-item>
                   </span>
@@ -210,6 +210,10 @@
           </AbilityScoreModifiers>
         </div>
       </el-row>
+      <el-form-item>
+        <el-button type="primary" @click="onFormSubmit">Create</el-button>
+        <el-button>Cancel</el-button>
+      </el-form-item>
     </el-form>
   </el-card>
 </template>
@@ -288,9 +292,8 @@ export default {
     replace,
     updateReferences(label, statIndex) {
       if (!this.form.useDefaultReferences) return;
-      console.log("__LABEL__", label);
       this.form.stats[statIndex].reference = label + "-score";
-      this.form.stats[statIndex].modReference = label + "-mod";
+      this.form.stats[statIndex].modifierReference = label + "-mod";
     },
     resetReferences() {
       this.form.stats.forEach((s, i) => {
@@ -303,12 +306,16 @@ export default {
       if (difference === 0) {
         return;
       }
+
       if (difference > 0) {
-        const defaultStat = {
-          label: "",
-          value: random(this.form.minValue, this.form.maxValue),
-        };
-        let newElements = new Array(difference).fill(defaultStat);
+        let newElements = new Array(difference).fill({});
+        newElements = newElements.map(() => {
+          const defaultValues = {
+            label: "",
+            value: random(this.form.minValue, this.form.maxValue),
+          };
+          return defaultValues;
+        });
         this.form.stats.push(...newElements);
       }
       if (difference < 0) {
@@ -319,9 +326,9 @@ export default {
       return keyBy(this.form.stats, "label");
     },
     onFormSubmit() {
-      console.log("Submitted");
-      const scrubbedStats = this.form.stats.map((s) => ({ ...s, value: null }));
+      const scrubbedStats = this.form.stats.map((s) => ({ ...s, value: 10 }));
       const payload = {
+        name: this.form.componentName,
         maxValue: this.form.maxValue,
         minValue: this.form.minValue,
         derivedFormulaInput: this.form.includeModifiers
@@ -333,7 +340,7 @@ export default {
         displaySign: this.form.displaySign,
         stats: scrubbedStats,
       };
-      console.log(payload);
+      this.onSubmit(payload);
     },
   },
   mounted() {

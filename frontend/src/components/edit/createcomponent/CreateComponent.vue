@@ -19,15 +19,7 @@
     v-model="createCoreStatsVisible"
     title="Scores And Modifiers"
   >
-    <EditAbilityScoreModifiers />
-    <template #footer>
-      <div class="dialog-footer">
-        <el-button @click="createCoreStatsVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="createCoreStatsVisible = false">
-          Save
-        </el-button>
-      </div>
-    </template>
+    <EditAbilityScoreModifiers :on-submit="createStatsConfig" />
   </el-dialog>
 </template>
 
@@ -35,6 +27,7 @@
 import { ElButton, ElCard, ElDialog, ElHeader, ElMain } from "element-plus";
 import "element-plus/es/components/descriptions/style/css";
 import { map } from "lodash";
+import { createStatsConfigComponent } from "../../../api/component";
 import EditAbilityScoreModifiers from "./EditAbilityScoreModifiers.vue";
 import AbilityScoreModifiers from "./AbilityScoreModifiers.vue";
 
@@ -83,6 +76,10 @@ export default {
   methods: {
     statsAsList() {
       return map(this.stats, (v) => v);
+    },
+    async createStatsConfig(config) {
+      await createStatsConfigComponent(config);
+      this.createCoreStatsVisible = false;
     },
   },
 };
