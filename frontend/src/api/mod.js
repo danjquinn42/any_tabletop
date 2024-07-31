@@ -1,9 +1,9 @@
 const apiRoot = process.env.API_URL;
-export const getAllHexes = () =>
-  fetch(apiRoot + "hex/all")
+export const getAllModsChildren = () =>
+  fetch(apiRoot + "mod/children")
     .then((response) => {
       if (!response.ok) {
-        throw new Error("failed to fetch hexes");
+        throw new Error("failed to fetch mods children");
       }
       return response.json();
     })

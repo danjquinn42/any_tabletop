@@ -1,3 +1,21 @@
+export interface Node {
+  identity: number;
+  labels: string[];
+  properties: any;
+  elementId: string;
+}
+
+export interface NodeRelationship {
+  identity: number;
+  start: number;
+  end: number;
+  type: string;
+  properties: any;
+  elementId: string;
+  startNodeElementId: string;
+  endNodeElementId: string;
+}
+
 export interface ScoreComponentConfig {
   id?: string;
   name: string;
@@ -18,12 +36,20 @@ export interface ScoreComponentConfig {
   ];
 }
 
+export interface ScoreComponentConfigNode extends Node {
+  properties: ScoreComponentConfig;
+}
+
 export interface Stat {
   id: string;
   label: string;
   reference?: string;
   modifierReference?: string;
   value: number;
+}
+
+export interface StatNode extends Node {
+  properties: Stat;
 }
 
 export interface Game {

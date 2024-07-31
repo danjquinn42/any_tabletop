@@ -10,6 +10,9 @@ const session = driver.session();
 const express = require("express");
 const getAllHexes = require("./hex/get.ts");
 const createScoreComponentConfig = require("./component/create.ts");
+const { getModsChildren } = require("./mod/get");
+const { error } = require("neo4j-driver");
+const { response } = require("express");
 const router = express.Router();
 
 // test route
@@ -17,7 +20,7 @@ router.get("/", (req, res) => {
   res.send("Welcome to Ada!");
 });
 
-router.get("/hex/get", async (req, res) => {
+router.get("/hex/all", async (req, res) => {
   const hexes = await getAllHexes(session).then((result) => result);
   const response = {};
   hexes.records.forEach((r) => {
@@ -30,20 +33,34 @@ router.get("/hex/get", async (req, res) => {
 });
 
 router.put("/score-component-config", async (req, res) => {
+  // TODO: replace gameId with game in request body
   const gameId = "f441dc0a-3b4e-4cc1-b180-d6e8b48f9606";
   try {
     const { config } = req.body;
-    // TODO: replace gameId with game in request body
-    const response = await createScoreComponentConfig(
+    await createScoreComponentConfig(
       session,
       config,
       gameId,
     ).then((result) => result);
-    console.log(response);
     res.status(201).send(`Config created with relationships to Game ${gameId}`);
   } catch (error) {
     console.log("FAILED TO CREATE", error);
     res.status(500).send(`Error creating Config on Game ${gameId} ${error}`);
+  }
+});
+
+router.get("/mod/children", async (req, res) => {
+  console.log("GETTING MOD");
+  // TODO: replace modName with mod ID in query path
+  const modName = "DnD 5e Game Setup";
+  try {
+    const modAndChildren = await getModsChildren(session, modName).then(
+      (result) => result,
+    );
+    res.send(modAndChildren);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(`Error fetching mod and children ${modName}`);
   }
 });
 
