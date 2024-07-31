@@ -78,7 +78,8 @@ export default {
       return map(this.stats, (v) => v);
     },
     async createStatsConfig(config) {
-      await createStatsConfigComponent(config);
+      const gameId = this.$route.params.gameId;
+      await createStatsConfigComponent(config, gameId);
       this.createCoreStatsVisible = false;
     },
   },

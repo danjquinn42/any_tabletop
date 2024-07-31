@@ -1,5 +1,6 @@
 import { Session } from "neo4j-driver";
 import {
+  GraphNode,
   NodeRelationship,
   ScoreComponentConfigNode,
   StatNode,
@@ -64,11 +65,12 @@ async function getModsChildren(session: Session, modName: string) {
       }
     });
     // TODO: replace with methods when multiple games defined
-    games[0].configs = Array.from(configs.values());
+    const flatGames = games.map((g: GraphNode) => ({...g.properties, identity: g.identity}))
+    flatGames[0].configs = Array.from(configs.values());
     return (
       result.records[0].get("mod").properties,
       {
-        games,
+        games: flatGames,
       }
     );
   } catch (error) {

@@ -235,7 +235,7 @@ import {
   ElRadio,
   ElRadioGroup,
 } from "element-plus";
-import { dropRight, keyBy, merge, random, replace } from "lodash";
+import {dropRight, find, isEmpty, keyBy, merge, random, replace} from "lodash";
 import AbilityScoreModifiers from "./AbilityScoreModifiers.vue";
 import { create, all } from "mathjs";
 
@@ -280,6 +280,10 @@ export default {
         stats: [{}],
       }),
     },
+    mod: {
+      type: Object,
+      default: {},
+    }
   },
   data: function () {
     return {
@@ -342,11 +346,31 @@ export default {
       };
       this.onSubmit(payload);
     },
+    updateProps() {
+      merge(this.form, this.abilityScoreModifierData);
+      this.numberOfElements = this.form.stats.length;
+      this.previousNumberOfElements = this.numberOfElements;
+      if (!isEmpty(this.mod)) {
+        const gameId = this.$route.params.gameId;
+        const componentId = this.$route.params.componentId;
+        if (componentId === "new") return;
+
+        const game = find(this.mod.games, g => g.id === gameId);
+        const config = find(game.configs, c => c.id === componentId);
+        this.form = {
+          ...config,
+          componentName: config.name
+        };
+      }
+    },
+  },
+  watch: {
+    mod: function() {
+      this.updateProps();
+    },
   },
   mounted() {
-    merge(this.form, this.abilityScoreModifierData);
-    this.numberOfElements = this.form.stats.length;
-    this.previousNumberOfElements = this.numberOfElements;
+    this.updateProps();
   },
 };
 </script>

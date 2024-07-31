@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import About from "../components/docs/About.vue";
-import SpeciesDirectory from "../components/docs/species/SpeciesDirectory.vue";
 import CreateComponent from "../components/edit/createcomponent/CreateComponent.vue";
+import EditAbilityScoreModifiers from "../components/edit/createcomponent/EditAbilityScoreModifiers.vue";
 import EditSpecies from "../components/edit/species/EditSpecies.vue";
 import Map from "../components/map/Map.vue";
 import Docs from "../components/docs/Docs.vue";
@@ -22,16 +22,6 @@ const routes = [
         name: "about",
         component: About,
       },
-      {
-        path: "species",
-        name: "species",
-        component: SpeciesDirectory,
-      },
-      {
-        path: "",
-        name: "docs default",
-        component: About,
-      },
     ],
   },
   {
@@ -41,19 +31,28 @@ const routes = [
       {
         path: "docs",
         name: "edit docs",
+        props: true,
         component: Docs,
         children: [
           {
             path: "species/:id",
             name: "edit species",
+            props: true,
             component: EditSpecies,
           },
+          {
+            path: "game/:gameId/component/new",
+            name: "create new component",
+            props: true,
+            component: CreateComponent
+          },
+          {
+            path: "game/:gameId/ScoreComponentConfig/:componentId",
+            name: "edit component",
+            props: true,
+            component: EditAbilityScoreModifiers
+          },
         ],
-      },
-      {
-        path: "component/new",
-        name: "new component",
-        component: CreateComponent,
       },
     ],
   },

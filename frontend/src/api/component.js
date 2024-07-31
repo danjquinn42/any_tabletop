@@ -1,7 +1,7 @@
 const apiRoot = process.env.API_URL;
 
-export const createStatsConfigComponent = (config) => {
-  fetch(apiRoot + "score-component-config", {
+export const createStatsConfigComponent = (config, gameId) => {
+  fetch(apiRoot + `game/${gameId}/score-component`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

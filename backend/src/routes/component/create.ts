@@ -8,11 +8,7 @@ async function createScoreComponentConfig(
   gameId: string,
 ) {
   config.id = crypto.randomUUID();
-  const stats = config.stats.map((s, i) => {
-    return { ...s, index: i, id: crypto.randomUUID() };
-  });
-  console.log("GAMEID", gameId);
-  console.log("STATS", stats);
+
   const createConfigQuery = `
     CREATE (config:ScoreComponentConfig {
       id: $id,

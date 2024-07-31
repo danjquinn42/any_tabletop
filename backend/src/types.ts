@@ -1,4 +1,4 @@
-export interface Node {
+export interface GraphNode {
   identity: number;
   labels: string[];
   properties: any;
@@ -36,7 +36,7 @@ export interface ScoreComponentConfig {
   ];
 }
 
-export interface ScoreComponentConfigNode extends Node {
+export interface ScoreComponentConfigNode extends GraphNode {
   properties: ScoreComponentConfig;
 }
 
@@ -48,7 +48,7 @@ export interface Stat {
   value: number;
 }
 
-export interface StatNode extends Node {
+export interface StatNode extends GraphNode {
   properties: Stat;
 }
 

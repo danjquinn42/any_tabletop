@@ -11,8 +11,6 @@ const express = require("express");
 const getAllHexes = require("./hex/get.ts");
 const createScoreComponentConfig = require("./component/create.ts");
 const { getModsChildren } = require("./mod/get");
-const { error } = require("neo4j-driver");
-const { response } = require("express");
 const router = express.Router();
 
 // test route
@@ -32,9 +30,8 @@ router.get("/hex/all", async (req, res) => {
   res.send(response);
 });
 
-router.put("/score-component-config", async (req, res) => {
-  // TODO: replace gameId with game in request body
-  const gameId = "f441dc0a-3b4e-4cc1-b180-d6e8b48f9606";
+router.put("/game/:gameId/score-component", async (req, res) => {
+  const gameId = req.params.gameId;
   try {
     const { config } = req.body;
     await createScoreComponentConfig(
