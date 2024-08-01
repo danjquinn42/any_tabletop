@@ -4,6 +4,7 @@ dotenv.config();
 import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import auth from "./auth";
+import router from "./routes";
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -25,8 +26,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 // Use routes
-const indexRouter = require("./routes/index");
-app.use("/", indexRouter);
+app.use("/", router);
 
 // Google OAuth
 app.use(auth);

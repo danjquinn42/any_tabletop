@@ -1,8 +1,8 @@
 import { Session } from "neo4j-driver";
-import { ScoreComponentConfig } from "../../../types/schema";
+import { ScoreComponentConfig } from "../../types/schema";
 import crypto from "crypto";
 
-async function createScoreComponentConfig(
+export async function createScoreComponentConfig(
   session: Session,
   config: ScoreComponentConfig,
   gameId: string,
@@ -77,5 +77,3 @@ async function createScoreComponentConfig(
     console.error("Error creating config and stats:", error);
   }
 }
-
-module.exports = createScoreComponentConfig;

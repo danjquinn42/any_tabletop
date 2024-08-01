@@ -4,11 +4,11 @@ import {
   NodeRelationship,
   ScoreComponentConfigNode,
   StatNode,
-} from "../../../types/schema";
+} from "../../types/schema";
 import { mapByIdentity } from "../../util/nodefunctions";
 import { isNil } from "lodash";
 
-async function getMod(session: Session, modName: string) {
+export async function getMod(session: Session, modName: string) {
   const query = "MATCH (mod:Mod) {name: $modname} RETURN mod";
 
   try {
@@ -22,7 +22,7 @@ async function getMod(session: Session, modName: string) {
   }
 }
 
-async function getModsChildren(session: Session, modName: string) {
+export async function getModsChildren(session: Session, modName: string) {
   const query = `MATCH (mod:Mod {name: $modName})-[creates:CREATES]->(game:Game)
    OPTIONAL MATCH (game)-[contains:CONTAINS]->(config:ScoreComponentConfig)
    OPTIONAL MATCH (config)-[defines:DEFINES]->(stat:Stat)
@@ -80,5 +80,3 @@ async function getModsChildren(session: Session, modName: string) {
     console.error(`Failed to fetch mod ${modName} and it's children`, error);
   }
 }
-
-module.exports = { getMod, getModsChildren: getModsChildren };
