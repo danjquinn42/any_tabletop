@@ -3,6 +3,7 @@ import About from "../components/docs/About.vue";
 import CreateComponent from "../components/edit/createcomponent/CreateComponent.vue";
 import EditAbilityScoreModifiers from "../components/edit/createcomponent/EditAbilityScoreModifiers.vue";
 import EditSpecies from "../components/edit/species/EditSpecies.vue";
+import Login from "../components/Login.vue";
 import Map from "../components/map/Map.vue";
 import Docs from "../components/docs/Docs.vue";
 
@@ -11,6 +12,11 @@ const routes = [
     path: "/",
     name: "map",
     component: Map,
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
   },
   {
     path: "/docs",

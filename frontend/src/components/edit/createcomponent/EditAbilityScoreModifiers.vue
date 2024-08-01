@@ -219,7 +219,12 @@
         </div>
       </el-row>
       <el-form-item class="submit-buttons">
-        <el-button v-if="componentId === 'new'" type="primary" @click="onFormSubmit">Create</el-button>
+        <el-button
+          v-if="componentId === 'new'"
+          type="primary"
+          @click="onFormSubmit"
+          >Create</el-button
+        >
         <el-button v-else type="primary">Update</el-button>
         <el-button>Cancel</el-button>
       </el-form-item>
@@ -307,7 +312,7 @@ export default {
       numberOfElements: 6,
       previousNumberOfElements: 6,
       form: {},
-      componentId: "new"
+      componentId: "new",
     };
   },
   methods: {

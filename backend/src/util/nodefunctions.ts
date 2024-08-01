@@ -1,4 +1,4 @@
-import { GraphNode } from "../types";
+import { GraphNode } from "../../types/schema";
 
 export function mapByIdentity<T extends GraphNode>(nodes: T[]) {
   return new Map(

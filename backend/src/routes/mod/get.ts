@@ -4,7 +4,7 @@ import {
   NodeRelationship,
   ScoreComponentConfigNode,
   StatNode,
-} from "../../types";
+} from "../../../types/schema";
 import { mapByIdentity } from "../../util/nodefunctions";
 import { isNil } from "lodash";
 
@@ -65,7 +65,10 @@ async function getModsChildren(session: Session, modName: string) {
       }
     });
     // TODO: replace with methods when multiple games defined
-    const flatGames = games.map((g: GraphNode) => ({...g.properties, identity: g.identity}))
+    const flatGames = games.map((g: GraphNode) => ({
+      ...g.properties,
+      identity: g.identity,
+    }));
     flatGames[0].configs = Array.from(configs.values());
     return (
       result.records[0].get("mod").properties,

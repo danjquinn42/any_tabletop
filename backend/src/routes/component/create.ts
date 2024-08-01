@@ -1,5 +1,5 @@
 import { Session } from "neo4j-driver";
-import { ScoreComponentConfig } from "../../types";
+import { ScoreComponentConfig } from "../../../types/schema";
 import crypto from "crypto";
 
 async function createScoreComponentConfig(

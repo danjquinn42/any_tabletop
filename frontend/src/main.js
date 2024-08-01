@@ -11,4 +11,14 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
 }
 
+app.mixin({
+  created() {
+    // Check for login state and handle redirection
+    if (window.location.search.includes("code=")) {
+      // Assuming the backend handles the code exchange and session management
+      window.location.href = "/";
+    }
+  },
+});
+
 app.mount("#app");

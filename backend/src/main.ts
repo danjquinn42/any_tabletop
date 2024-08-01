@@ -1,15 +1,20 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express, { Request, Response, NextFunction } from "express";
-const app = express();
+import cors from "cors";
+import auth from "./auth";
+
 const PORT = process.env.PORT || 3000;
+const app = express();
 
 // Middleware to parse JSON
 app.use(express.json());
 
 // CORS middleware
-import cors from "cors";
 app.use(
   cors({
-    origin: "http://localhost:8080", // Allow only this origin
+    origin: "http://localhost:8080", // TODO: update before deployment
     optionsSuccessStatus: 200,
   }),
 );
@@ -19,11 +24,12 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-// Import routes
-const indexRouter = require("./routes/index");
-
 // Use routes
+const indexRouter = require("./routes/index");
 app.use("/", indexRouter);
+
+// Google OAuth
+app.use(auth);
 
 // Start the server
 app.listen(PORT, () => {
