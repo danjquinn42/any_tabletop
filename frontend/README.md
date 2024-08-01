@@ -1,15 +1,9 @@
-# 🚀 Welcome to your new awesome project!
+# Welcome to Any Tabletop
 
-This project has been created using **webpack-cli**, you can now run
-
-```
-npm run build
-```
-
-or
+This project has been created using **webpack-cli**, you can run the frontend using
 
 ```
-yarn build
+npm install
+npm run serve
 ```
 
-to bundle your application
