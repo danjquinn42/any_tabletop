@@ -1,6 +1,6 @@
 <template>
   <el-menu :default-active="$router.path" mode="horizontal" router>
-    <el-text size="large" class="title">Ada</el-text>
+    <el-text size="large" class="title">Any Tabletop</el-text>
     <el-image class="map-icon" src="/assets/favicon.png"></el-image>
     <el-text size="large"></el-text>
     <el-menu-item index="/">Map</el-menu-item>
