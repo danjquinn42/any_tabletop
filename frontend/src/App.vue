@@ -4,9 +4,6 @@
       <top-navigation></top-navigation>
     </el-header>
     <RouterView />
-    <el-footer class="app-footer"
-      ><el-text>Created by Daniel Quinn</el-text></el-footer
-    >
   </el-container>
 </template>
 
@@ -60,23 +57,4 @@ export default {
   },
 };
 </script>
-<style scoped>
-a:link {
-  color: #66b1ff;
-}
-a:visited {
-  color: #3375b9;
-}
-
-.app-footer {
-  background: #121212;
-  margin: 8px;
-  height: 16px;
-  width: 100%;
-  text-align: center;
-}
-.app-footer > * {
-  color: #6c6e72;
-  width: 100%;
-}
-</style>
+<style scoped></style>
