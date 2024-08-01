@@ -218,8 +218,9 @@
           </AbilityScoreModifiers>
         </div>
       </el-row>
-      <el-form-item>
-        <el-button type="primary" @click="onFormSubmit">Create</el-button>
+      <el-form-item class="submit-buttons">
+        <el-button v-if="componentId === 'new'" type="primary" @click="onFormSubmit">Create</el-button>
+        <el-button v-else type="primary">Update</el-button>
         <el-button>Cancel</el-button>
       </el-form-item>
     </el-form>
@@ -306,6 +307,7 @@ export default {
       numberOfElements: 6,
       previousNumberOfElements: 6,
       form: {},
+      componentId: "new"
     };
   },
   methods: {
@@ -368,11 +370,11 @@ export default {
       this.previousNumberOfElements = this.numberOfElements;
       if (!isEmpty(this.mod)) {
         const gameId = this.$route.params.gameId;
-        const componentId = this.$route.params.componentId;
-        if (componentId === "new") return;
+        this.componentId = this.$route.params.componentId;
+        if (this.componentId === "new") return;
 
         const game = find(this.mod.games, (g) => g.id === gameId);
-        const config = find(game.configs, (c) => c.id === componentId);
+        const config = find(game.configs, (c) => c.id === this.componentId);
         this.form = {
           ...config,
           componentName: config.name,
@@ -420,5 +422,10 @@ export default {
   display: block;
   font-size: var(--el-form-label-font-size);
   color: var(--el-text-color-regular);
+}
+
+.submit-buttons {
+  float: right;
+  margin: 2rem;
 }
 </style>
