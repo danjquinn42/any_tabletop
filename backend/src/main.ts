@@ -7,6 +7,7 @@ import auth from "./auth";
 import router from "./routes";
 
 const PORT = process.env.PORT || 3000;
+const CORS_ORIGIN = process.env.CORS_ORIGIN;
 const app = express();
 
 // Middleware to parse JSON
@@ -15,7 +16,7 @@ app.use(express.json());
 // CORS middleware
 app.use(
   cors({
-    origin: "http://localhost:8080", // TODO: update before deployment
+    origin: CORS_ORIGIN,
     optionsSuccessStatus: 200,
   }),
 );
