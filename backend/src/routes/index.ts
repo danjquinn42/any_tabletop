@@ -14,7 +14,7 @@ const router: Router = express.Router();
 
 // Test route
 router.get("/", (req: Request, res: Response) => {
-  res.send("Welcome to Ada!");
+  res.send("Welcome to Any Tabletop!");
 });
 
 router.get("/hex/all", async (req: Request, res: Response) => {
