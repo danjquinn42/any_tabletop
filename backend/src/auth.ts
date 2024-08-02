@@ -4,20 +4,27 @@ import express, { Request, Response, NextFunction } from "express";
 import session from "express-session";
 import dotenv from "dotenv";
 import { getEnvVar } from "./util/util";
+import { driver } from "./routes";
+import { getUserByGoogleId } from "./routes/user/get";
+import { UNKNOWN_USER_ID } from "./util/const";
+import { createUser } from "./routes/user/create";
+import { UserProfile } from "./types/schema";
 
 dotenv.config();
 
 const GOOGLE_CLIENT_ID = getEnvVar("GOOGLE_CLIENT_ID");
 const GOOGLE_CLIENT_SECRET = getEnvVar("GOOGLE_CLIENT_SECRET");
+const FRONTEND_URL = getEnvVar("FRONTEND_URL");
+const GOOGLE_AUTH_CALLBACK_URL = getEnvVar("GOOGLE_AUTH_CALLBACK_URL");
 
 passport.use(
   new GoogleStrategy(
     {
       clientID: GOOGLE_CLIENT_ID,
       clientSecret: GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/auth/google/callback", // Ensure this matches your server port
+      callbackURL: GOOGLE_AUTH_CALLBACK_URL,
     },
-    (
+    async (
       accessToken: string,
       refreshToken: string,
       profile: Profile,
@@ -27,8 +34,17 @@ passport.use(
         info?: object,
       ) => void,
     ) => {
-      // TODO save user profile information to the database.
-      return done(null, profile);
+      const session = driver.session();
+      try {
+        let user = await getUserByGoogleId(session, profile.id);
+        if (user?.id === UNKNOWN_USER_ID) {
+          await createUser(session, profile);
+          user = await getUserByGoogleId(session, profile.id);
+        }
+        return done(null, user);
+      } catch (error) {
+        console.error(error);
+      }
     },
   ),
 );
@@ -56,7 +72,7 @@ router.use(passport.session());
 router.get(
   "/google",
   passport.authenticate("google", {
-    scope: ["https://www.googleapis.com/auth/plus.login", "email"], // Ensure email scope is included
+    scope: ["https://www.googleapis.com/auth/plus.login", "email"],
   }),
 );
 
@@ -64,8 +80,9 @@ router.get(
   "/google/callback",
   passport.authenticate("google", { failureRedirect: "/" }),
   (req: Request, res: Response) => {
-    // Successful authentication, redirect home.
-    res.redirect("/profile");
+    const user = req.user as UserProfile;
+    console.log("Authentication successful. User:", user.id);
+    res.redirect(`${FRONTEND_URL}/`);
   },
 );
 

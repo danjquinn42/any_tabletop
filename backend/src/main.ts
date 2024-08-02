@@ -11,18 +11,30 @@ import { getEnvVar } from "./util/util";
 
 const PORT = process.env.PORT || 3000;
 const CORS_ORIGIN = process.env.CORS_ORIGIN;
+const SERVER_URL = process.env.CORS_ORIGIN;
 const app = express();
 
 // Middleware to parse JSON
 app.use(express.json());
 
+const allowedOrigins = [CORS_ORIGIN, SERVER_URL];
+
+const corsOptions = {
+  origin: (
+    origin: string | undefined,
+    callback: (err: Error | null, allowed: boolean) => void,
+  ) => {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"), false);
+    }
+  },
+  credentials: true,
+  optionsSuccessStatus: 200, // For legacy browser support
+};
 // CORS middleware
-app.use(
-  cors({
-    origin: CORS_ORIGIN,
-    optionsSuccessStatus: 200,
-  }),
-);
+app.use(cors(corsOptions));
 
 // Google session middleware
 app.use(
@@ -37,7 +49,6 @@ app.use(passport.session());
 app.use("/auth", auth);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
-  console.log("Request headers:", req.headers);
   next();
 });
 

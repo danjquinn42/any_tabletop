@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-header>
-      <top-navigation></top-navigation>
+      <top-navigation :loggedIn="loggedIn"></top-navigation>
     </el-header>
     <RouterView />
   </el-container>
@@ -16,6 +16,8 @@ import {
   ElText,
 } from "element-plus";
 import "./index.css";
+import { isEmpty, isNil } from "lodash";
+import { getCurrentUser } from "./api/profile";
 import TopNavigation from "./components/TopNavigation.vue";
 import ZoomSlider from "./components/map/ZoomSlider.vue";
 import "element-plus/es/components/descriptions/style/css";
@@ -54,6 +56,23 @@ export default {
     ElContainer,
     ElPageHeader,
     ZoomSlider,
+  },
+  data: function () {
+    return {
+      loggedIn: false,
+      user: {},
+    };
+  },
+  methods: {
+    async getUserProfile() {
+      this.user = await getCurrentUser();
+      if (!isNil(this.user) && !isEmpty(this.user)) {
+        this.loggedIn = true;
+      }
+    },
+  },
+  mounted() {
+    this.getUserProfile();
   },
 };
 </script>

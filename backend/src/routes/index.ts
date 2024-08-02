@@ -19,7 +19,7 @@ const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
   res.status(401).send("Unauthorized");
 };
 
-// get current user profile
+// test current user profile
 router.get("/profile", isAuthenticated, (req: Request, res: Response) => {
   res.send(req.user); // Access the authenticated user
 });

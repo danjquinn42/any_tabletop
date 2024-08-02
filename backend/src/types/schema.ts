@@ -1,7 +1,7 @@
-export interface GraphNode {
+export interface GraphNode<T> {
   identity: number;
   labels: string[];
-  properties: any;
+  properties: T;
   elementId: string;
 }
 
@@ -26,30 +26,16 @@ export interface ScoreComponentConfig {
   includeStats: boolean;
   includeModifiers: boolean;
   displaySign: boolean;
-  stats: [
-    {
-      label: string;
-      reference: string | null;
-      modifierReference: string | null;
-      index: number;
-    },
-  ];
-}
-
-export interface ScoreComponentConfigNode extends GraphNode {
-  properties: ScoreComponentConfig;
+  stats: Stat[];
 }
 
 export interface Stat {
   id: string;
+  index?: number;
   label: string;
   reference?: string;
   modifierReference?: string;
   value: number;
-}
-
-export interface StatNode extends GraphNode {
-  properties: Stat;
 }
 
 export interface Game {
@@ -66,6 +52,21 @@ export interface Mod {
 
 export interface Root {}
 
-export interface RootNode extends GraphNode {
-  properties: Root;
+// This is for internal use only
+export interface UnsecureInternalUserEntry {
+  id: string;
+  isProfileSetUp: boolean;
+  googleId: string;
+  name: string;
+  username?: string;
+  givenName?: string;
+  familyName?: string;
+  email?: string;
+}
+
+// This is the public facing user
+export interface UserProfile {
+  username?: string;
+  isProfileSetUp: boolean;
+  id: string;
 }

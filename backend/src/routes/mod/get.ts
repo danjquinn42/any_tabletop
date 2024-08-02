@@ -1,9 +1,10 @@
 import { Session } from "neo4j-driver";
 import {
+  Game,
   GraphNode,
   NodeRelationship,
-  ScoreComponentConfigNode,
-  StatNode,
+  ScoreComponentConfig,
+  Stat,
 } from "../../types/schema";
 import { mapByIdentity } from "../../util/nodefunctions";
 import { isEmpty, isNil } from "lodash";
@@ -44,8 +45,8 @@ export async function getModsChildren(session: Session, modName: string) {
 
     // TODO: replace with methods when multiple games defined
     const games = result.records[0].get("games");
-    const configs = mapByIdentity<ScoreComponentConfigNode>(
-      result.records[0].get("configs") as ScoreComponentConfigNode[],
+    const configs = mapByIdentity<ScoreComponentConfig>(
+      result.records[0].get("configs") as GraphNode<ScoreComponentConfig>[],
     );
     const stats = result.records[0].get("stats");
     const configDefines = result.records[0].get("definesRels");
@@ -53,7 +54,7 @@ export async function getModsChildren(session: Session, modName: string) {
     configDefines.forEach((rel: NodeRelationship) => {
       const configId = rel.start;
       const statId = rel.end;
-      const stat = stats.find((s: StatNode) => s.identity === statId);
+      const stat = stats.find((s: GraphNode<Stat>) => s.identity === statId);
       if (stat) {
         const config = configs.get(configId);
         if (config) {
@@ -69,7 +70,7 @@ export async function getModsChildren(session: Session, modName: string) {
       }
     });
     // TODO: replace with methods when multiple games defined
-    const flatGames = games.map((g: GraphNode) => ({
+    const flatGames = games.map((g: GraphNode<Game>) => ({
       ...g.properties,
       identity: g.identity,
     }));

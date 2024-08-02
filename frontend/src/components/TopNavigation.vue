@@ -2,6 +2,8 @@
   <el-menu :default-active="$router.path" mode="horizontal" router>
     <el-text size="large" class="title">Any Tabletop</el-text>
     <el-image class="map-icon" src="/assets/favicon.png"></el-image>
+    <el-menu-item v-if="!loggedIn" index="/login">Log In</el-menu-item>
+    <el-menu-item v-if="loggedIn" index="/logout">Log Out</el-menu-item>
     <el-text size="large"></el-text>
     <el-menu-item index="/">Map</el-menu-item>
     <el-sub-menu index="docs-menu"
@@ -45,6 +47,12 @@ export default {
     ElSubMenu,
     ElMenuItem,
     ElMenu,
+  },
+  props: {
+    loggedIn: {
+      type: Boolean,
+      default: false,
+    },
   },
   data: function () {
     return {
