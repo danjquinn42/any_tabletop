@@ -55,4 +55,17 @@ export interface StatNode extends GraphNode {
 export interface Game {
   name: string;
   id: string;
+  description: string;
+}
+
+export interface Mod {
+  name: string;
+  description: string;
+  id: string;
+}
+
+export interface Root {}
+
+export interface RootNode extends GraphNode {
+  properties: Root;
 }
