@@ -3,16 +3,9 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import express, { Request, Response, NextFunction } from "express";
 import session from "express-session";
 import dotenv from "dotenv";
+import { getEnvVar } from "./util/util";
 
 dotenv.config();
-
-function getEnvVar(key: string): string {
-  const value = process.env[key];
-  if (!value) {
-    throw new Error(`Environment variable ${key} is not set`);
-  }
-  return value;
-}
 
 const GOOGLE_CLIENT_ID = getEnvVar("GOOGLE_CLIENT_ID");
 const GOOGLE_CLIENT_SECRET = getEnvVar("GOOGLE_CLIENT_SECRET");
@@ -22,7 +15,7 @@ passport.use(
     {
       clientID: GOOGLE_CLIENT_ID,
       clientSecret: GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:8080/auth/google/callback",
+      callbackURL: "http://localhost:3000/auth/google/callback", // Ensure this matches your server port
     },
     (
       accessToken: string,
@@ -34,7 +27,7 @@ passport.use(
         info?: object,
       ) => void,
     ) => {
-      // TODO: Save user profile information to neo4j or session
+      // TODO save user profile information to the database.
       return done(null, profile);
     },
   ),
@@ -48,31 +41,35 @@ passport.deserializeUser((obj: any, done) => {
   done(null, obj);
 });
 
-const app = express();
+const router = express.Router();
 
-app.use(
-  session({ secret: "your-secret-key", resave: true, saveUninitialized: true }),
+router.use(
+  session({
+    secret: getEnvVar("ANY_TABLE_SESSION_SECRET"),
+    resave: true,
+    saveUninitialized: true,
+  }),
 );
-app.use(passport.initialize());
-app.use(passport.session());
+router.use(passport.initialize());
+router.use(passport.session());
 
-app.get(
-  "/auth/google",
+router.get(
+  "/google",
   passport.authenticate("google", {
-    scope: ["https://www.googleapis.com/auth/plus.login"],
+    scope: ["https://www.googleapis.com/auth/plus.login", "email"], // Ensure email scope is included
   }),
 );
 
-app.get(
-  "/auth/google/callback",
+router.get(
+  "/google/callback",
   passport.authenticate("google", { failureRedirect: "/" }),
   (req: Request, res: Response) => {
     // Successful authentication, redirect home.
-    res.redirect("/");
+    res.redirect("/profile");
   },
 );
 
-app.get("/logout", (req: Request, res: Response, next: NextFunction) => {
+router.get("/logout", (req: Request, res: Response, next: NextFunction) => {
   req.logout((err) => {
     if (err) {
       return next(err);
@@ -81,4 +78,4 @@ app.get("/logout", (req: Request, res: Response, next: NextFunction) => {
   });
 });
 
-export default app;
+export default router;

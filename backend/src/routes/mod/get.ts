@@ -6,7 +6,7 @@ import {
   StatNode,
 } from "../../types/schema";
 import { mapByIdentity } from "../../util/nodefunctions";
-import { isNil } from "lodash";
+import { isEmpty, isNil } from "lodash";
 
 export async function getMod(session: Session, modName: string) {
   const query = "MATCH (mod:Mod) {name: $modname} RETURN mod";
@@ -38,6 +38,10 @@ export async function getModsChildren(session: Session, modName: string) {
       modName,
     });
 
+    if (isNil(result) || isEmpty(result.records)) {
+      return {};
+    }
+
     // TODO: replace with methods when multiple games defined
     const games = result.records[0].get("games");
     const configs = mapByIdentity<ScoreComponentConfigNode>(
@@ -45,7 +49,7 @@ export async function getModsChildren(session: Session, modName: string) {
     );
     const stats = result.records[0].get("stats");
     const configDefines = result.records[0].get("definesRels");
-
+    ``;
     configDefines.forEach((rel: NodeRelationship) => {
       const configId = rel.start;
       const statId = rel.end;

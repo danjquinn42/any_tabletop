@@ -1,16 +1,28 @@
 import neo4j from "neo4j-driver";
-import express, { Request, Response, Router } from "express";
+import express, { NextFunction, Request, Response, Router } from "express";
 import { getAllHexes } from "./hex/get";
 import { createScoreComponentConfig } from "./component/create";
 import { getModsChildren } from "./mod/get";
 
-const driver = neo4j.driver(
+export const driver = neo4j.driver(
   "bolt://localhost:7687",
   neo4j.auth.basic("neo4j", "localDev"),
   { disableLosslessIntegers: true },
 );
 
 const router: Router = express.Router();
+
+const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.status(401).send("Unauthorized");
+};
+
+// get current user profile
+router.get("/profile", isAuthenticated, (req: Request, res: Response) => {
+  res.send(req.user); // Access the authenticated user
+});
 
 // Test route
 router.get("/", (req: Request, res: Response) => {
