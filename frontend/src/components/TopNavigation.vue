@@ -10,7 +10,7 @@
       ><template #title>Docs</template>
       <el-menu-item index="/docs/about">About</el-menu-item>
     </el-sub-menu>
-    <el-menu-item index="/edit/component/new">Create</el-menu-item>
+    <el-menu-item index="/edit/docs">Create</el-menu-item>
     <el-form class="form">
       <el-form-item>
         <el-button @click="toggleDisplayMode">{{ displayMode }}</el-button>
