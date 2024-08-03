@@ -3,10 +3,13 @@ import express, { NextFunction, Request, Response, Router } from "express";
 import { getAllHexes } from "./hex/get";
 import { createScoreComponentConfig } from "./component/create";
 import { getModsChildren } from "./mod/get";
+import { getInitialStateFromUserRoot } from "./clientInit/get";
+import { UserProfile } from "../types/schema";
+import { getEnvVar } from "../util/util";
 
 export const driver = neo4j.driver(
-  "bolt://localhost:7687",
-  neo4j.auth.basic("neo4j", "localDev"),
+  getEnvVar("NEO4J_DRIVER_URL"),
+  neo4j.auth.basic(getEnvVar("NEO4J_USERNAME"), getEnvVar("NEO4J_PASSWORD")),
   { disableLosslessIntegers: true },
 );
 
@@ -14,6 +17,8 @@ const router: Router = express.Router();
 
 const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
   if (req.isAuthenticated()) {
+    const profile = req.user as UserProfile;
+    console.log("User in session:", profile.id);
     return next();
   }
   res.status(401).send("Unauthorized");
@@ -27,6 +32,24 @@ router.get("/profile", isAuthenticated, (req: Request, res: Response) => {
 // Test route
 router.get("/", (req: Request, res: Response) => {
   res.send("Welcome to Any Tabletop!");
+});
+
+router.get("/init", async (req: Request, res: Response) => {
+  const session = driver.session();
+  try {
+    const user = req.user as UserProfile;
+    if (user) {
+      const initialState = await getInitialStateFromUserRoot(session, user.id);
+      res.send(initialState);
+    } else {
+      res.send("Dan, make sure to implement default state method");
+    }
+  } catch (error) {
+    console.error("Failed to fetch initial state", error);
+    res.status(500).send("Unable to initialize application state");
+  } finally {
+    await session.close();
+  }
 });
 
 router.get("/hex/all", async (req: Request, res: Response) => {
@@ -61,7 +84,7 @@ router.put(
         .status(201)
         .send(`Config created with relationships to Game ${gameId}`);
     } catch (error) {
-      console.log("FAILED TO CREATE", error);
+      console.error("FAILED TO CREATE", error);
       res.status(500).send(`Error creating Config on Game ${gameId} ${error}`);
     } finally {
       await session.close();
@@ -71,7 +94,6 @@ router.put(
 
 router.get("/mod/children", async (req: Request, res: Response) => {
   const session = driver.session();
-  console.log("GETTING MOD");
   // TODO: replace modName with mod ID in query path
   const modName: string = "DnD 5e Game Setup";
   try {

@@ -1,0 +1,90 @@
+import { Session } from "neo4j-driver";
+import {
+  Game,
+  GraphRecord,
+  Mod,
+  ScoreComponentConfig,
+  Stat,
+} from "../../types/schema";
+import { RootNodeResponse } from "../../types/response";
+import { keyBy } from "lodash";
+
+export async function getInitialStateFromUserRoot(
+  session: Session,
+  userId: string,
+) {
+  const getMods = `
+        MATCH (user:User { id: $userId })-[entry:ENTRY]->(root:Root)
+        MATCH (root:Root)-[has:HAS]->(mod:Mod)
+        RETURN collect(DISTINCT mod) as mods
+    `;
+
+  const getGames = `
+      MATCH (mod:Mod { id: $modId})-[has:HAS]->(game:Game)
+      RETURN collect(DISTINCT game) as games
+  `;
+
+  const getConfigs = `
+    MATCH (game:Game { id: $gameId })-[has:HAS]->(componentConfig:ScoreComponentConfig)
+    RETURN collect(DISTINCT componentConfig) as componentConfigs
+  `;
+
+  const getStats = `
+    MATCH (c:ScoreComponentConfig { id: $configId })-[DEFINES]->(stat:Stat)
+    RETURN collect(DISTINCT stat) as stats
+  `;
+
+  try {
+    return session.executeRead(async (transaction) => {
+      const response: RootNodeResponse = {};
+      const modResult = await transaction.run(getMods, { userId });
+      const modList: Mod[] = modResult.records[0]
+        .get("mods")
+        .map((m: GraphRecord<Mod>) => m.properties);
+
+      const gameList: Game[] = [];
+      for (const mod of modList) {
+        // It would be better to fetch all games in a single query but for now this is more readable
+        const gamesResult = await transaction.run(getGames, { modId: mod.id });
+        const games = gamesResult.records[0]
+          .get("games")
+          .map((g: GraphRecord<Game>) => g.properties);
+        mod.gameIds = games.map((g: Game) => g.id);
+        gameList.push(...games);
+      }
+
+      const componentList: ScoreComponentConfig[] = [];
+      for (const game of gameList) {
+        const configResult = await transaction.run(getConfigs, {
+          gameId: game.id,
+        });
+        const configs = configResult.records[0]
+          .get("componentConfigs")
+          .map((s: GraphRecord<ScoreComponentConfig>) => s.properties);
+        game.configIds = configs.map((s: ScoreComponentConfig) => s.id);
+        componentList.push(...configs);
+      }
+
+      const statList: Stat[] = [];
+      for (const comp of componentList) {
+        const statResult = await transaction.run(getStats, {
+          configId: comp.id,
+        });
+        const stats = statResult.records[0]
+          .get("stats")
+          .map((s: GraphRecord<Stat>) => s.properties);
+        comp.statIds = stats.map((s: Stat) => s.id);
+        componentList.push(...stats);
+      }
+
+      response.mods = keyBy(modList, "id");
+      response.games = keyBy(gameList, "id");
+      response.components = keyBy(componentList, "id");
+      response.stats = keyBy(statList, "id");
+
+      return response;
+    });
+  } catch (error) {
+    console.error("Failed to get initial state:", error);
+  }
+}

@@ -26,7 +26,7 @@ export async function createScoreComponentConfig(
   const attachConfigToGameQuery = `
     MATCH (game:Game {id: $gameId})
     MATCH (config:ScoreComponentConfig {id: $configId})
-    CREATE (game)-[:CONTAINS]->(config)`;
+    CREATE (game)-[:HAS]->(config)`;
 
   const createStatsQuery = `
     MATCH (config:ScoreComponentConfig {id: $configId})
@@ -42,7 +42,7 @@ export async function createScoreComponentConfig(
     RETURN config, collect(s) AS stats`;
 
   try {
-    await session.writeTransaction(async (tx) => {
+    await session.executeWrite(async (tx) => {
       // Create the config node
       const configResult = await tx.run(createConfigQuery, {
         id: config.id,

@@ -52,11 +52,24 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  done(null, user);
+  const profile = user as UserProfile;
+  done(null, profile.id);
 });
 
-passport.deserializeUser((user: UserProfile, done) => {
-  done(null, user);
+passport.deserializeUser(async (id: string, done) => {
+  const session = driver.session();
+  try {
+    const result = await session.run(
+      "MATCH (user:User {id: $id}) RETURN user",
+      { id },
+    );
+    const user = result.records[0]?.get("user").properties;
+    done(null, user);
+  } catch (error) {
+    done(error, null);
+  } finally {
+    await session.close();
+  }
 });
 
 const router = express.Router();

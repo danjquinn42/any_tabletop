@@ -17,6 +17,7 @@ import {
 } from "element-plus";
 import "./index.css";
 import { isEmpty, isNil } from "lodash";
+import {getInitialState} from "./api/init";
 import { getCurrentUser } from "./api/profile";
 import TopNavigation from "./components/TopNavigation.vue";
 import ZoomSlider from "./components/map/ZoomSlider.vue";
@@ -73,6 +74,7 @@ export default {
   },
   mounted() {
     this.getUserProfile();
+    getInitialState();
   },
 };
 </script>

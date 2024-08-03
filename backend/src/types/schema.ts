@@ -1,4 +1,4 @@
-export interface GraphNode<T> {
+export interface GraphRecord<T> {
   identity: number;
   labels: string[];
   properties: T;
@@ -26,7 +26,9 @@ export interface ScoreComponentConfig {
   includeStats: boolean;
   includeModifiers: boolean;
   displaySign: boolean;
-  stats: Stat[];
+  stats: Stat[]; //TODO: remove
+
+  statIds?: string[];
 }
 
 export interface Stat {
@@ -42,15 +44,20 @@ export interface Game {
   name: string;
   id: string;
   description: string;
+  configIds?: string[];
 }
 
 export interface Mod {
   name: string;
   description: string;
   id: string;
+
+  gameIds?: string[];
 }
 
-export interface Root {}
+export interface Root {
+  id: string;
+}
 
 // This is for internal use only
 export interface UnsecureInternalUserEntry {

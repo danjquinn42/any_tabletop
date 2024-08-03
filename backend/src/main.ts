@@ -42,6 +42,10 @@ app.use(
     secret: getEnvVar("ANY_TABLE_SESSION_SECRET"), // Use a separate strong secret
     resave: true,
     saveUninitialized: true,
+    cookie: {
+      secure: false, // TODO Switch to https and set to true
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    },
   }),
 );
 app.use(passport.initialize());

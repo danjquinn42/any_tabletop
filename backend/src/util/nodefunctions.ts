@@ -1,6 +1,6 @@
-import { GraphNode } from "../types/schema";
+import { GraphRecord } from "../types/schema";
 
-export function mapByIdentity<T>(nodes: GraphNode<T>[]) {
+export function mapByIdentity<T>(nodes: GraphRecord<T>[]) {
   return new Map(
     nodes.map((n) => [
       n.identity,
