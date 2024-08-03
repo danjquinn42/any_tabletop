@@ -1,1 +1,3 @@
 export const UNKNOWN_USER_ID = "UNKNOWN_USER";
+export const DEFAULT_GAME_ID = "DEFAULT_GAME";
+export const DEFAULT_MOD_ID = "DEFAULT_MOD";

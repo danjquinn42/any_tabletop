@@ -44,6 +44,8 @@ passport.use(
         return done(null, user);
       } catch (error) {
         console.error(error);
+      } finally {
+        session.close();
       }
     },
   ),
@@ -53,8 +55,8 @@ passport.serializeUser((user, done) => {
   done(null, user);
 });
 
-passport.deserializeUser((obj: any, done) => {
-  done(null, obj);
+passport.deserializeUser((user: UserProfile, done) => {
+  done(null, user);
 });
 
 const router = express.Router();
