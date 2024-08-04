@@ -7,11 +7,7 @@
     </el-text>
     <el-text size="large"></el-text>
     <el-menu-item index="/">Map</el-menu-item>
-    <el-sub-menu index="docs-menu"
-    >
-      <template #title>Docs</template>
-      <el-menu-item index="/docs/about">About</el-menu-item>
-    </el-sub-menu>
+    <el-menu-item index="/docs/about">Docs</el-menu-item>
     <el-menu-item index="/edit/docs">Create</el-menu-item>
     <el-form class="form">
       <el-form-item>

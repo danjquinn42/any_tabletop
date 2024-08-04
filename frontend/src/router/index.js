@@ -53,7 +53,7 @@ const routes = [
             component: CreateComponent,
           },
           {
-            path: "game/:gameId/ScoreComponentConfig/:componentId",
+            path: "game/:gameId/component/:componentId",
             name: "edit component",
             props: true,
             component: EditAbilityScoreModifiers,

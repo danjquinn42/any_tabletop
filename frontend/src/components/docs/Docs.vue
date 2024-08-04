@@ -1,28 +1,29 @@
 <template>
   <el-container
-    class="container"
-    v-loading="loadingStatus"
-    element-loading-text="Loading..."
+      class="container"
   >
     <el-aside width="auto">
       <el-menu :default-active="$router.path" mode="vertical" router>
         <el-menu-item :index="getRoute('about')">
           <template #title>About</template>
         </el-menu-item>
-        <el-sub-menu v-for="game in mod.games" :index="game.name">
+        <el-sub-menu v-for="game in modStore.games" :index="game.name">
           <template #title>{{ game.name }}</template>
           <el-menu-item :index="getRoute(`game/${game.id}`)"
-            >About</el-menu-item
+          >About
+          </el-menu-item
           >
           <el-sub-menu :index="game.name + 'components'">
             <template #title>Components</template>
             <el-menu-item :index="getRoute(`game/${game.id}/component/new`)"
-              >Create New Component</el-menu-item
+            >Create New Component
+            </el-menu-item
             >
             <el-menu-item
-              v-for="comp in game.configs"
-              :index="getRoute(`game/${game.id}/${comp.label}/${comp.id}`)"
-              >{{ comp.name }}</el-menu-item
+                v-for="compId in game.configIds"
+                :index="getRoute(`game/${game.id}/component/${compId}`)"
+            >{{ modStore.components[compId].name }}
+            </el-menu-item
             >
           </el-sub-menu>
         </el-sub-menu>
@@ -30,7 +31,7 @@
     </el-aside>
     <el-scrollbar class="scroll" always>
       <el-main class="main">
-        <RouterView :key="$route.fullPath" :mod="mod" />
+        <RouterView :key="$route.fullPath"/>
       </el-main>
     </el-scrollbar>
   </el-container>
@@ -39,6 +40,7 @@
 import "element-plus/theme-chalk/el-menu.css";
 import "element-plus/theme-chalk/el-menu-item.css";
 import "element-plus/theme-chalk/el-sub-menu.css";
+import {useModStore} from "../../store/modStore";
 import {
   ElMain,
   ElAside,
@@ -47,38 +49,24 @@ import {
   ElMenu,
   ElMenuItem,
   ElScrollbar,
-  ElLoading,
   ElSubMenu,
 } from "element-plus";
-import { getAllModsChildren } from "../../api/mod";
 
 export default {
   name: "Docs",
   data: function () {
     return {
       isEditMode: this.$route.matched[0].name === "edit",
-      loadingStatus: true,
-      mod: {},
     };
+  },
+  setup() {
+    const modStore = useModStore();
+    return {modStore};
   },
   methods: {
     getRoute(index) {
       return this.isEditMode ? `/edit/docs/${index}` : index;
     },
-    async fetchGames() {
-      function timeout(ms) {
-        return new Promise((resolve) => setTimeout(resolve, ms));
-      }
-
-      this.mod = await getAllModsChildren();
-      console.log(this.mod);
-      await timeout(1000);
-    },
-  },
-  mounted() {
-    this.fetchGames().then(() => {
-      this.loadingStatus = false;
-    });
   },
   components: {
     ElSubMenu,
@@ -89,9 +77,6 @@ export default {
     ElAside,
     ElMain,
     ElContainer,
-  },
-  directives: {
-    loading: ElLoading.directive,
   },
 };
 </script>

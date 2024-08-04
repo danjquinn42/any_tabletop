@@ -1,9 +1,10 @@
 <template>
-  <el-container>
+  <el-container
+      v-loading="!modStore.isLoaded">
     <el-header>
       <top-navigation></top-navigation>
     </el-header>
-    <RouterView />
+    <RouterView/>
   </el-container>
 </template>
 
@@ -14,6 +15,7 @@ import {
   ElHeader,
   ElFooter,
   ElText,
+  ElLoading,
 } from "element-plus";
 import "./index.css";
 import TopNavigation from "./components/TopNavigation.vue";
@@ -21,6 +23,7 @@ import ZoomSlider from "./components/map/ZoomSlider.vue";
 import "element-plus/es/components/descriptions/style/css";
 import {useModStore} from "./store/modStore";
 import {useProfileStore} from "./store/profileStore";
+
 export default {
   name: "App",
   components: {
@@ -31,16 +34,20 @@ export default {
     ElContainer,
     ElPageHeader,
     ZoomSlider,
+    ElLoading,
   },
   setup() {
     const modStore = useModStore();
     const profileStore = useProfileStore();
-    return { modStore, profileStore };
+    return {modStore, profileStore};
   },
   mounted() {
     this.profileStore.init().then(() => {
       this.modStore.init();
     });
+  },
+  directives: {
+    loading: ElLoading.directive,
   },
 };
 </script>
