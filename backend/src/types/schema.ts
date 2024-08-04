@@ -57,6 +57,7 @@ export interface Mod {
 
 export interface Root {
   id: string;
+  entryModId?: string;
 }
 
 // This is for internal use only
@@ -64,16 +65,14 @@ export interface UnsecureInternalUserEntry {
   id: string;
   isProfileSetUp: boolean;
   googleId: string;
-  name: string;
-  username?: string;
+  displayName: string;
   givenName?: string;
   familyName?: string;
-  email?: string;
 }
 
 // This is the public facing user
 export interface UserProfile {
-  username?: string;
+  displayName: string;
   isProfileSetUp: boolean;
   id: string;
 }

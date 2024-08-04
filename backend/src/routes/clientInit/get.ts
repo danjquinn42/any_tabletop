@@ -13,11 +13,17 @@ export async function getInitialStateFromUserRoot(
   session: Session,
   userId: string,
 ) {
-  const getMods = `
+  const getRoot = `
         MATCH (user:User { id: $userId })-[entry:ENTRY]->(root:Root)
         MATCH (root:Root)-[has:HAS]->(mod:Mod)
-        RETURN collect(DISTINCT mod) as mods
+        RETURN root, mod as entryMod
     `;
+
+  const getMods = `
+        MATCH (startMod:Mod {id: $modId})
+        OPTIONAL MATCH path=(startMod)-[:OVERRIDES*0..]->(modChain:Mod)
+        RETURN [mod in nodes(path) | mod] AS mods
+  `;
 
   const getGames = `
       MATCH (mod:Mod { id: $modId})-[has:HAS]->(game:Game)
@@ -25,7 +31,7 @@ export async function getInitialStateFromUserRoot(
   `;
 
   const getConfigs = `
-    MATCH (game:Game { id: $gameId })-[has:HAS]->(componentConfig:ScoreComponentConfig)
+    MATCH (game:Game { id: $gameId })-[creates:CREATES]->(componentConfig:ScoreComponentConfig)
     RETURN collect(DISTINCT componentConfig) as componentConfigs
   `;
 
@@ -37,7 +43,15 @@ export async function getInitialStateFromUserRoot(
   try {
     return session.executeRead(async (transaction) => {
       const response: RootNodeResponse = {};
-      const modResult = await transaction.run(getMods, { userId });
+      const rootResult = await transaction.run(getRoot, { userId });
+
+      const root = rootResult.records[0].get("root").properties;
+      const entryMod = rootResult.records[0].get("entryMod");
+      root.entryModId = entryMod.properties.id;
+
+      const modResult = await transaction.run(getMods, {
+        modId: root.entryModId,
+      });
       const modList: Mod[] = modResult.records[0]
         .get("mods")
         .map((m: GraphRecord<Mod>) => m.properties);
@@ -77,6 +91,7 @@ export async function getInitialStateFromUserRoot(
         componentList.push(...stats);
       }
 
+      response.root = root;
       response.mods = keyBy(modList, "id");
       response.games = keyBy(gameList, "id");
       response.components = keyBy(componentList, "id");

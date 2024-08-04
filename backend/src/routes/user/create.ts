@@ -9,30 +9,23 @@ export async function createUser(session: Session, googleProfile: Profile) {
   const rootId = crypto.randomUUID();
   const googleId = googleProfile.id;
   const modId = DEFAULT_MOD_ID;
-  const email: undefined | string =
-    googleProfile.emails &&
-    googleProfile.emails[0] &&
-    googleProfile.emails[0].value;
 
   const userEntry: UnsecureInternalUserEntry = {
     id,
     googleId,
     isProfileSetUp: false,
-    name: googleProfile.displayName,
+    displayName: googleProfile.displayName,
     givenName: googleProfile.name?.givenName,
     familyName: googleProfile.name?.familyName,
-    email,
   };
 
   const createUser = `
         CREATE (user:User {
             id: $id,
             googleId: $googleId,
-            isProfileSetUp: $isProfileSetUp,
-            name: $name,
+            displayName: $displayName,
             givenName: $givenName,
-            familyName: $familyName,
-            email: $email
+            familyName: $familyName
         }) 
         RETURN user
         `;

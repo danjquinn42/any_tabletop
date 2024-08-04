@@ -6,6 +6,7 @@ import { getModsChildren } from "./mod/get";
 import { getInitialStateFromUserRoot } from "./clientInit/get";
 import { UserProfile } from "../types/schema";
 import { getEnvVar } from "../util/util";
+import { getUserById } from "./user/get";
 
 export const driver = neo4j.driver(
   getEnvVar("NEO4J_DRIVER_URL"),
@@ -25,8 +26,17 @@ const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
 };
 
 // test current user profile
-router.get("/profile", isAuthenticated, (req: Request, res: Response) => {
-  res.send(req.user); // Access the authenticated user
+router.get("/profile", isAuthenticated, async (req: Request, res: Response) => {
+  const session = driver.session();
+  try {
+    const profile = req.user as UserProfile;
+    const user = await getUserById(session, profile.id);
+    res.send(user); // Access the authenticated user
+  } catch (error) {
+    console.error("unable to get current profile", error);
+  } finally {
+    session.close();
+  }
 });
 
 // Test route
@@ -42,7 +52,7 @@ router.get("/init", async (req: Request, res: Response) => {
       const initialState = await getInitialStateFromUserRoot(session, user.id);
       res.send(initialState);
     } else {
-      res.send("Dan, make sure to implement default state method");
+      res.send({ message: "Dan, make sure to implement default state method" });
     }
   } catch (error) {
     console.error("Failed to fetch initial state", error);

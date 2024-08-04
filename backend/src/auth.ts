@@ -8,7 +8,7 @@ import { driver } from "./routes";
 import { getUserByGoogleId } from "./routes/user/get";
 import { UNKNOWN_USER_ID } from "./util/const";
 import { createUser } from "./routes/user/create";
-import { UserProfile } from "./types/schema";
+import { UnsecureInternalUserEntry, UserProfile } from "./types/schema";
 
 dotenv.config();
 
@@ -63,7 +63,13 @@ passport.deserializeUser(async (id: string, done) => {
       "MATCH (user:User {id: $id}) RETURN user",
       { id },
     );
-    const user = result.records[0]?.get("user").properties;
+    const profile: UnsecureInternalUserEntry =
+      result.records[0]?.get("user").properties;
+    const user: UserProfile = {
+      id: profile.id,
+      displayName: profile.displayName,
+      isProfileSetUp: profile.isProfileSetUp,
+    };
     done(null, user);
   } catch (error) {
     done(error, null);

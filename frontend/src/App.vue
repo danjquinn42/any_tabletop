@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-header>
-      <top-navigation :loggedIn="loggedIn"></top-navigation>
+      <top-navigation></top-navigation>
     </el-header>
     <RouterView />
   </el-container>
@@ -16,37 +16,11 @@ import {
   ElText,
 } from "element-plus";
 import "./index.css";
-import { isEmpty, isNil } from "lodash";
-import {getInitialState} from "./api/init";
-import { getCurrentUser } from "./api/profile";
 import TopNavigation from "./components/TopNavigation.vue";
 import ZoomSlider from "./components/map/ZoomSlider.vue";
 import "element-plus/es/components/descriptions/style/css";
-
-// Add debouce to window ResizeObserve to avoid excessive calls
-// This is to prevent the error
-// "ResizeObserver loop completed with undelivered notifications"
-// which was seen frequently when building the form editor
-const debounce = (callback, delay) => {
-  let tid;
-  return function (...args) {
-    const ctx = self;
-    tid && clearTimeout(tid);
-    tid = setTimeout(() => {
-      callback.apply(ctx, args);
-    }, delay);
-  };
-};
-
-const _resizeObserver = window.ResizeObserver;
-
-window.ResizeObserver = class ResizeObserver extends _resizeObserver {
-  constructor(callback) {
-    callback = debounce(callback, 20);
-    super(callback);
-  }
-};
-
+import {useModStore} from "./store/modStore";
+import {useProfileStore} from "./store/profileStore";
 export default {
   name: "App",
   components: {
@@ -58,23 +32,15 @@ export default {
     ElPageHeader,
     ZoomSlider,
   },
-  data: function () {
-    return {
-      loggedIn: false,
-      user: {},
-    };
-  },
-  methods: {
-    async getUserProfile() {
-      this.user = await getCurrentUser();
-      if (!isNil(this.user) && !isEmpty(this.user)) {
-        this.loggedIn = true;
-      }
-    },
+  setup() {
+    const modStore = useModStore();
+    const profileStore = useProfileStore();
+    return { modStore, profileStore };
   },
   mounted() {
-    this.getUserProfile();
-    getInitialState();
+    this.profileStore.init().then(() => {
+      this.modStore.init();
+    });
   },
 };
 </script>

@@ -1,6 +1,6 @@
 import { Session } from "neo4j-driver";
 import { isEmpty, isNil } from "lodash";
-import { UnsecureInternalUserEntry } from "../../types/schema";
+import { UnsecureInternalUserEntry, UserProfile } from "../../types/schema";
 import { UNKNOWN_USER_ID } from "../../util/const";
 
 export async function getUserByGoogleId(session: Session, googleId: string) {
@@ -22,7 +22,7 @@ export async function getUserByGoogleId(session: Session, googleId: string) {
         maybeUser.records[0].get("user").properties;
 
       return Promise.resolve({
-        username: profile.username,
+        displayName: profile.displayName,
         isProfileSetUp: profile.isProfileSetUp,
         id: profile.id,
       });
@@ -36,7 +36,11 @@ export async function getUserByGoogleId(session: Session, googleId: string) {
 }
 
 export async function getUserById(session: Session, id: string) {
-  const query = `MATCH (user:User{ id: $id}) RETURN user`;
+  const query = `MATCH (user:User{ id: $id }) RETURN user`;
   const users = await session.run(query, { id });
-  return users.records[0].get("user");
+  const userEntry = users.records[0].get("user").properties;
+  return {
+    displayName: userEntry.displayName,
+    id: userEntry.id,
+  } as UserProfile;
 }

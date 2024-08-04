@@ -25,7 +25,7 @@ export async function getMod(session: Session, modName: string) {
 
 export async function getModsChildren(session: Session, modName: string) {
   const query = `MATCH (mod:Mod {name: $modName})-[creates:CREATES]->(game:Game)
-   OPTIONAL MATCH (game)-[contains:CONTAINS]->(config:ScoreComponentConfig)
+   OPTIONAL MATCH (game)-[creates:CREATES]->(config:ScoreComponentConfig)
    OPTIONAL MATCH (config)-[defines:DEFINES]->(stat:Stat)
    RETURN mod, collect(DISTINCT game) AS games, 
           collect(DISTINCT config) AS configs, 

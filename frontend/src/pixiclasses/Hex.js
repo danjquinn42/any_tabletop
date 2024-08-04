@@ -100,7 +100,9 @@ class Hex {
         this.background.addChild(imageSprite);
         this.background.addChild(mask);
       })
-      .catch((e) => console.log(`failed to load icon ${this.styles.icon}`, e));
+      .catch((e) =>
+        console.error(`failed to load icon ${this.styles.icon}`, e),
+      );
   }
 
   drawHexagon(graphic) {

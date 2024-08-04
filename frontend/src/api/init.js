@@ -8,7 +8,7 @@ export const getInitialState = () =>
       if (!response.ok) {
         throw new Error("failed to initialize");
       }
-      console.log(response.json());
+      return response.json();
     })
     .catch((error) => {
       console.error("Error:", error);
