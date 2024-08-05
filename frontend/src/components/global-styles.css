@@ -5,6 +5,10 @@ html {
     sans-serif;
 }
 
+* {
+  --color: pink;
+}
+
 h1,
 .h1-input {
   font-size: 1.8rem;

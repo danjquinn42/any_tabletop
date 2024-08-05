@@ -3,15 +3,22 @@
   "version": "1.0.0",
   "description": "Ada Frontend",
   "dependencies": {
+    "@codemirror/basic-setup": "^0.20.0",
+    "@codemirror/lang-css": "^6.2.1",
+    "@codemirror/lang-html": "^6.4.9",
+    "@codemirror/theme-one-dark": "^6.1.2",
+    "@codemirror/view": "^6.30.0",
     "@element-plus/icons-vue": "^2.3.1",
     "babel": "^6.23.0",
+    "dompurify": "^3.1.6",
     "dotenv": "^16.4.5",
     "element-plus": "^2.7.7",
     "lodash": "^4.17.21",
     "mathjs": "^13.0.3",
     "pinia": "^2.2.0",
     "pixi.js": "^8.2.5",
-    "vue": "^3.4.33"
+    "vue": "^3.4.33",
+    "vue-codemirror": "^6.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.24.9",

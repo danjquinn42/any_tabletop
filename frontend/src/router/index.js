@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import CreateComponent from "../components/edit/createcomponent/CreateComponent.vue";
+import NewComponent from "../components/edit/createcomponent/NewComponent.vue";
 import Login from "../components/Login.vue";
 import Map from "../components/map/Map.vue";
 import Docs from "../components/docs/Docs.vue";
@@ -36,6 +37,12 @@ const routes = [
             name: "create new component",
             props: true,
             component: CreateComponent,
+          },
+          {
+            path: "component/code",
+            name: "create new component",
+            props: true,
+            component: NewComponent,
           },
         ],
       },

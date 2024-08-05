@@ -1,45 +1,31 @@
 <template>
-  <el-main>
-    <el-card class="preview-container" @click="createCoreStatsVisible = true">
-      <template #header><span>Scores And Modifiers</span></template>
-      <div class="preview">
-        <AbilityScoreModifiers
-          display-sign
-          class="preview"
-          :stats="exampleCoreStats"
-        />
-      </div>
-    </el-card>
-  </el-main>
+  <el-main class="main">
+    <ComponentPreviewCard
+        :example-core-stats="exampleCoreStats"/>
 
-  <el-dialog
-    width="95%"
-    style="max-width: 1400px"
-    v-model="createCoreStatsVisible"
-    title="Scores And Modifiers"
-  >
-    <EditAbilityScoreModifiers :on-submit="createStatsConfig" />
-  </el-dialog>
+    <NewComponentPreview/>
+
+  </el-main>
 </template>
 
 <script>
-import { ElButton, ElCard, ElDialog, ElHeader, ElMain } from "element-plus";
+import {ElCard, ElDialog, ElMain} from "element-plus";
 import "element-plus/es/components/descriptions/style/css";
-import { map } from "lodash";
-import { createStatsConfigComponent } from "../../../api/component";
+import {map} from "lodash";
+import ComponentPreviewCard from "./ComponentPreviewCard.vue";
 import EditAbilityScoreModifiers from "./EditAbilityScoreModifiers.vue";
-import AbilityScoreModifiers from "./AbilityScoreModifiers.vue";
+import NewComponentPreview from "./NewComponentPreview.vue";
 
 export default {
   name: "CreateComponent",
   components: {
+    NewComponentPreview,
+    ComponentPreviewCard,
     EditAbilityScoreModifiers,
     ElDialog,
-    ElHeader,
     ElMain,
     ElCard,
-    AbilityScoreModifiers,
-    ElButton,
+
   },
   data: function () {
     return {
@@ -69,36 +55,25 @@ export default {
           value: 8,
         },
       },
-      createCoreStatsVisible: false,
     };
   },
   methods: {
     statsAsList() {
       return map(this.stats, (v) => v);
     },
-    async createStatsConfig(config) {
-      const gameId = this.$route.params.gameId;
-      await createStatsConfigComponent(config, gameId);
-      this.createCoreStatsVisible = false;
-    },
   },
 };
 </script>
 
 <style scoped>
-.preview-container {
-  margin: 1rem auto;
-  align-self: center;
-  min-width: 15rem;
-  max-width: 20rem;
-}
 
-.preview-container:hover {
-  border-color: var(--el-color-primary);
-}
-
-.preview {
-  zoom: 0.7;
-  place-content: center;
+.main {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  justify-content: space-around;
+  grid-template-columns: repeat(auto-fill, 20rem);
+  flex-flow: wrap;
+  padding: 0;
 }
 </style>
