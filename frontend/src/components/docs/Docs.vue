@@ -2,38 +2,27 @@
   <el-container
       class="container"
   >
-    <el-aside width="auto">
-      <el-menu :default-active="$router.path" mode="vertical" router>
-        <el-menu-item :index="getRoute('about')">
-          <template #title>About</template>
+    <el-header class="header">
+
+      <el-menu class="menu" :default-active="$router.path" mode="horizontal" router>
+        <el-menu-item
+            class="menu-item"
+            :index="getRoute(`component/new`)"
+        >Components
         </el-menu-item>
-        <el-sub-menu v-for="game in modStore.games" :index="game.name">
-          <template #title>{{ game.name }}</template>
-          <el-menu-item :index="getRoute(`game/${game.id}`)"
-          >About
-          </el-menu-item
-          >
-          <el-sub-menu :index="game.name + 'components'">
-            <template #title>Components</template>
-            <el-menu-item :index="getRoute(`game/${game.id}/component/new`)"
-            >Create New Component
-            </el-menu-item
-            >
-            <el-menu-item
-                v-for="compId in game.configIds"
-                :index="getRoute(`game/${game.id}/component/${compId}`)"
-            >{{ modStore.components[compId].name }}
-            </el-menu-item
-            >
-          </el-sub-menu>
-        </el-sub-menu>
+        <el-menu-item
+            class="menu-item"
+        >Games
+        </el-menu-item>
       </el-menu>
-    </el-aside>
-    <el-scrollbar class="scroll" always>
+    </el-header>
+    <!--    <el-aside>-->
+    <!--    </el-aside>-->
       <el-main class="main">
+    <el-scrollbar class="scroll" always>
         <RouterView :key="$route.fullPath"/>
-      </el-main>
     </el-scrollbar>
+      </el-main>
   </el-container>
 </template>
 <script>
@@ -50,6 +39,7 @@ import {
   ElMenuItem,
   ElScrollbar,
   ElSubMenu,
+  ElHeader
 } from "element-plus";
 
 export default {
@@ -69,6 +59,7 @@ export default {
     },
   },
   components: {
+    ElHeader,
     ElSubMenu,
     ElButton,
     ElMenuItem,
@@ -81,8 +72,25 @@ export default {
 };
 </script>
 <style scoped>
+
+.header {
+  height: fit-content;
+  padding-bottom: 0;
+}
+
+.menu {
+  height: 3rem;
+}
+
+.menu-item {
+  font-size: 0.8rem;
+  padding: 0.8rem;
+  font-weight: normal;
+}
+
 .main {
   width: 100%;
+  padding-top: 0;
 }
 
 .container {
