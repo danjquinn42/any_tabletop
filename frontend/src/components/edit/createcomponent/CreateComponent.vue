@@ -1,7 +1,6 @@
 <template>
   <el-main class="main">
-    <ComponentPreviewCard
-        :example-core-stats="exampleCoreStats"/>
+    <ComponentPreviewCard/>
 
     <NewComponentPreview/>
 
@@ -26,36 +25,6 @@ export default {
     ElMain,
     ElCard,
 
-  },
-  data: function () {
-    return {
-      exampleCoreStats: {
-        STR: {
-          label: "STR",
-          value: 16,
-        },
-        DEX: {
-          label: "DEX",
-          value: 14,
-        },
-        CON: {
-          label: "CON",
-          value: 16,
-        },
-        INT: {
-          label: "INT",
-          value: 8,
-        },
-        WIS: {
-          label: "WIS",
-          value: 10,
-        },
-        CHA: {
-          label: "CHA",
-          value: 8,
-        },
-      },
-    };
   },
   methods: {
     statsAsList() {

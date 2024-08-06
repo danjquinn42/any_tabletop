@@ -25,14 +25,12 @@ export async function getMod(session: Session, modName: string) {
 
 export async function getModsChildren(session: Session, modName: string) {
   const query = `MATCH (mod:Mod {name: $modName})-[creates:CREATES]->(game:Game)
-   OPTIONAL MATCH (game)-[creates:CREATES]->(config:ScoreComponentConfig)
-   OPTIONAL MATCH (config)-[defines:DEFINES]->(stat:Stat)
+   OPTIONAL MATCH (mod:Mod  {name: $modName})-[creates:CREATES]->(config:ComponentConfig)
+   OPTIONAL MATCH (config:ComponentConfig)-[contains:CONTAINS]->(stat:Stat)
    RETURN mod, collect(DISTINCT game) AS games, 
           collect(DISTINCT config) AS configs, 
           collect(DISTINCT stat) AS stats,
-          collect(Distinct creates) as creates,
-          collect(DISTINCT contains) AS containsRels,
-          collect(DISTINCT defines) AS definesRels`;
+          collect(DISTINCT defines) AS containsRels`;
 
   try {
     const result = await session.run(query, {
@@ -43,13 +41,13 @@ export async function getModsChildren(session: Session, modName: string) {
       return {};
     }
 
-    // TODO: replace with methods when multiple games defined
     const games = result.records[0].get("games");
     const configs = mapByIdentity<ScoreComponentConfig>(
       result.records[0].get("configs") as GraphRecord<ScoreComponentConfig>[],
     );
+
     const stats = result.records[0].get("stats");
-    const configDefines = result.records[0].get("definesRels");
+    const configDefines = result.records[0].get("containsRels");
     ``;
     configDefines.forEach((rel: NodeRelationship) => {
       const configId = rel.start;
@@ -73,11 +71,18 @@ export async function getModsChildren(session: Session, modName: string) {
       ...g.properties,
       identity: g.identity,
     }));
+
+    const flatConfigs = games.map((c: GraphRecord<ScoreComponentConfig>) => ({
+      ...c.properties,
+      identity: c.identity,
+    }));
+
     flatGames[0].configs = Array.from(configs.values());
     return (
       result.records[0].get("mod").properties,
       {
         games: flatGames,
+        components: flatConfigs,
       }
     );
   } catch (error) {

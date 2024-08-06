@@ -254,12 +254,12 @@ import {
   find,
   isEmpty,
   keyBy,
-  merge,
   random,
   replace,
 } from "lodash";
 import AbilityScoreModifiers from "./AbilityScoreModifiers.vue";
 import { create, all } from "mathjs";
+import { useModStore } from "../../../store/modStore";
 
 const math = create(all);
 export default {
@@ -283,13 +283,23 @@ export default {
     ElCard,
   },
   props: {
-    onSubmit: {
+    closeDialog: {
       type: Function,
-      default: () => console.log("no submit defined fro EditAbility"),
     },
-    abilityScoreModifierData: {
+    mod: {
       type: Object,
-      default: () => ({
+      default: {},
+    },
+  },
+  setup() {
+    const modStore = useModStore();
+    return { modStore };
+  },
+  data: function () {
+    return {
+      numberOfElements: 6,
+      previousNumberOfElements: 6,
+      form: {
         componentName: "",
         minValue: 0,
         maxValue: 30,
@@ -300,18 +310,7 @@ export default {
         includeModifiers: true,
         displaySign: true,
         stats: [{}],
-      }),
-    },
-    mod: {
-      type: Object,
-      default: {},
-    },
-  },
-  data: function () {
-    return {
-      numberOfElements: 6,
-      previousNumberOfElements: 6,
-      form: {},
+      },
       componentId: "new",
     };
   },
@@ -352,10 +351,12 @@ export default {
     statsAsObject() {
       return keyBy(this.form.stats, "label");
     },
-    onFormSubmit() {
-      const scrubbedStats = this.form.stats.map((s) => ({ ...s, value: 10 }));
+    async onFormSubmit() {
+      const scrubbedStats = this.form.stats.map((s) => ({ ...s, value: 0 }));
       const payload = {
+        id: this.componentId,
         name: this.form.componentName,
+        type: "ScoresAndModifiers",
         maxValue: this.form.maxValue,
         minValue: this.form.minValue,
         derivedFormulaInput: this.form.includeModifiers
@@ -367,10 +368,10 @@ export default {
         displaySign: this.form.displaySign,
         stats: scrubbedStats,
       };
-      this.onSubmit(payload);
+      await this.modStore.updateComponent(payload);
+      this.closeDialog()
     },
     updateProps() {
-      merge(this.form, this.abilityScoreModifierData);
       this.numberOfElements = this.form.stats.length;
       this.previousNumberOfElements = this.numberOfElements;
       if (!isEmpty(this.mod)) {

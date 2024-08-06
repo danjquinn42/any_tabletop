@@ -22,12 +22,11 @@
       v-model="createCoreStatsVisible"
       title="Scores And Modifiers"
   >
-    <EditAbilityScoreModifiers :on-submit="createStatsConfig"/>
+    <EditAbilityScoreModifiers :closeDialog="() => createCoreStatsVisible = !createCoreStatsVisible"/>
   </el-dialog>
 </template>
 <script>
 import {ElCard, ElDialog} from "element-plus";
-import {createStatsConfigComponent} from "../../../api/component";
 import AbilityScoreModifiers from "./AbilityScoreModifiers.vue"
 import EditAbilityScoreModifiers from "./EditAbilityScoreModifiers.vue";
 
@@ -35,20 +34,38 @@ export default {
   name: 'ComponentPreviewCard',
   components: {EditAbilityScoreModifiers, ElDialog, ElCard, AbilityScoreModifiers},
   props: {
-    exampleCoreStats: {}
   },
   data: function() {
     return {
       createCoreStatsVisible: false,
+      exampleCoreStats: {
+        STR: {
+          label: "STR",
+          value: 16,
+        },
+        DEX: {
+          label: "DEX",
+          value: 14,
+        },
+        CON: {
+          label: "CON",
+          value: 16,
+        },
+        INT: {
+          label: "INT",
+          value: 8,
+        },
+        WIS: {
+          label: "WIS",
+          value: 10,
+        },
+        CHA: {
+          label: "CHA",
+          value: 8,
+        },
+      },
     }
   },
-  methods: {
-    async createStatsConfig(config) {
-      const gameId = this.$route.params.gameId;
-      await createStatsConfigComponent(config, gameId);
-      this.createCoreStatsVisible = false;
-    },
-  }
 }
 </script>
 <style scoped>

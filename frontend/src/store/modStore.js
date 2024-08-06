@@ -1,5 +1,6 @@
 import { isEmpty } from "lodash";
 import { defineStore } from "pinia";
+import { createStatsConfigComponent } from "../api/component";
 import { getInitialState } from "../api/init";
 
 export const useModStore = defineStore("mods", {
@@ -23,6 +24,20 @@ export const useModStore = defineStore("mods", {
         this.stats = initialState.stats;
       }
       this.isLoaded = true;
+    },
+    async updateComponent(component) {
+      if (component.id === "new") {
+        const result = await createStatsConfigComponent(
+          component,
+          this.root.entryModId,
+        );
+        const config = result.config;
+        const stats = result.stats;
+        this.components[config.id] = config;
+        stats.forEach((s) => (this.stats[s.id] = s));
+      } else {
+        throw new Error("Component update has not been implemented");
+      }
     },
   },
 });

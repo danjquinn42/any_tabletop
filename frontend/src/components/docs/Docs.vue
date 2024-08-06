@@ -4,20 +4,26 @@
   >
     <el-header class="header">
 
-      <el-menu class="menu" :default-active="$router.path" mode="horizontal" router>
-        <el-menu-item
-            class="menu-item"
-            :index="getRoute(`component/new`)"
-        >Components
-        </el-menu-item>
-        <el-menu-item
-            class="menu-item"
-        >Games
-        </el-menu-item>
+      <el-menu class="menu" popper-class="popper-sub-menu" :default-active="$router.path" mode="horizontal" router>
+        <el-sub-menu
+            index="components">
+          <template #title>Components</template>
+          <el-menu-item
+              v-if="isEditMode"
+              class="menu-item"
+              :index="getRoute(`component/new`)"
+          >Create New Component
+          </el-menu-item>
+          <el-menu-item
+              v-for="component in Object.values(modStore.components)"
+              class="menu-item"
+              :index="getRoute(`component/${component.id}`)"
+          >{{ component.name }}
+          </el-menu-item>
+
+        </el-sub-menu>
       </el-menu>
     </el-header>
-    <!--    <el-aside>-->
-    <!--    </el-aside>-->
       <el-main class="main">
     <el-scrollbar class="scroll" always>
         <RouterView :key="$route.fullPath"/>
@@ -71,6 +77,15 @@ export default {
   },
 };
 </script>
+<style>
+
+/* class is used but Webstorm linter doesn't pick it up.*/
+.popper-sub-menu {
+  max-height: 25rem;
+  overflow: auto;
+}
+</style>
+
 <style scoped>
 
 .header {

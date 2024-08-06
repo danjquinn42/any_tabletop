@@ -82,25 +82,20 @@ router.get("/hex/all", async (req: Request, res: Response) => {
   }
 });
 
-router.put(
-  "/game/:gameId/score-component",
-  async (req: Request, res: Response) => {
-    const session = driver.session();
-    const gameId: string = req.params.gameId;
-    try {
-      const { config } = req.body;
-      await createScoreComponentConfig(session, config, gameId);
-      res
-        .status(201)
-        .send(`Config created with relationships to Game ${gameId}`);
-    } catch (error) {
-      console.error("FAILED TO CREATE", error);
-      res.status(500).send(`Error creating Config on Game ${gameId} ${error}`);
-    } finally {
-      await session.close();
-    }
-  },
-);
+router.put("/component/new/:modId", async (req: Request, res: Response) => {
+  const session = driver.session();
+  const modId: string = req.params.modId;
+  try {
+    const { config } = req.body;
+    const result = await createScoreComponentConfig(session, config, modId);
+    res.status(201).send(result);
+  } catch (error) {
+    console.error("FAILED TO CREATE", error);
+    res.status(500).send(`Error creating Config on Mod ${modId}`);
+  } finally {
+    await session.close();
+  }
+});
 
 router.get("/mod/children", async (req: Request, res: Response) => {
   const session = driver.session();

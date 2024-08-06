@@ -31,12 +31,12 @@ export async function getInitialStateFromUserRoot(
   `;
 
   const getConfigs = `
-    MATCH (game:Game { id: $gameId })-[creates:CREATES]->(componentConfig:ScoreComponentConfig)
+    MATCH (mod:Mod { id: $modId })-[creates:CREATES]->(componentConfig:ComponentConfig)
     RETURN collect(DISTINCT componentConfig) as componentConfigs
   `;
 
   const getStats = `
-    MATCH (c:ScoreComponentConfig { id: $configId })-[DEFINES]->(stat:Stat)
+    MATCH (c:ScoreComponentConfig { id: $configId })-[CONTAINS]->(stat:Stat)
     RETURN collect(DISTINCT stat) as stats
   `;
 
@@ -67,17 +67,17 @@ export async function getInitialStateFromUserRoot(
         gameList.push(...games);
       }
 
-      const componentList: ScoreComponentConfig[] = [];
-      for (const game of gameList) {
-        const configResult = await transaction.run(getConfigs, {
-          gameId: game.id,
-        });
-        const configs = configResult.records[0]
-          .get("componentConfigs")
-          .map((s: GraphRecord<ScoreComponentConfig>) => s.properties);
-        game.configIds = configs.map((s: ScoreComponentConfig) => s.id);
-        componentList.push(...configs);
-      }
+      // TODO: Update when multiple mods are created
+      // this only fetches configs from entry mod
+      const configResult = await transaction.run(getConfigs, {
+        modId: root.entryModId,
+      });
+      console.log("config record", configResult.records[0]);
+      const componentList = configResult.records[0]
+        .get("componentConfigs")
+        .map((s: GraphRecord<ScoreComponentConfig>) => s.properties);
+
+      console.log("Fetched Components", componentList);
 
       const statList: Stat[] = [];
       for (const comp of componentList) {
