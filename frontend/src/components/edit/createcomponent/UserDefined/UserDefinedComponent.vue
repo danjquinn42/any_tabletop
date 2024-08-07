@@ -51,11 +51,11 @@ import {oneDark} from '@codemirror/theme-one-dark';
 import DOMPurify from 'dompurify';
 import {ElButton, ElCard, ElDialog, ElForm, ElMain, ElText} from "element-plus";
 import {Codemirror} from 'vue-codemirror';
-import '../../global-styles.css';
+import '../../../global-styles.css';
 import CssVariables from "./CssVariables.vue";
 
 export default {
-  name: 'NewComponent',
+  name: 'UserDefined',
   components: {
     CssVariables,
     ElDialog,

@@ -259,7 +259,7 @@ import {
 } from "lodash";
 import AbilityScoreModifiers from "./AbilityScoreModifiers.vue";
 import { create, all } from "mathjs";
-import { useModStore } from "../../../store/modStore";
+import { useModStore } from "../../../../store/modStore";
 
 const math = create(all);
 export default {

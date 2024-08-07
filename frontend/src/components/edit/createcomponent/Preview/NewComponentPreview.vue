@@ -16,19 +16,19 @@
       style="max-width: 1400px"
       v-model="visible"
   >
-    <NewComponent :on-submit="createStatsConfig"/>
+    <UserDefined :on-submit="createStatsConfig"/>
   </el-dialog>
 </template>
 <script>
 import {ElCard, ElDialog} from "element-plus";
-import {createStatsConfigComponent} from "../../../api/component";
-import AbilityScoreModifiers from "./AbilityScoreModifiers.vue"
-import EditAbilityScoreModifiers from "./EditAbilityScoreModifiers.vue";
-import NewComponent from "./NewComponent.vue";
+import {createStatsConfigComponent} from "../../../../api/component";
+import AbilityScoreModifiers from "../AbilityScores/AbilityScoreModifiers.vue"
+import EditAbilityScoreModifiers from "../AbilityScores/EditAbilityScoreModifiers.vue";
+import UserDefined from "../UserDefined/UserDefinedComponent.vue";
 
 export default {
   name: 'NewComponentPreview',
-  components: {NewComponent, EditAbilityScoreModifiers, ElDialog, ElCard, AbilityScoreModifiers},
+  components: {UserDefined, EditAbilityScoreModifiers, ElDialog, ElCard, AbilityScoreModifiers},
   props: {
   },
   data: function() {
