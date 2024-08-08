@@ -20,7 +20,7 @@
 import {Handle, Position} from "@vue-flow/core";
 import {ATNilData} from "../types/ATNilData";
 import {ATNodeData} from "../types/ATNodeData";
-import {ATNumberData} from "../types/NumberData";
+import {ATNumberData} from "../types/ATNumberData";
 
 export default {
   name: 'DisplayNumberNode',

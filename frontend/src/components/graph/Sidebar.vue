@@ -1,7 +1,8 @@
 <script setup>
 import {ATNilData} from "./types/ATNilData";
 import {ATNodeData} from "./types/ATNodeData";
-import {ATNumberData} from "./types/NumberData";
+import {ATNumberData} from "./types/ATNumberData";
+import {ATStringData} from "./types/ATStringData";
 import useDragAndDrop from './useDnD';
 
 const {onDragStart} = useDragAndDrop();
@@ -26,6 +27,22 @@ const {onDragStart} = useDragAndDrop();
           new ATNodeData(new ATNumberData(), new ATNumberData()))"
       >
         Display Number Node
+      </div>
+      <div
+          class="vue-flow__node-input"
+          draggable="true"
+          @dragstart="onDragStart($event, 'input',
+          new ATNodeData(new ATNilData(), new ATStringData()))"
+      >
+        Input Node
+      </div>
+      <div
+          class="vue-flow__node-input"
+          draggable="true"
+          @dragstart="onDragStart($event, 'displayString',
+          new ATNodeData(new ATStringData(), new ATNilData()))"
+      >
+        Display Short Text
       </div>
     </div>
   </aside>

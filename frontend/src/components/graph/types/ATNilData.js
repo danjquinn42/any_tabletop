@@ -1,11 +1,11 @@
 import { ATDataType } from "./ATDataType";
 
 export class ATNilData extends ATDataType {
-  value = undefined;
-  label = "undefined";
+  value = null;
+  label = "nil";
 
   constructor() {
-    super("undefined");
+    super("nil");
   }
 
   setValue() {

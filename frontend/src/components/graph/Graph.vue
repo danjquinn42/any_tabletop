@@ -30,6 +30,8 @@ import {markRaw} from 'vue';
 import {VueFlow, useVueFlow} from '@vue-flow/core';
 import DropzoneBackground from "./DropzoneBackground.vue";
 import DisplayNumberNode from "./nodes/DisplayNumberNode.vue";
+import DisplayStringNode from "./nodes/DisplayStringNode.vue";
+import InputNode from "./nodes/InputNode.vue";
 import InputNumberNode from "./nodes/InputNumberNode.vue";
 import Sidebar from "./Sidebar.vue";
 import useDragAndDrop from './useDnD';
@@ -53,8 +55,10 @@ export default {
     const {onDragOver, onDrop, onDragLeave, isDragOver} = useDragAndDrop();
 
     const nodeTypes = {
+      input: markRaw(InputNode),
       inputNumber: markRaw(InputNumberNode),
       displayNumber: markRaw(DisplayNumberNode),
+      displayString: markRaw(DisplayStringNode),
     };
 
     function onConnect(params) {
