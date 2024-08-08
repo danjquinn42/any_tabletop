@@ -1,12 +1,9 @@
 <template>
   <div class="input-number-node">
     <el-form>
-      <el-form-item label="Label">
-        <el-input v-model="label"></el-input>
-      </el-form-item>
       <el-form-item label="Character Level">
         <el-input-number
-            v-model="number"
+            v-model="data.nodeData.output.value"
             @change="updateNumber"
             :controls="false"
         />
@@ -26,7 +23,9 @@
 <script>
 import { useVueFlow, Handle, Position } from "@vue-flow/core";
 import { ElForm, ElFormItem, ElInputNumber, ElInput } from "element-plus";
-import { ref, watch } from 'vue';
+import {ATNilData} from "../types/ATNilData";
+import {ATNodeData} from "../types/ATNodeData";
+import {ATNumberData} from "../types/NumberData";
 
 export default {
   name: 'InputNumberNode',
@@ -43,41 +42,27 @@ export default {
     },
     data: {
       type: Object,
-      required: true,
-      default: {
-        number: 0,
-        children: [],
-      }
+      default: () => {
+        nodeData: new ATNodeData(new ATNilData(), new ATNumberData())
+      },
     },
   },
   setup(props) {
-    const { updateNodeData } = useVueFlow();
-    const number = ref(props.data.number);
-
-    if (!props.data.children) {
-      props.data.children = [];
-    }
+    const { updateNodeData, findNode } = useVueFlow();
 
     function updateNumber(newNumber) {
-      number.value = newNumber;
-      updateNodeData(props.id, { number: newNumber });
-      props.data.children.forEach(c => updateNodeData(c, { number: newNumber }));
+      const data = props.data.nodeData;
+      data.setOutputValue(newNumber);
+      updateNodeData(props.id, { nodeData: data});
+      data.forEachChild(c => {
+        const targetData = findNode(c).data.nodeData.withInputValue(newNumber);
+        updateNodeData(c, { nodeData: targetData});
+      });
     }
 
-    watch(() => props.data.number, (newNumber) => {
-      number.value = newNumber;
-    });
-
     return {
-      number,
       updateNumber,
       updateNodeData,
-    };
-  },
-  data() {
-    return {
-      number: this.data.number || 0,
-      label: this.data.label || "",
     };
   },
 };
@@ -93,7 +78,6 @@ export default {
 }
 
 .custom-handle {
-  /*position: absolute;*/
   width: 16px;
   height: 16px;
   color: black;

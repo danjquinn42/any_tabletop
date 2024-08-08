@@ -11,14 +11,16 @@
 
     <!-- Display content -->
     <div class="display-number-node">
-      {{ number }}
+      {{ data.nodeData.getInputValue() }}
     </div>
   </div>
 </template>
 
 <script>
-import { ref, watch } from "vue";
 import {Handle, Position} from "@vue-flow/core";
+import {ATNilData} from "../types/ATNilData";
+import {ATNodeData} from "../types/ATNodeData";
+import {ATNumberData} from "../types/NumberData";
 
 export default {
   name: 'DisplayNumberNode',
@@ -30,11 +32,9 @@ export default {
     },
     data: {
       type: Object,
-      required: true,
-      default: {
-        id: "",
-        number: 0,
-      }
+      default: () => {
+        nodeData: new ATNodeData(new ATNilData(), new ATNumberData())
+      },
     }
   },
   computed: {
@@ -43,16 +43,10 @@ export default {
     },
   },
   setup(props) {
-    const number = ref(props.data.number);
-
-    watch(() => props.data.number, (newNumber) => {
-      number.value = newNumber;
-    });
-    watch(() => props.data, (newData) => {
-      number.value = newData.number;
-    }, { deep: true });
-
-    return { Position, number };
+    props.data.nodeData.setOnUpdateInput(() => {
+      props.data.nodeData.setOutput(props.data.nodeData.input)
+    })
+    return { Position };
   }
 };
 </script>

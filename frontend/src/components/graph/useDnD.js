@@ -1,6 +1,8 @@
 import { isNil } from "lodash";
-import { ref, watch, onUnmounted } from "vue";
+import { ref, watch, onUnmounted, reactive } from "vue";
 import { useVueFlow } from "@vue-flow/core";
+import { ATNilData } from "./types/ATNilData";
+import { ATNodeData } from "./types/ATNodeData";
 
 let id = 0;
 
@@ -15,6 +17,7 @@ export default function useDragAndDrop() {
   const draggedType = ref(null);
   const isDragOver = ref(false);
   const isDragging = ref(false);
+  const draggedData = ref(new ATNodeData(new ATNilData(), new ATNilData()));
 
   const { addNodes, screenToFlowCoordinate, onNodesInitialized, updateNode } =
     useVueFlow();
@@ -23,13 +26,14 @@ export default function useDragAndDrop() {
     document.body.style.userSelect = dragging ? "none" : "";
   });
 
-  function onDragStart(event, type) {
+  function onDragStart(event, type, data) {
     if (event.dataTransfer) {
       event.dataTransfer.setData("application/vueflow", type);
       event.dataTransfer.effectAllowed = "move";
     }
 
     draggedType.value = type;
+    draggedData.value = data;
     isDragging.value = true;
 
     document.addEventListener("drop", onDrop);
@@ -72,7 +76,7 @@ export default function useDragAndDrop() {
       id: nodeId,
       type: draggedType.value,
       position,
-      data: { id: nodeId },
+      data: reactive({ nodeData: draggedData.value }),
     };
 
     const { off } = onNodesInitialized(() => {
