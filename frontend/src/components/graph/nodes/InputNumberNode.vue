@@ -1,40 +1,33 @@
 <template>
-  <div class="input-number-node">
+  <NodeWrapper
+      :id="id"
+      :data="data"
+      :output-count="1"
+      :input-count="0"
+      v-slot="slotProps"
+  >
     <el-form>
-      <el-form-item label="Character Level">
+      <el-form-item>
         <el-input-number
             v-model="data.nodeData.output.value"
-            @change="updateNumber"
+            @change="slotProps.updateOutputValue"
             :controls="false"
         />
       </el-form-item>
     </el-form>
-
-    <Handle
-        class="custom-handle source"
-        :id="'inputNumber' + id"
-        :position="Position.Bottom"
-        :connectable="true"
-        type="source"
-    ></Handle>
-  </div>
+  </NodeWrapper>
 </template>
 
 <script>
-import { useVueFlow, Handle, Position } from "@vue-flow/core";
-import { ElForm, ElFormItem, ElInputNumber, ElInput } from "element-plus";
+import {ElForm, ElFormItem, ElInputNumber, ElInput} from "element-plus";
 import {ATNilData} from "../types/ATNilData";
 import {ATNodeData} from "../types/ATNodeData";
 import {ATNumberData} from "../types/ATNumberData";
+import NodeWrapper from "./NodeWrapper.vue";
 
 export default {
   name: 'InputNumberNode',
-  computed: {
-    Position() {
-      return Position;
-    }
-  },
-  components: { ElInput, ElForm, ElFormItem, ElInputNumber, Handle },
+  components: {NodeWrapper, ElInput, ElForm, ElFormItem, ElInputNumber},
   props: {
     id: {
       type: String,
@@ -47,46 +40,9 @@ export default {
       },
     },
   },
-  setup(props) {
-    const { updateNodeData, findNode } = useVueFlow();
-
-    function updateNumber(newNumber) {
-      const data = props.data.nodeData;
-      data.setOutputValue(newNumber);
-      updateNodeData(props.id, { nodeData: data});
-      data.forEachChild(c => {
-        const targetData = findNode(c).data.nodeData.withInputValue(newNumber);
-        updateNodeData(c, { nodeData: targetData});
-      });
-    }
-
-    return {
-      updateNumber,
-      updateNodeData,
-    };
-  },
 };
 </script>
 
 
 <style scoped>
-.input-number-node {
-  padding: 10px;
-  border: 2px solid var(--el-border-color);
-  background-color: var(--el-bg-color-overlay);
-  border-radius: 4px;
-}
-
-.custom-handle {
-  width: 16px;
-  height: 16px;
-  color: black;
-  font-size: small;
-  text-align: center;
-  background-color: #fff;
-  border: 1px solid #999;
-  border-radius: 50%;
-  cursor: crosshair;
-}
-
 </style>

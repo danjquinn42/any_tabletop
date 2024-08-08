@@ -12,30 +12,25 @@ const {onDragStart} = useDragAndDrop();
   <aside>
     <div class="description">You can drag these nodes to the pane.</div>
     <div class="nodes">
-      <div
-          class="vue-flow__node-input"
-          draggable="true"
-          @dragstart="onDragStart($event, 'inputNumber',
-          new ATNodeData(new ATNilData(), new ATNumberData()))"
-      >
-        Input Number Node
-      </div>
-      <div
-          class="vue-flow__node-output"
-          draggable="true"
-          @dragstart="onDragStart($event, 'displayNumber',
-          new ATNodeData(new ATNumberData(), new ATNumberData()))"
-      >
-        Display Number Node
-      </div>
+      <h6>User Input Nodes</h6>
       <div
           class="vue-flow__node-input"
           draggable="true"
           @dragstart="onDragStart($event, 'input',
           new ATNodeData(new ATNilData(), new ATStringData()))"
       >
-        Input Node
+        Input Short Text
       </div>
+      <div
+          class="vue-flow__node-input"
+          draggable="true"
+          @dragstart="onDragStart($event, 'inputNumber',
+          new ATNodeData(new ATNilData(), new ATNumberData()))"
+      >
+        Input Number
+      </div>
+
+      <h6>Display Nodes</h6>
       <div
           class="vue-flow__node-input"
           draggable="true"
@@ -43,6 +38,14 @@ const {onDragStart} = useDragAndDrop();
           new ATNodeData(new ATStringData(), new ATNilData()))"
       >
         Display Short Text
+      </div>
+      <div
+          class="vue-flow__node-output"
+          draggable="true"
+          @dragstart="onDragStart($event, 'displayNumber',
+          new ATNodeData(new ATNumberData(), new ATNumberData()))"
+      >
+        Display Number
       </div>
     </div>
   </aside>

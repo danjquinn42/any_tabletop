@@ -4,7 +4,7 @@
       :data="data"
       :output-count="0"
       :input-count="1"
-  >{{ data.nodeData.getInputValue() }}
+  >{{ data.nodeData.getInputValue() || "&nbsp;" }}
   </NodeWrapper>
 </template>
 

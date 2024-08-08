@@ -1,30 +1,26 @@
 <template>
-  <div class="display-number-node-wrapper">
-    <!-- Top handle -->
-    <Handle
-        class="custom-handle target"
-        :id="'displayNumber' + id"
-        :position="Position.Top"
-        :connectable="true"
-        type="target"
-    ></Handle>
-
-    <!-- Display content -->
-    <div class="display-number-node">
+  <NodeWrapper
+      :id="id"
+      :data="data"
+      :output-count="0"
+      :input-count="1"
+  >
+    <div class="displayNumber">
       {{ data.nodeData.getInputValue() }}
     </div>
-  </div>
+  </NodeWrapper>
+
 </template>
 
 <script>
-import {Handle, Position} from "@vue-flow/core";
 import {ATNilData} from "../types/ATNilData";
 import {ATNodeData} from "../types/ATNodeData";
 import {ATNumberData} from "../types/ATNumberData";
+import NodeWrapper from "./NodeWrapper.vue";
 
 export default {
   name: 'DisplayNumberNode',
-  components: {Handle},
+  components: {NodeWrapper},
   props: {
     id: {
       type: String,
@@ -33,45 +29,17 @@ export default {
     data: {
       type: Object,
       default: () => {
-        nodeData: new ATNodeData(new ATNilData(), new ATNumberData())
+        nodeData: new ATNodeData(new ATNumberData(), new ATNilData())
       },
     }
   },
-  computed: {
-    Position() {
-      return Position
-    },
-  },
-  setup(props) {
-    props.data.nodeData.setOnUpdateInput(() => {
-      props.data.nodeData.setOutput(props.data.nodeData.input)
-    })
-    return { Position };
-  }
 };
 </script>
 
 <style scoped>
-.display-number-node-wrapper {
-  position: relative;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: var(--el-bg-color-overlay);
-}
 
-.display-number-node {
+.displayNumber {
   text-align: center;
-}
-
-.custom-handle {
-  /*position: absolute;*/
-  width: 16px;
-  height: 16px;
-  background-color: #fff;
-  border: 1px solid #999;
-  border-radius: 50%;
-  cursor: crosshair;
 }
 
 </style>
