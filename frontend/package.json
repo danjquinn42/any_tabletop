@@ -23,6 +23,7 @@
     "mathjs": "^13.0.3",
     "pinia": "^2.2.0",
     "pixi.js": "^8.2.5",
+    "uuid": "^10.0.0",
     "vue-codemirror": "^6.1.1",
     "vue-flow": "^0.3.0"
   },

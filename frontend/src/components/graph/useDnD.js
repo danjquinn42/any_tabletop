@@ -3,14 +3,19 @@ import { ref, watch, onUnmounted, reactive } from "vue";
 import { useVueFlow } from "@vue-flow/core";
 import { ATNilData } from "./types/ATNilData";
 import { ATNodeData } from "./types/ATNodeData";
+import { v4 as uuidv4 } from "uuid";
 
-let id = 0;
+let count = 0;
 
 /**
  * @returns {string} - A unique id.
  */
-function getId() {
-  return `dndnode_${id++}`;
+function getId(nodeType) {
+  // the UUID is not needed for global collisions,
+  // this is only for if the page refreshes during editing.
+  // requires 7.50e5 nodes with same 'nodeType' and 'count' values to have a 0.1% chance of collision
+  return `${nodeType}_${uuidv4().slice(0, 8)}_${count++}`;
+  // return `${nodeType}_${count++}`;
 }
 
 export default function useDragAndDrop() {
@@ -70,7 +75,7 @@ export default function useDragAndDrop() {
       y: event.clientY,
     });
 
-    const nodeId = getId();
+    const nodeId = getId(draggedType.value);
 
     const newNode = {
       id: nodeId,

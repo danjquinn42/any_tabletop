@@ -7,8 +7,8 @@
       <VueFlow
           class="flow"
           :node-types="nodeTypes"
-          :nodes="nodes"
-          :edges="edges"
+          v-model:nodes="graphStore.graphs.onlyGraph.nodes"
+          v-model:edges="graphStore.graphs.onlyGraph.edges"
           @connect="onConnect"
       >
         <DropzoneBackground
@@ -26,13 +26,14 @@
 <script>
 import {ElAside, ElContainer, ElMain} from "element-plus";
 import {cloneDeep} from "lodash";
-import {ref, markRaw} from 'vue';
+import {markRaw} from 'vue';
 import {VueFlow, useVueFlow} from '@vue-flow/core';
 import DropzoneBackground from "./DropzoneBackground.vue";
 import DisplayNumberNode from "./nodes/DisplayNumberNode.vue";
 import InputNumberNode from "./nodes/InputNumberNode.vue";
 import Sidebar from "./Sidebar.vue";
 import useDragAndDrop from './useDnD';
+import { useGraphStore } from "../../store/graphStore";
 
 export default {
   name: 'Graph',
@@ -47,11 +48,9 @@ export default {
     Sidebar,
   },
   setup() {
+    const graphStore = useGraphStore();
     const {addEdges, findNode, updateNodeData, onEdgesChange} = useVueFlow();
     const {onDragOver, onDrop, onDragLeave, isDragOver} = useDragAndDrop();
-
-    const nodes = ref([]);
-    const edges = ref([]);
 
     const nodeTypes = {
       inputNumber: markRaw(InputNumberNode),
@@ -86,8 +85,7 @@ export default {
     });
 
     return {
-      edges,
-      nodes,
+      graphStore,
       nodeTypes,
       isDragOver,
       onDragOver,
