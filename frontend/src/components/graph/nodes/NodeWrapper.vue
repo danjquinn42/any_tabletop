@@ -6,6 +6,7 @@
         :id="'input-handle' + id"
         :position="Position.Top"
         :connectable="true"
+        :is-valid-connection="isValidConnection"
         type="target"
     ></Handle>
     <slot class="slot" :data="data" :updateOutputValue="updateOutputValue"></slot>
@@ -15,6 +16,7 @@
         :id="'output-handle' + id"
         :position="Position.Bottom"
         :connectable="true"
+        :is-valid-connection="isValidConnection"
         type="source"
     ></Handle>
   </div>
@@ -25,7 +27,7 @@ import {Handle, Position, useVueFlow} from "@vue-flow/core";
 
 export default {
   name: "NodeWrapper",
-  components: { Handle },
+  components: {Handle},
   props: {
     inputCount: {
       type: Number,
@@ -46,6 +48,7 @@ export default {
   },
   setup(props) {
     const {updateNodeData, findNode} = useVueFlow();
+
     function updateOutputValue(outputValue) {
       const data = props.data.nodeData;
       data.setOutputValue(outputValue);
@@ -56,7 +59,18 @@ export default {
       })
     }
 
-    return {Position, updateOutputValue: updateOutputValue}
+    function isValidConnection({source, sourceHandle, target, targetHandle}) {
+      if (
+          !(sourceHandle.includes("output-handle") && targetHandle.includes("input-handle"))
+      ) return false;
+
+      const sourceNode = findNode(source);
+      const targetNode = findNode(target);
+
+      return sourceNode.data.nodeData.getOutput().type === targetNode.data.nodeData.getInput().type;
+    }
+
+    return {Position, updateOutputValue, isValidConnection}
   }
 }
 </script>
