@@ -31,6 +31,7 @@ import {VueFlow, useVueFlow} from '@vue-flow/core';
 import DropzoneBackground from "./DropzoneBackground.vue";
 import DisplayNumberNode from "./nodes/DisplayNumberNode.vue";
 import DisplayStringNode from "./nodes/DisplayStringNode.vue";
+import FormulaNode from "./nodes/FormulaNode.vue";
 import InputNode from "./nodes/InputNode.vue";
 import InputNumberNode from "./nodes/InputNumberNode.vue";
 import Sidebar from "./Sidebar.vue";
@@ -59,6 +60,7 @@ export default {
       inputNumber: markRaw(InputNumberNode),
       displayNumber: markRaw(DisplayNumberNode),
       displayString: markRaw(DisplayStringNode),
+      applyFormula: markRaw(FormulaNode),
     };
 
     function onConnect(params) {

@@ -43,10 +43,18 @@ const {onDragStart} = useDragAndDrop();
           class="vue-flow__node-output"
           draggable="true"
           @dragstart="onDragStart($event, 'displayNumber',
-          new ATNodeData(new ATNumberData(), new ATNumberData()))"
+          new ATNodeData(new ATNumberData(), new ATNilData()))"
       >
         Display Number
       </div>
+
+      <h6>Functional Nodes</h6>
+      <div
+          class="vue-flow__node-default"
+          draggable="true"
+          @dragstart="onDragStart($event, 'applyFormula',
+          new ATNodeData(new ATNumberData(), new ATNumberData()))"
+      >Apply Formula</div>
     </div>
   </aside>
 </template>

@@ -9,7 +9,7 @@
     <div>
       <el-input
           v-model="data.nodeData.output.value"
-          @change="slotProps.updateOutputValue"></el-input>
+          @input="slotProps.updateOutputValue"></el-input>
     </div>
   </NodeWrapper>
 </template>

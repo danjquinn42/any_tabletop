@@ -6,20 +6,18 @@
       :input-count="0"
       v-slot="slotProps"
   >
-    <el-form>
       <el-form-item>
         <el-input-number
             v-model="data.nodeData.output.value"
-            @change="slotProps.updateOutputValue"
+            @input="slotProps.updateOutputValue"
             :controls="false"
         />
       </el-form-item>
-    </el-form>
   </NodeWrapper>
 </template>
 
 <script>
-import {ElForm, ElFormItem, ElInputNumber, ElInput} from "element-plus";
+import {ElFormItem, ElInputNumber, ElInput} from "element-plus";
 import {ATNilData} from "../types/ATNilData";
 import {ATNodeData} from "../types/ATNodeData";
 import {ATNumberData} from "../types/ATNumberData";
@@ -27,7 +25,7 @@ import NodeWrapper from "./NodeWrapper.vue";
 
 export default {
   name: 'InputNumberNode',
-  components: {NodeWrapper, ElInput, ElForm, ElFormItem, ElInputNumber},
+  components: {NodeWrapper, ElInput, ElFormItem, ElInputNumber},
   props: {
     id: {
       type: String,

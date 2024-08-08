@@ -48,14 +48,18 @@ export default {
   },
   setup(props) {
     const {updateNodeData, findNode} = useVueFlow();
-
+    function updateChildrenDeep(nodeId, newInputValue) {
+      const target = findNode(nodeId).data.nodeData.withInputValue(newInputValue);
+      updateNodeData(nodeId, { nodeData: target });
+      target.forEachChild(child => updateChildrenDeep(child, target.getOutputValue()));
+    }
     function updateOutputValue(outputValue) {
       const data = props.data.nodeData;
       data.setOutputValue(outputValue);
       updateNodeData(props.id, {nodeData: data});
+
       data.forEachChild(childId => {
-        const targetData = findNode(childId).data.nodeData.withInputValue(outputValue);
-        updateNodeData(childId, {nodeData: targetData});
+        updateChildrenDeep(childId, outputValue);
       })
     }
 

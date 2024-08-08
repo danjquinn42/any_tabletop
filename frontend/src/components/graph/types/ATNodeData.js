@@ -7,15 +7,15 @@ export class ATNodeData {
 
   children = [];
 
-  onUpdateInput = () => {};
+  afterUpdateInput = () => {};
 
   constructor(input, output) {
     this.input = input;
     this.output = output;
   }
 
-  setOnUpdateInput(callback) {
-    this.onUpdateInput = callback;
+  setAfterUpdateInput(callback) {
+    this.afterUpdateInput = callback;
   }
 
   addChild(childId) {
@@ -28,9 +28,9 @@ export class ATNodeData {
   }
 
   setInput(input) {
-    this.onUpdateInput(input);
     if (this.input.type === input.type) {
       this.input = input;
+      this.afterUpdateInput(input);
     } else {
       throw new Error(
         `Input type ${input.type} cannot be assigned to input ${this.input.type}`,
@@ -69,6 +69,7 @@ export class ATNodeData {
   withInputValue(value) {
     if (typeof value === typeof this.input.value) {
       this.input.setValue(value);
+      this.afterUpdateInput(this.input);
       return this;
     }
     throw new Error(
