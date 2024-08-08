@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import CreateComponent from "../components/edit/createcomponent/CreateComponent.vue";
+import Graph from "../components/graph/Graph.vue";
 import Login from "../components/Login.vue";
 import Map from "../components/map/Map.vue";
 import Docs from "../components/docs/Docs.vue";
@@ -36,6 +37,11 @@ const routes = [
             component: CreateComponent,
           },
         ],
+      },
+      {
+        path: "graph",
+        name: "edit graph",
+        component: Graph,
       },
     ],
   },
