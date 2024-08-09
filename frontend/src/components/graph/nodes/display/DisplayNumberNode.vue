@@ -13,10 +13,10 @@
 </template>
 
 <script>
-import {ATNilData} from "../types/ATNilData";
-import {ATNodeData} from "../types/ATNodeData";
-import {ATNumberData} from "../types/ATNumberData";
-import NodeWrapper from "./NodeWrapper.vue";
+import {ATNilData} from "../../types/ATNilData";
+import {ATNodeData} from "../../types/ATNodeData";
+import {ATNumberData} from "../../types/ATNumberData";
+import NodeWrapper from "../NodeWrapper.vue";
 
 export default {
   name: 'DisplayNumberNode',

@@ -18,9 +18,9 @@
 <script>
 import {useVueFlow} from "@vue-flow/core";
 import {ElFormItem, ElInput} from "element-plus";
-import {ATNodeData} from "../types/ATNodeData";
-import {ATNumberData} from "../types/ATNumberData";
-import NodeWrapper from "./NodeWrapper.vue";
+import {ATNodeData} from "../../types/ATNodeData";
+import {ATNumberData} from "../../types/ATNumberData";
+import NodeWrapper from "../NodeWrapper.vue";
 import { create, all } from "mathjs";
 
 const math = create(all);

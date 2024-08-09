@@ -9,10 +9,10 @@
 </template>
 
 <script>
-import {ATNilData} from "../types/ATNilData";
-import {ATNodeData} from "../types/ATNodeData";
-import {ATStringData} from "../types/ATStringData";
-import NodeWrapper from "./NodeWrapper.vue";
+import {ATNilData} from "../../types/ATNilData";
+import {ATNodeData} from "../../types/ATNodeData";
+import {ATStringData} from "../../types/ATStringData";
+import NodeWrapper from "../NodeWrapper.vue";
 
 export default {
   name: "DisplayStringNode",
