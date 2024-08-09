@@ -18,7 +18,6 @@
 <script>
 import {useVueFlow} from "@vue-flow/core";
 import {ElFormItem, ElInput} from "element-plus";
-import {isEmpty} from "lodash";
 import {ATNodeData} from "../types/ATNodeData";
 import {ATNumberData} from "../types/ATNumberData";
 import NodeWrapper from "./NodeWrapper.vue";
@@ -44,9 +43,6 @@ export default {
   },
   setup(props) {
     const { findNode, updateNodeData} = useVueFlow();
-    if (isEmpty(props.data.formula)) {
-      props.data.formula = 'x';
-    }
     function evaluateExpression(updateCallback, formula = "") {
       const expr = formula.replace(/x/g, this.data.nodeData.getInputValue());
       try {
@@ -54,7 +50,6 @@ export default {
         updateCallback(result);
         updateNodeData(props.id, {formula});
       } catch (error) {
-        // console.error("error evaluating formula ", error);
         updateCallback(NaN);
       }
     }

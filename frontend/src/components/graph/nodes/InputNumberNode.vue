@@ -9,7 +9,7 @@
       <el-form-item>
         <el-input-number
             v-model="data.nodeData.output.value"
-            @input="slotProps.updateOutputValue"
+            @input="(input) => updateInputWith(input, slotProps.updateOutputValue)"
             :controls="false"
         />
       </el-form-item>
@@ -38,6 +38,12 @@ export default {
       },
     },
   },
+  methods: {
+    updateInputWith(i, callback) {
+      const input = i || 0;
+      callback(input);
+    }
+  }
 };
 </script>
 

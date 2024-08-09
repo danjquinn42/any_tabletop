@@ -47,7 +47,7 @@ export class ATNodeData {
       this.input = input;
       this.afterUpdateInput(input);
     } else {
-      throw new Error(
+      console.error(
         `Input type ${input.type} cannot be assigned to input ${this.input.type}`,
       );
     }
@@ -57,7 +57,7 @@ export class ATNodeData {
     if (this.output.type === output.type) {
       this.output = output;
     } else {
-      throw new Error(
+      console.error(
         `Output type ${output.type} cannot be assigned to output ${this.output.type}`,
       );
     }
@@ -75,7 +75,7 @@ export class ATNodeData {
     if (typeof value === typeof this.output.value) {
       this.output.setValue(value);
     } else {
-      throw new Error(
+      console.error(
         `Output value ${typeof value} cannot be value of ${typeof this.output.value}`,
       );
     }
@@ -87,7 +87,7 @@ export class ATNodeData {
       this.afterUpdateInput(this.input);
       return this;
     }
-    throw new Error(
+    console.error(
       `input value ${typeof value} cannot be value of ${typeof this.input.value}`,
     );
   }
