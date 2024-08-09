@@ -53,7 +53,9 @@ export default {
   },
   setup() {
     const graphStore = useGraphStore();
-    const {addEdges, findNode, updateNodeData, onEdgesChange} = useVueFlow();
+    // TODO remove local storage
+    graphStore.loadLocally();
+    const {addEdges, findNode, updateNodeData, toObject, onEdgesChange, onNodesChange} = useVueFlow();
     const {onDragOver, onDrop, onDragLeave, isDragOver} = useDragAndDrop();
 
     const nodeTypes = {
@@ -67,7 +69,6 @@ export default {
     function onConnect(params) {
       params.arrowHeadType = 'arrow';
       params.markerEnd = {type: 'arrow'};
-      console.log(params);
       addEdges(params);
       const source = findNode(params.source);
       const target = findNode(params.target);
@@ -82,6 +83,10 @@ export default {
       }
     }
 
+    onNodesChange(() => {
+      graphStore.storeLocally(toObject());
+    })
+
     onEdgesChange((change) => {
       change.forEach(c => {
         if (c.type === "remove") {
@@ -92,6 +97,7 @@ export default {
           updateNodeData(c.source, {nodeData: sourceWithoutTarget})
         }
       })
+      graphStore.storeLocally(toObject());
     });
 
     return {

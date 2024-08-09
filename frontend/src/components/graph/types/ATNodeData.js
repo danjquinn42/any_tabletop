@@ -1,4 +1,5 @@
 import { remove } from "lodash";
+import { ATDataType } from "./ATDataType";
 
 export class ATNodeData {
   input = { type: "undefined ", label: "", value: undefined };
@@ -12,6 +13,20 @@ export class ATNodeData {
   constructor(input, output) {
     this.input = input;
     this.output = output;
+  }
+
+  static fromNodeData(nodeData) {
+    const input = nodeData.input;
+    const output = nodeData.output;
+    const atInput = new ATDataType(input.type);
+    atInput.setValue(input.value);
+    atInput.setLabel(input.label);
+    const atOutput = new ATDataType(output.type);
+    atOutput.setValue(output.value);
+    atOutput.setLabel(output.label);
+    const atNode = new ATNodeData(atInput, atOutput);
+    atNode.children = nodeData.children;
+    return atNode;
   }
 
   setAfterUpdateInput(callback) {
