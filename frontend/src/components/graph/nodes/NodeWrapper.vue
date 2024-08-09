@@ -2,17 +2,18 @@
   <div class="node-wrapper">
     <Handle
         v-if="inputCount !== 0"
-        class="custom-handle input-handle target"
+        v-slot="{ isConnected }"
+        :class="[{'connected': isHandleConnected('input-handle' + id)}, 'custom-handle', 'input-handle', 'target']"
         :id="'input-handle' + id"
         :position="Position.Top"
-        :connectable="true"
+        :connectable="!isHandleConnected('input-handle' + id)"
         :is-valid-connection="isValidConnection"
         type="target"
     ></Handle>
     <slot class="slot" :data="data" :updateOutputValue="updateOutputValue"></slot>
     <Handle
         v-if="outputCount !== 0"
-        class="custom-handle output-handle source"
+        :class="[{'connected': isHandleConnected('output-handle' + id)}, 'custom-handle', 'input-handle', 'target']"
         :id="'output-handle' + id"
         :position="Position.Bottom"
         :connectable="true"
@@ -47,7 +48,7 @@ export default {
     }
   },
   setup(props) {
-    const {updateNodeData, findNode} = useVueFlow();
+    const {updateNodeData, findNode, getConnectedEdges} = useVueFlow();
     function updateChildrenDeep(nodeId, newInputValue) {
       const target = findNode(nodeId).data.nodeData.withInputValue(newInputValue);
       updateNodeData(nodeId, { nodeData: target });
@@ -63,6 +64,18 @@ export default {
       })
     }
 
+    function isHandleConnected(handleId) {
+      try {
+        const connectedEdges = getConnectedEdges(props.id);
+        if (connectedEdges) {
+          return connectedEdges.some((edge) => edge.targetHandle === handleId || edge.sourceHandle === handleId)
+        }
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
+    }
+
     function isValidConnection({source, sourceHandle, target, targetHandle}) {
       if (
           !(sourceHandle.includes("output-handle") && targetHandle.includes("input-handle"))
@@ -74,7 +87,7 @@ export default {
       return sourceNode.data.nodeData.getOutput().type === targetNode.data.nodeData.getInput().type;
     }
 
-    return {Position, updateOutputValue, isValidConnection}
+    return {Position, updateOutputValue, isValidConnection, isHandleConnected}
   }
 }
 </script>
@@ -100,7 +113,7 @@ div:has( > .node-wrapper) {
   text-align: center;
 }
 
-.custom-handle {
+.custom-handle.custom-handle {
   /*position: absolute;*/
   width: 16px;
   height: 16px;
@@ -108,5 +121,23 @@ div:has( > .node-wrapper) {
   border: 1px solid #999;
   border-radius: 50%;
   cursor: crosshair;
+}
+
+.custom-handle.valid {
+  border: 3px solid var(--el-color-primary-light-3);
+}
+
+.custom-handle.connecting:not(.valid) {
+  background-color: var(--el-color-error);
+}
+
+.custom-handle.connected {
+  background-color: var(--el-color-primary-light-3);
+  width: 12px;
+  height: 12px;
+}
+
+.custom-handle:not(.connected):not(.valid):hover {
+  border: 2px solid var(--el-color-primary-light-3);
 }
 </style>

@@ -6,10 +6,10 @@
       :input-count="1"
       v-slot="slotProps"
   >
-      <el-form-item label="x=">
+      <el-form-item label="x =">
         <el-input
-            v-model="formula"
-            @input="updateFormula(slotProps.updateOutputValue, formula)"
+            v-model="data.formula"
+            @input="updateFormula(slotProps.updateOutputValue, data.formula)"
         ></el-input>
       </el-form-item>
   </NodeWrapper>
@@ -18,6 +18,9 @@
 <script>
 import {useVueFlow} from "@vue-flow/core";
 import {ElFormItem, ElInput} from "element-plus";
+import {isEmpty} from "lodash";
+import {ATNodeData} from "../types/ATNodeData";
+import {ATNumberData} from "../types/ATNumberData";
 import NodeWrapper from "./NodeWrapper.vue";
 import { create, all } from "mathjs";
 
@@ -33,23 +36,23 @@ export default {
     },
     data: {
       type: Object,
-      default: () => {
-        nodeData: new ATNodeData(new ATNumberData(), new ATNumberData())
-      },
+      default: () => ({
+        nodeData: new ATNodeData(new ATNumberData(), new ATNumberData()),
+        formula: 'x'
+      }),
     },
   },
-  data: function () {
-    return {
-      formula: "x",
-    }
-  },
   setup(props) {
-    const { findNode } = useVueFlow();
+    const { findNode, updateNodeData} = useVueFlow();
+    if (isEmpty(props.data.formula)) {
+      props.data.formula = 'x';
+    }
     function evaluateExpression(updateCallback, formula = "") {
       const expr = formula.replace(/x/g, this.data.nodeData.getInputValue());
       try {
         const result = math.evaluate(expr);
         updateCallback(result);
+        updateNodeData(props.id, {formula});
       } catch (error) {
         // console.error("error evaluating formula ", error);
         updateCallback(NaN);
