@@ -4,6 +4,7 @@
       :output-count="1"
       :input-count="0"
       :data="data"
+      header="Input Short Text"
       v-slot="slotProps"
   >
     <div>

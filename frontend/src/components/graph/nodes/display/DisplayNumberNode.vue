@@ -4,6 +4,7 @@
       :data="data"
       :output-count="0"
       :input-count="1"
+      header="Display Number"
   >
     <div class="displayNumber">
       {{ data.nodeData.getInputValue() }}

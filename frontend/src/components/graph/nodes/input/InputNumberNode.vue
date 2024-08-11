@@ -5,8 +5,13 @@
       :output-count="1"
       :input-count="0"
       v-slot="slotProps"
+      header="Input Number"
+      header-content=""
   >
-      <el-form-item>
+    <el-form-item label="label">
+      <el-input></el-input>
+    </el-form-item>
+      <el-form-item label="example value">
         <el-input-number
             v-model="data.nodeData.output.value"
             @input="(input) => updateInputWith(input, slotProps.updateOutputValue)"

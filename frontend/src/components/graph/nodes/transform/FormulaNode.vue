@@ -5,6 +5,7 @@
       :output-count="1"
       :input-count="1"
       v-slot="slotProps"
+      header="Apply Formula"
   >
       <el-form-item label="x =">
         <el-input

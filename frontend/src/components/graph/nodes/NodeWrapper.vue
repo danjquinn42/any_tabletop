@@ -1,5 +1,17 @@
 <template>
   <div class="node-wrapper">
+<!--    <template v-if="header" #header><h4 class="header" >{{header}}</h4></template>-->
+<!--    <h4>{{header}}</h4>-->
+    <div class="header">
+
+    <el-collapse v-if="header">
+      <el-collapse-item
+        :title="header"
+      >
+        {{ headerContent }}
+    </el-collapse-item>
+    </el-collapse>
+    </div>
     <Handle
         v-if="inputCount !== 0"
         v-slot="{ isConnected }"
@@ -25,10 +37,11 @@
 
 <script>
 import {Handle, Position, useVueFlow} from "@vue-flow/core";
+import {ElCard, ElText, ElCollapse, ElCollapseItem} from "element-plus";
 
 export default {
   name: "NodeWrapper",
-  components: {Handle},
+  components: {ElText, ElCard, Handle, ElCollapse, ElCollapseItem},
   props: {
     inputCount: {
       type: Number,
@@ -45,6 +58,12 @@ export default {
     data: {
       type: Object,
       required: true,
+    },
+    header: {
+      type: String,
+    },
+    headerContent: {
+      type: String,
     }
   },
   setup(props) {
@@ -107,6 +126,14 @@ div:has( > .node-wrapper) {
   I cant find where the 10px padding is being set on the parent so negative margin it is. */
   margin: -10px;
   background-color: var(--el-bg-color-overlay);
+}
+
+.header {
+  margin-bottom: 1rem;
+}
+
+.card-body {
+  padding-top: 0;
 }
 
 .slot {
