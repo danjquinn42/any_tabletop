@@ -1,9 +1,16 @@
 <template>
   <el-container class="dnd-flow" @drop="onDrop" @dragover="onDragOver" @dragleave="onDragLeave">
-    <el-aside>
-      <Sidebar/>
-    </el-aside>
-    <el-main>
+    <el-affix target=".dnd-flow">
+      <div class="at-flow-switch-container">
+        <el-radio-group v-model="modelView">
+          <el-radio-button label="Graph Editor" value="graph"/>
+          <el-radio-button label="Template Editor" value="template"/>
+        </el-radio-group>
+      </div>
+    </el-affix>
+    <GraphSidebar />
+    <el-main class="at-flow-main">
+
       <VueFlow
           class="at-flow"
           :node-types="nodeTypes"
@@ -25,7 +32,7 @@
 </template>
 
 <script>
-import {ElAside, ElContainer, ElMain} from "element-plus";
+import {ElAffix, ElContainer, ElMain, ElRadioButton, ElRadioGroup} from "element-plus";
 import {cloneDeep} from "lodash";
 import {markRaw} from 'vue';
 import {VueFlow, useVueFlow} from '@vue-flow/core';
@@ -35,21 +42,28 @@ import DisplayStringNode from "./nodes/display/DisplayStringNode.vue";
 import FormulaNode from "./nodes/transform/FormulaNode.vue";
 import InputNode from "./nodes/input/InputNode.vue";
 import InputNumberNode from "./nodes/input/InputNumberNode.vue";
-import Sidebar from "./Sidebar.vue";
+import GraphSidebar from "./GraphSidebar.vue";
 import useDragAndDrop from './useDnD';
 import {useGraphStore} from "../../store/graphStore";
 
 export default {
   name: 'Graph',
   components: {
-    ElAside,
+    GraphSidebar,
+    ElAffix,
+    ElRadioButton,
+    ElRadioGroup,
     ElContainer,
     ElMain,
     VueFlow,
     DropzoneBackground,
     DisplayNumberNode,
     InputNumberNode,
-    Sidebar,
+  },
+  data: function () {
+    return {
+      modelView: "graph",
+    };
   },
   setup() {
     const graphStore = useGraphStore();
@@ -116,12 +130,22 @@ export default {
 <style>
 @import '@vue-flow/core/dist/style.css';
 @import '@vue-flow/core/dist/theme-default.css';
+
 /* WARNING: styles are NOT scoped to this component
 Be sure to use specific and uncommon class names*/
+
+.at-flow-switch-container {
+  padding: 1rem;
+  position: fixed;
+}
 
 .at-flow {
   width: 100%;
   height: 100vh;
+}
+
+.at-flow-main {
+  padding-left: 0.5rem;
 }
 
 /* selector is used */
