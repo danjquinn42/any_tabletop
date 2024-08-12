@@ -1,9 +1,10 @@
 <template>
   <el-affix>
     <div class="at-flow-switch-container">
-      <el-radio-group v-model="modelView">
-        <el-radio-button label="Graph Editor" value="graph"/>
-        <el-radio-button label="Template Editor" value="template"/>
+      <el-radio-group size="small" v-model="modelView">
+        <el-radio-button label="Graph" value="graph"/>
+        <el-radio-button label="Input" value="form"/>
+        <el-radio-button label="Output" value="display"/>
       </el-radio-group>
     </div>
   </el-affix>
@@ -15,7 +16,7 @@
 
 
   <!-- TEMPLATE VIEW  -->
-  <TemplateView :template-types="templateTypes" v-if="modelView === 'template'"></TemplateView>
+  <TemplateView :template-types="templateTypes" v-if="modelView !== 'graph'" :model-view="modelView"></TemplateView>
 </template>
 
 <script>
@@ -48,7 +49,7 @@ export default {
   },
   data: function () {
     return {
-      modelView: "template",
+      modelView: "graph",
     };
   },
   setup() {

@@ -131,6 +131,7 @@ div:has( > .node-wrapper) {
   I cant find where the 10px padding is being set on the parent so negative margin it is. */
   margin: -10px;
   background-color: var(--el-bg-color-overlay);
+  text-align: left;
 }
 
 .header {
@@ -139,10 +140,6 @@ div:has( > .node-wrapper) {
 
 .card-body {
   padding-top: 0;
-}
-
-.slot {
-  text-align: center;
 }
 
 .custom-handle.custom-handle {

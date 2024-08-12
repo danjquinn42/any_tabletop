@@ -1,4 +1,4 @@
-import { debounce, find, flatMap, flatten, values } from "lodash";
+import { debounce, find } from "lodash";
 import { defineStore } from "pinia";
 import { ATNodeData } from "../components/editor/types/ATNodeData";
 import { create, all } from "mathjs";
@@ -12,6 +12,10 @@ export const useGraphStore = defineStore("graphs", {
         id: "onlyGraph",
         nodes: [],
         edges: [],
+        layout: {
+          editGrid: [],
+          viewGrid: [],
+        },
       },
     },
   }),

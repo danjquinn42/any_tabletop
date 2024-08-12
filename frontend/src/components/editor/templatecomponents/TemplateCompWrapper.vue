@@ -1,6 +1,6 @@
 <template>
   <div class="template-wrapper">
-    <slot :updateOutputValue="updateOutputValue"></slot>
+    <slot :data="data" :updateOutputValue="updateOutputValue"></slot>
   </div>
 </template>
 
@@ -41,5 +41,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

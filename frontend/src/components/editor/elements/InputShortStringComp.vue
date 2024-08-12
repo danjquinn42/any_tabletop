@@ -1,5 +1,5 @@
 <template>
-  <el-form-item :label="data.nodeData.input.label">
+  <el-form-item class="form-item" :label="data.nodeData.input.label">
     <el-input
         v-model="data.nodeData.output.value"
         @input="updateOutputValue"></el-input>
@@ -17,3 +17,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.form-item {
+  margin-bottom: 0;
+}
+</style>

@@ -2,7 +2,6 @@
   <TemplateCompWrapper :id="id" :data="data" v-slot="slotProps">
     <DisplayData :data="data" />
   </TemplateCompWrapper>
-
 </template>
 
 <script>

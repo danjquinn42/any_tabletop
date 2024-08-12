@@ -9,6 +9,7 @@
           v-model:edges="graphStore.graphs.onlyGraph.edges"
           edge-types="arrowclosed"
           @connect="onConnect"
+          :default-viewport="{ zoom: 0.8 }"
       >
         <DropzoneBackground
             :style="{
