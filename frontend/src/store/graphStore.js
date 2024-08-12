@@ -1,6 +1,6 @@
-import { debounce } from "lodash";
+import { debounce, find, flatMap, flatten, values } from "lodash";
 import { defineStore } from "pinia";
-import { ATNodeData } from "../components/graph/types/ATNodeData";
+import { ATNodeData } from "../components/editor/types/ATNodeData";
 import { create, all } from "mathjs";
 
 const math = create(all);
@@ -43,6 +43,9 @@ export const useGraphStore = defineStore("graphs", {
         });
         this.graphs.onlyGraph = graph;
       }
+    },
+    getLocalNode(graphId, nodeId) {
+      return find(this.graphs[graphId].nodes, (n) => n.id === nodeId);
     },
   },
 });

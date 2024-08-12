@@ -1,9 +1,6 @@
 <template>
   <div class="node-wrapper">
-<!--    <template v-if="header" #header><h4 class="header" >{{header}}</h4></template>-->
-<!--    <h4>{{header}}</h4>-->
     <div class="header">
-
     <el-collapse v-if="header">
       <el-collapse-item
         :title="header"
@@ -22,6 +19,10 @@
         :is-valid-connection="isValidConnection"
         type="target"
     ></Handle>
+    <el-form-item v-if="!anonymous" label="name" size="small">
+      <el-input v-model="data.nodeData.input.label" ></el-input>
+    </el-form-item>
+    <h5 v-if="!anonymous">preview</h5>
     <slot class="slot" :data="data" :updateOutputValue="updateOutputValue"></slot>
     <Handle
         v-if="outputCount !== 0"
@@ -37,11 +38,11 @@
 
 <script>
 import {Handle, Position, useVueFlow} from "@vue-flow/core";
-import {ElCard, ElText, ElCollapse, ElCollapseItem} from "element-plus";
+import {ElCard, ElText, ElCollapse, ElCollapseItem,  ElFormItem, ElInput} from "element-plus";
 
 export default {
   name: "NodeWrapper",
-  components: {ElText, ElCard, Handle, ElCollapse, ElCollapseItem},
+  components: {ElInput, ElFormItem, ElText, ElCard, Handle, ElCollapse, ElCollapseItem},
   props: {
     inputCount: {
       type: Number,
@@ -64,6 +65,10 @@ export default {
     },
     headerContent: {
       type: String,
+    },
+    anonymous: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props) {

@@ -7,20 +7,16 @@
       header="Input Short Text"
       v-slot="slotProps"
   >
-    <div>
-      <el-input
-          v-model="data.nodeData.output.value"
-          @input="slotProps.updateOutputValue"></el-input>
-    </div>
+    <InputShortStringComp :data="data" :update-output-value="slotProps.updateOutputValue"/>
   </NodeWrapper>
 </template>
 
 <script>
-import {ElInput} from "element-plus";
 import {ATNilData} from "../../types/ATNilData";
 import {ATNodeData} from "../../types/ATNodeData";
 import {ATStringData} from "../../types/ATStringData";
 import NodeWrapper from "../NodeWrapper.vue";
+import InputShortStringComp from "../../elements/InputShortStringComp.vue";
 
 export default {
   name: "InputNode",
@@ -36,9 +32,7 @@ export default {
       },
     },
   },
-  components: {ElInput, NodeWrapper}
+  components: {InputShortStringComp, NodeWrapper}
 }
 </script>
 
-<style scoped>
-</style>

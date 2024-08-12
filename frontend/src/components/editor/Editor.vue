@@ -1,68 +1,54 @@
 <template>
-  <el-container class="dnd-flow" @drop="onDrop" @dragover="onDragOver" @dragleave="onDragLeave">
-    <el-affix target=".dnd-flow">
-      <div class="at-flow-switch-container">
-        <el-radio-group v-model="modelView">
-          <el-radio-button label="Graph Editor" value="graph"/>
-          <el-radio-button label="Template Editor" value="template"/>
-        </el-radio-group>
-      </div>
-    </el-affix>
-    <GraphSidebar />
-    <el-main class="at-flow-main">
+  <el-affix>
+    <div class="at-flow-switch-container">
+      <el-radio-group v-model="modelView">
+        <el-radio-button label="Graph Editor" value="graph"/>
+        <el-radio-button label="Template Editor" value="template"/>
+      </el-radio-group>
+    </div>
+  </el-affix>
 
-      <VueFlow
-          class="at-flow"
-          :node-types="nodeTypes"
-          v-model:nodes="graphStore.graphs.onlyGraph.nodes"
-          v-model:edges="graphStore.graphs.onlyGraph.edges"
-          edge-types="arrowclosed"
-          @connect="onConnect"
-      >
-        <DropzoneBackground
-            :style="{
-            backgroundColor: isDragOver ? '#e7f3ff' : 'transparent',
-            transition: 'background-color 0.2s ease',
-          }"
-        >
-        </DropzoneBackground>
-      </VueFlow>
-    </el-main>
-  </el-container>
+  <!-- GRAPH VIEW  -->
+  <div v-if="modelView === 'graph'">
+    <GraphView :node-types="nodeTypes" :on-connect="onConnect"/>
+  </div>
+
+
+  <!-- TEMPLATE VIEW  -->
+  <TemplateView :template-types="templateTypes" v-if="modelView === 'template'"></TemplateView>
 </template>
 
 <script>
-import {ElAffix, ElContainer, ElMain, ElRadioButton, ElRadioGroup} from "element-plus";
+import {useVueFlow} from '@vue-flow/core';
+import {ElAffix, ElRadioButton, ElRadioGroup} from "element-plus";
 import {cloneDeep} from "lodash";
 import {markRaw} from 'vue';
-import {VueFlow, useVueFlow} from '@vue-flow/core';
-import DropzoneBackground from "./DropzoneBackground.vue";
+import {useGraphStore} from "../../store/graphStore";
+import GraphView from "./GraphView.vue";
 import DisplayNumberNode from "./nodes/display/DisplayNumberNode.vue";
 import DisplayStringNode from "./nodes/display/DisplayStringNode.vue";
-import FormulaNode from "./nodes/transform/FormulaNode.vue";
 import InputNode from "./nodes/input/InputNode.vue";
 import InputNumberNode from "./nodes/input/InputNumberNode.vue";
-import GraphSidebar from "./GraphSidebar.vue";
-import useDragAndDrop from './useDnD';
-import {useGraphStore} from "../../store/graphStore";
+import FormulaNode from "./nodes/transform/FormulaNode.vue";
+import DisplayNumberTemplate from "./templatecomponents/DisplayNumberTemplate.vue";
+import DisplayStringTemplate from "./templatecomponents/DisplayStringTemplate.vue";
+import InputNumberTemplate from "./templatecomponents/InputNumberTemplate.vue";
+import InputStringTemplate from "./templatecomponents/InputStringTemplate.vue";
+import TemplateView from "./TemplateView.vue";
 
 export default {
-  name: 'Graph',
+  name: 'Editor',
   components: {
-    GraphSidebar,
+    GraphView,
+    TemplateView,
     ElAffix,
     ElRadioButton,
     ElRadioGroup,
-    ElContainer,
-    ElMain,
-    VueFlow,
-    DropzoneBackground,
-    DisplayNumberNode,
-    InputNumberNode,
+
   },
   data: function () {
     return {
-      modelView: "graph",
+      modelView: "template",
     };
   },
   setup() {
@@ -70,14 +56,21 @@ export default {
     // TODO remove local storage
     graphStore.loadLocally();
     const {addEdges, findNode, updateNodeData, toObject, onEdgesChange, onNodesChange} = useVueFlow();
-    const {onDragOver, onDrop, onDragLeave, isDragOver} = useDragAndDrop();
 
+    graphStore.logGraphs();
     const nodeTypes = {
       input: markRaw(InputNode),
       inputNumber: markRaw(InputNumberNode),
       displayNumber: markRaw(DisplayNumberNode),
       displayString: markRaw(DisplayStringNode),
       applyFormula: markRaw(FormulaNode),
+    };
+
+    const templateTypes = {
+      input: markRaw(InputStringTemplate),
+      inputNumber: markRaw(InputNumberTemplate),
+      displayNumber: markRaw(DisplayNumberTemplate),
+      displayString: markRaw(DisplayStringTemplate),
     };
 
     function onConnect(params) {
@@ -115,12 +108,8 @@ export default {
     });
 
     return {
-      graphStore,
       nodeTypes,
-      isDragOver,
-      onDragOver,
-      onDrop,
-      onDragLeave,
+      templateTypes,
       onConnect,
     };
   },
@@ -137,26 +126,5 @@ Be sure to use specific and uncommon class names*/
 .at-flow-switch-container {
   padding: 1rem;
   position: fixed;
-}
-
-.at-flow {
-  width: 100%;
-  height: 100vh;
-}
-
-.at-flow-main {
-  padding-left: 0.5rem;
-}
-
-/* selector is used */
-.vue-flow__edge-path {
-  stroke-width: 0.15rem;
-  stroke: var(--el-color-info);
-}
-
-/* selector is used */
-.vue-flow__edge.selected .vue-flow__edge-path {
-  stroke-width: 0.2rem;
-  stroke: var(--el-color-warning-dark-2);
 }
 </style>

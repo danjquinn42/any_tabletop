@@ -4,24 +4,22 @@
       :data="data"
       :output-count="0"
       :input-count="1"
-      header="Display Number"
+      header="Display Short Text"
   >
-    <div class="displayNumber">
-      {{ data.nodeData.getInputValue() }}
-    </div>
+    <DisplayData :data="data"/>
   </NodeWrapper>
-
 </template>
 
 <script>
 import {ATNilData} from "../../types/ATNilData";
 import {ATNodeData} from "../../types/ATNodeData";
-import {ATNumberData} from "../../types/ATNumberData";
+import {ATStringData} from "../../types/ATStringData";
 import NodeWrapper from "../NodeWrapper.vue";
+import DisplayData from "../../elements/DisplayData.vue";
 
 export default {
-  name: 'DisplayNumberNode',
-  components: {NodeWrapper},
+  name: "DisplayStringNode",
+  components: {DisplayData, NodeWrapper},
   props: {
     id: {
       type: String,
@@ -30,17 +28,10 @@ export default {
     data: {
       type: Object,
       default: () => {
-        nodeData: new ATNodeData(new ATNumberData(), new ATNilData())
+        nodeData: new ATNodeData(new ATStringData(), new ATNilData())
       },
-    }
+    },
   },
-};
+}
 </script>
 
-<style scoped>
-
-.displayNumber {
-  text-align: center;
-}
-
-</style>

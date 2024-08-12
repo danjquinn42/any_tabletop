@@ -8,7 +8,9 @@ export class ATNodeData {
 
   children = [];
 
-  afterUpdateInput = () => {};
+  afterUpdateInput = () => {
+    this.setOutputValue(this.getInputValue());
+  };
 
   constructor(input, output) {
     this.input = input;
@@ -79,6 +81,16 @@ export class ATNodeData {
         `Output value ${typeof value} cannot be value of ${typeof this.output.value}`,
       );
     }
+  }
+
+  setInputValue(value) {
+    if (typeof value === typeof this.input.value) {
+      this.input.setValue(value);
+      this.afterUpdateInput(this.input);
+    }
+    console.error(
+      `input value ${typeof value} cannot be value of ${typeof this.input.value}`,
+    );
   }
 
   withInputValue(value) {

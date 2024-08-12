@@ -8,29 +8,20 @@
       header="Input Number"
       header-content=""
   >
-    <el-form-item label="label">
-      <el-input></el-input>
-    </el-form-item>
-      <el-form-item label="example value">
-        <el-input-number
-            v-model="data.nodeData.output.value"
-            @input="(input) => updateInputWith(input, slotProps.updateOutputValue)"
-            :controls="false"
-        />
-      </el-form-item>
+    <InputNumberComp :data="data" :updateOutputValue="slotProps.updateOutputValue"/>
   </NodeWrapper>
 </template>
 
 <script>
-import {ElFormItem, ElInputNumber, ElInput} from "element-plus";
 import {ATNilData} from "../../types/ATNilData";
 import {ATNodeData} from "../../types/ATNodeData";
 import {ATNumberData} from "../../types/ATNumberData";
 import NodeWrapper from "../NodeWrapper.vue";
+import InputNumberComp from "../../elements/InputNumberComp.vue";
 
 export default {
   name: 'InputNumberNode',
-  components: {NodeWrapper, ElInput, ElFormItem, ElInputNumber},
+  components: {InputNumberComp, NodeWrapper},
   props: {
     id: {
       type: String,
@@ -43,15 +34,7 @@ export default {
       },
     },
   },
-  methods: {
-    updateInputWith(i, callback) {
-      const input = i || 0;
-      callback(input);
-    }
-  }
 };
 </script>
 
 
-<style scoped>
-</style>

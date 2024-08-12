@@ -6,6 +6,7 @@
       :input-count="1"
       v-slot="slotProps"
       header="Apply Formula"
+      anonymous
   >
       <el-form-item label="x =">
         <el-input
