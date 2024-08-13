@@ -5,7 +5,7 @@
       <el-scrollbar class="scrollbar" always height="100vh">
         <!-- Draggable Components -->
         <div
-          v-for="(node, index) in nodeList"
+          v-for="(node, index) in nodeMap"
           :key="node.id"
           class="draggable-element"
           draggable="true"
@@ -56,9 +56,13 @@
               ><Delete
             /></el-icon>
             <component
-              v-if="item.component"
-              :is="item.component"
-              v-bind="item.props"
+              v-if="templateTypes[nodeMap[item.i]?.type]"
+              :is="templateTypes[nodeMap[item.i].type]"
+              v-bind="{
+                id: item.i,
+                data: nodeMap[item.i].data,
+                type: nodeMap[item.i].type,
+              }"
               class="comp"
             ></component>
           </grid-item>
@@ -99,10 +103,14 @@
               ><Delete
             /></el-icon>
             <component
-              v-if="item.component"
-              :is="item.component"
-              v-bind="item.props"
-              class="comp"
+                v-if="templateTypes[nodeMap[item.i]?.type]"
+                :is="templateTypes[nodeMap[item.i].type]"
+                v-bind="{
+                id: item.i,
+                data: nodeMap[item.i].data,
+                type: nodeMap[item.i].type,
+              }"
+                class="comp"
             ></component>
           </grid-item>
         </grid-layout>
@@ -121,9 +129,9 @@ import {
   ElContainer,
   ElMain,
   ElScrollbar,
-  ElIcon,
+  ElIcon, ElNotification,
 } from "element-plus";
-import { remove } from "lodash";
+import {find, remove} from "lodash";
 import { GridItem, GridLayout } from "vue3-grid-layout";
 import { reactive } from "vue";
 import { useGraphStore } from "../../store/graphStore";
@@ -149,25 +157,19 @@ export default {
   },
   setup(props) {
     const graphStore = useGraphStore();
-
-    const nodeList = [];
-    graphStore.graphs.onlyGraph.nodes.forEach((node) => {
-      if (props.templateTypes[node.type]) {
-        nodeList.push(node);
-      }
-    });
     return { graphStore };
   },
   mounted() {
     this.graphStore.graphs.onlyGraph.nodes.forEach((node) => {
       if (this.templateTypes[node.type]) {
-        this.nodeList.push(node);
+        this.nodeMap[node.id] = node;
       }
     });
+    console.log("NODE MAP", this.nodeMap);
   },
   data() {
     return {
-      nodeList: [],
+      nodeMap: {},
       colCount: 6,
       draggingNode: null,
       draggingIndex: null,
@@ -182,6 +184,7 @@ export default {
     onDrop(event, targetGrid) {
       console.log("DROPPED", event);
       const grid = this.$refs[targetGrid].$el;
+      const layout = this.graphStore.graphs.onlyGraph.layout;
       const gridRect = grid.getBoundingClientRect();
 
       const offsetX = event.clientX - gridRect.left;
@@ -190,38 +193,37 @@ export default {
       const col = Math.floor((offsetX / gridRect.width) * this.colCount);
       const row = Math.floor((offsetY / gridRect.height) * this.colCount);
 
+      const isNodeInTargetGrid = find(layout[targetGrid], item => item.i === this.draggingNode?.id);
+
       if (this.draggingNode && this.templateTypes[this.draggingNode.type]) {
-        this.graphStore.graphs.onlyGraph.layout[targetGrid].push({
+        isNodeInTargetGrid ?
+            this.notifyComponentHasBeenAdded()
+            : layout[targetGrid].push({
           x: col,
           y: row,
           w: 4,
           h: 1,
           i: `${this.draggingNode.id}`,
           static: false,
-          component: this.templateTypes[this.draggingNode.type],
-          props: {
-            id: this.draggingNode.id,
-            data: reactive(this.draggingNode.data),
-            type: this.draggingNode.type,
-          },
         });
-        remove(this.nodeList, (n) => n.id === this.draggingNode.id);
       }
 
       this.draggingNode = null;
       this.draggingIndex = null;
       this.graphStore.storeLayoutLocally();
     },
+    notifyComponentHasBeenAdded() {
+      ElNotification({
+        title: "Component already in use",
+        message: "The component you copied is already present in the template and cannot be placed twice",
+        duration: 3000,
+      })
+    },
     removeComponent(item, targetGrid) {
       remove(
         this.graphStore.graphs.onlyGraph.layout[targetGrid],
         (comp) => comp.i === item.i,
       );
-      this.nodeList.push({
-        id: item.i,
-        type: item.props.type,
-        data: item.props.data,
-      });
       this.graphStore.storeLayoutLocally();
     },
   },

@@ -1,5 +1,5 @@
 <template>
-  <el-descriptions class="descriptions" border :column="1">
+  <el-descriptions size="small" class="descriptions" border :column="1">
     <el-descriptions-item
       label-class-name="desc-label"
       label-align="right"
