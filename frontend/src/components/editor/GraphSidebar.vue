@@ -6,41 +6,41 @@
       <div class="nodes">
         <h6>User Input Nodes</h6>
         <div
-            class="vue-flow__node-input"
-            draggable="true"
-            @dragstart="onDragStart($event, 'input', inputComponent)"
+          class="vue-flow__node-input"
+          draggable="true"
+          @dragstart="onDragStart($event, 'input', inputComponent)"
         >
           Input Short Text
         </div>
         <div
-            class="vue-flow__node-input"
-            draggable="true"
-            @dragstart="onDragStart($event, 'inputNumber', inputNumber)"
+          class="vue-flow__node-input"
+          draggable="true"
+          @dragstart="onDragStart($event, 'inputNumber', inputNumber)"
         >
           Input Number
         </div>
 
         <h6>Display Nodes</h6>
         <div
-            class="vue-flow__node-input"
-            draggable="true"
-            @dragstart="onDragStart($event, 'displayString', displayShortText)"
+          class="vue-flow__node-input"
+          draggable="true"
+          @dragstart="onDragStart($event, 'displayString', displayShortText)"
         >
           Display Short Text
         </div>
         <div
-            class="vue-flow__node-output"
-            draggable="true"
-            @dragstart="onDragStart($event, 'displayNumber', displayNumber)"
+          class="vue-flow__node-output"
+          draggable="true"
+          @dragstart="onDragStart($event, 'displayNumber', displayNumber)"
         >
           Display Number
         </div>
 
         <h6>Functional Nodes</h6>
         <div
-            class="vue-flow__node-input"
-            draggable="true"
-            @dragstart="onDragStart($event, 'applyFormula', applyFormula)"
+          class="vue-flow__node-input"
+          draggable="true"
+          @dragstart="onDragStart($event, 'applyFormula', applyFormula)"
         >
           Apply Formula
         </div>
@@ -66,7 +66,7 @@ export default {
     ElScrollbar,
     ElAside,
   },
-  data: function() {
+  data: function () {
     return {
       inputComponent: new ATNodeData(new ATNilData(), new ATStringData()),
       inputNumber: new ATNodeData(new ATNilData(), new ATNumberData()),

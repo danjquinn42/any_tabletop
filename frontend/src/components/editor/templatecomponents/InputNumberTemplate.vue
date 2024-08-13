@@ -1,23 +1,22 @@
 <template>
-<TemplateCompWrapper
-    :id="id"
-    :data="data"
-    v-slot="slotProps"
->
-  <InputNumberComp :data="data" :update-output-value="slotProps.updateOutputValue" />
-</TemplateCompWrapper>
+  <TemplateCompWrapper :id="id" :data="data" v-slot="slotProps">
+    <InputNumberComp
+      :data="data"
+      :update-output-value="slotProps.updateOutputValue"
+    />
+  </TemplateCompWrapper>
 </template>
 
 <script>
 import InputNumberComp from "../elements/InputNumberComp.vue";
-import {ATNilData} from "../types/ATNilData";
-import {ATNodeData} from "../types/ATNodeData";
-import {ATNumberData} from "../types/ATNumberData";
+import { ATNilData } from "../types/ATNilData";
+import { ATNodeData } from "../types/ATNodeData";
+import { ATNumberData } from "../types/ATNumberData";
 import TemplateCompWrapper from "./TemplateCompWrapper.vue";
 
 export default {
   name: "InputNumberTemplate",
-  components: {InputNumberComp, TemplateCompWrapper},
+  components: { InputNumberComp, TemplateCompWrapper },
   props: {
     id: {
       type: String,
@@ -26,13 +25,11 @@ export default {
     data: {
       type: Object,
       default: () => {
-        nodeData: new ATNodeData(new ATNilData(), new ATNumberData())
+        nodeData: new ATNodeData(new ATNilData(), new ATNumberData());
       },
     },
   },
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

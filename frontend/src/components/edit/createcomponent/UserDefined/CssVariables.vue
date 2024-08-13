@@ -1,19 +1,22 @@
 <template>
-  <p>Any Tabletop uses Elements Plus styles. These css variables are available</p>
+  <p>
+    Any Tabletop uses Elements Plus styles. These css variables are available
+  </p>
   <el-row :gutter="20">
     <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
       <el-card>
         <template #header>Light Mode Colors</template>
         <ul class="list">
           <li
-              class="list-item"
-              v-for="color of lightModeColors.sort()"
-              @click="copyText(color)"
+            class="list-item"
+            v-for="color of lightModeColors.sort()"
+            @click="copyText(color)"
           >
-            <div class="previewBox"
-                 :style="'background-color: '+ extractColorVariable(color)"
+            <div
+              class="previewBox"
+              :style="'background-color: ' + extractColorVariable(color)"
             ></div>
-            <el-text size="small">{{color}}</el-text>
+            <el-text size="small">{{ color }}</el-text>
           </li>
         </ul>
       </el-card>
@@ -23,14 +26,15 @@
         <template #header>Dark Mode Colors</template>
         <ul class="list">
           <li
-              class="list-item"
-              v-for="color of darkModeColors.sort()"
-              @click="copyText(color)"
+            class="list-item"
+            v-for="color of darkModeColors.sort()"
+            @click="copyText(color)"
           >
-            <div class="previewBox"
-                 :style="'background-color: '+ extractColorVariable(color)"
+            <div
+              class="previewBox"
+              :style="'background-color: ' + extractColorVariable(color)"
             ></div>
-            <el-text size="small">{{color}}</el-text>
+            <el-text size="small">{{ color }}</el-text>
           </li>
         </ul>
       </el-card>
@@ -38,11 +42,11 @@
   </el-row>
 </template>
 <script>
-import {ElCol, ElRow, ElCard, ElText, ElNotification} from "element-plus";
+import { ElCol, ElRow, ElCard, ElText, ElNotification } from "element-plus";
 
 export default {
-  name: 'CssVariables',
-  components: {ElCard, ElText, ElCol, ElRow},
+  name: "CssVariables",
+  components: { ElCard, ElText, ElCol, ElRow },
   data: function () {
     return {
       lightModeColors: [
@@ -174,23 +178,23 @@ export default {
         "--el-fill-color-light: #262727;",
         "--el-fill-color-lighter: #1D1D1D;",
         "--el-fill-color-extra-light: #191919;",
-      ]
-    }
+      ],
+    };
   },
   methods: {
     extractColorVariable(colorVar) {
-        return colorVar.match(/#\w+/gm);
+      return colorVar.match(/#\w+/gm);
     },
     copyText(text) {
       navigator.clipboard.writeText(text);
       ElNotification({
         title: "copied",
         message: text,
-        duration: 2000
-      })
-    }
-  }
-}
+        duration: 2000,
+      });
+    },
+  },
+};
 </script>
 <style scoped>
 .list {

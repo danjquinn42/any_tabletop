@@ -1,27 +1,27 @@
 <template>
   <NodeWrapper
-      :id="id"
-      :data="data"
-      :output-count="1"
-      :input-count="1"
-      v-slot="slotProps"
-      header="Apply Formula"
-      anonymous
+    :id="id"
+    :data="data"
+    :output-count="1"
+    :input-count="1"
+    v-slot="slotProps"
+    header="Apply Formula"
+    anonymous
   >
-      <el-form-item label="x =">
-        <el-input
-            v-model="data.formula"
-            @input="updateFormula(slotProps.updateOutputValue, data.formula)"
-        ></el-input>
-      </el-form-item>
+    <el-form-item label="x =">
+      <el-input
+        v-model="data.formula"
+        @input="updateFormula(slotProps.updateOutputValue, data.formula)"
+      ></el-input>
+    </el-form-item>
   </NodeWrapper>
 </template>
 
 <script>
-import {useVueFlow} from "@vue-flow/core";
-import {ElFormItem, ElInput} from "element-plus";
-import {ATNodeData} from "../../types/ATNodeData";
-import {ATNumberData} from "../../types/ATNumberData";
+import { useVueFlow } from "@vue-flow/core";
+import { ElFormItem, ElInput } from "element-plus";
+import { ATNodeData } from "../../types/ATNodeData";
+import { ATNumberData } from "../../types/ATNumberData";
 import NodeWrapper from "../NodeWrapper.vue";
 import { create, all } from "mathjs";
 
@@ -29,7 +29,7 @@ const math = create(all);
 
 export default {
   name: "FormulaNode",
-  components: {ElInput, ElFormItem, NodeWrapper},
+  components: { ElInput, ElFormItem, NodeWrapper },
   props: {
     id: {
       type: String,
@@ -39,18 +39,18 @@ export default {
       type: Object,
       default: () => ({
         nodeData: new ATNodeData(new ATNumberData(), new ATNumberData()),
-        formula: 'x'
+        formula: "x",
       }),
     },
   },
   setup(props) {
-    const { findNode, updateNodeData} = useVueFlow();
+    const { findNode, updateNodeData } = useVueFlow();
     function evaluateExpression(updateCallback, formula = "") {
       const expr = formula.replace(/x/g, this.data.nodeData.getInputValue());
       try {
         const result = math.evaluate(expr);
         updateCallback(result);
-        updateNodeData(props.id, {formula});
+        updateNodeData(props.id, { formula });
       } catch (error) {
         updateCallback(NaN);
       }
@@ -62,16 +62,16 @@ export default {
       callback();
     }
 
-    return { evaluateExpression, setUpdateInputCallback }
+    return { evaluateExpression, setUpdateInputCallback };
   },
   methods: {
     updateFormula(updateCallback, formula) {
-      this.setUpdateInputCallback(() => this.evaluateExpression(updateCallback, formula));
-    }
-  }
-}
+      this.setUpdateInputCallback(() =>
+        this.evaluateExpression(updateCallback, formula),
+      );
+    },
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -16,29 +16,30 @@ export default {
     },
     data: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   setup(props) {
     const graphStore = useGraphStore();
     function updateInputValue(nodeId, inputValue) {
-      const node = graphStore.getLocalNode('onlyGraph', nodeId);
+      const node = graphStore.getLocalNode("onlyGraph", nodeId);
       let nodeData = node.data.nodeData;
       nodeData.setInputValue(inputValue);
-      nodeData.forEachChild(childId => updateInputValue(childId, nodeData.getOutputValue()));
+      nodeData.forEachChild((childId) =>
+        updateInputValue(childId, nodeData.getOutputValue()),
+      );
     }
     function updateOutputValue(outputValue) {
       const nodeData = props.data.nodeData;
       nodeData.setOutputValue(outputValue);
-      nodeData.forEachChild(childId => {
+      nodeData.forEachChild((childId) => {
         updateInputValue(childId, outputValue);
-      })
+      });
     }
 
-    return { updateOutputValue }
-  }
-}
+    return { updateOutputValue };
+  },
+};
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

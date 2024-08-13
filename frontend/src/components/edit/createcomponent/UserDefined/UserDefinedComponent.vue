@@ -6,26 +6,39 @@
           <template #header>
             <div class="input-header">
               <label for="html-input">HTML</label>
-              <el-text v-if="htmlErrorText" class="error-text" type="danger">{{ htmlErrorText }}</el-text>
+              <el-text v-if="htmlErrorText" class="error-text" type="danger">{{
+                htmlErrorText
+              }}</el-text>
               <el-button class="popup-button">View HTML Hooks</el-button>
             </div>
           </template>
-          <codemirror :extensions="htmlExtensions" class="codemirror" v-model="htmlContent"></codemirror>
+          <codemirror
+            :extensions="htmlExtensions"
+            class="codemirror"
+            v-model="htmlContent"
+          ></codemirror>
         </el-card>
 
         <el-card class="input-panel">
           <template #header>
             <div class="input-header">
               <label for="css-input">CSS</label>
-              <el-text v-if="cssErrorText" class="error-text" type="danger">{{ cssErrorText }}</el-text>
+              <el-text v-if="cssErrorText" class="error-text" type="danger">{{
+                cssErrorText
+              }}</el-text>
               <el-button
-                  @click="cssVariablesVisible = !cssVariablesVisible"
-                  class="popup-button">
+                @click="cssVariablesVisible = !cssVariablesVisible"
+                class="popup-button"
+              >
                 View CSS color variables
               </el-button>
             </div>
           </template>
-          <codemirror :extensions="cssExtensions" class="codemirror" v-model="cssContent"></codemirror>
+          <codemirror
+            :extensions="cssExtensions"
+            class="codemirror"
+            v-model="cssContent"
+          ></codemirror>
         </el-card>
       </div>
       <h4 class="preview-header">Preview</h4>
@@ -35,27 +48,34 @@
     </el-form>
 
     <el-dialog
-        width="95%"
-        style="max-width: 1400px"
-        v-model="cssVariablesVisible"
+      width="95%"
+      style="max-width: 1400px"
+      v-model="cssVariablesVisible"
     >
-      <CssVariables/>
+      <CssVariables />
     </el-dialog>
   </el-main>
 </template>
 
 <script>
-import {css} from '@codemirror/lang-css';
-import {html} from "@codemirror/lang-html";
-import {oneDark} from '@codemirror/theme-one-dark';
-import DOMPurify from 'dompurify';
-import {ElButton, ElCard, ElDialog, ElForm, ElMain, ElText} from "element-plus";
-import {Codemirror} from 'vue-codemirror';
-import '../../../global-styles.css';
+import { css } from "@codemirror/lang-css";
+import { html } from "@codemirror/lang-html";
+import { oneDark } from "@codemirror/theme-one-dark";
+import DOMPurify from "dompurify";
+import {
+  ElButton,
+  ElCard,
+  ElDialog,
+  ElForm,
+  ElMain,
+  ElText,
+} from "element-plus";
+import { Codemirror } from "vue-codemirror";
+import "../../../global-styles.css";
 import CssVariables from "./CssVariables.vue";
 
 export default {
-  name: 'UserDefined',
+  name: "UserDefined",
   components: {
     CssVariables,
     ElDialog,
@@ -64,13 +84,13 @@ export default {
     ElButton,
     ElForm,
     ElCard,
-    Codemirror
+    Codemirror,
   },
   data() {
     return {
-      htmlContent: '<h2>Hello</h2>',
-      cssContent: '',
-      previewContent: '',
+      htmlContent: "<h2>Hello</h2>",
+      cssContent: "",
+      previewContent: "",
       htmlExtensions: [html(), oneDark],
       cssExtensions: [css(), oneDark],
       htmlErrorText: "",
@@ -78,7 +98,7 @@ export default {
       cssVariablesVisible: false,
       formContent: {
         sanitizedHtml: "",
-        css: ""
+        css: "",
       },
     };
   },
@@ -107,20 +127,19 @@ export default {
         this.formContent.css = this.cssContent;
         this.htmlErrorText = "";
       }
-    }
+    },
   },
   watch: {
-    htmlContent: 'updatePreview',
-    cssContent: 'updatePreview',
+    htmlContent: "updatePreview",
+    cssContent: "updatePreview",
   },
   mounted() {
     this.updatePreview();
-  }
+  },
 };
 </script>
 
 <style scoped>
-
 .input-header {
   display: flex;
   justify-content: space-between;

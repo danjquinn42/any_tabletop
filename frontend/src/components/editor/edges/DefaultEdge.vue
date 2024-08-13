@@ -1,15 +1,15 @@
 <template>
   <path
-      :d="pathData"
-      stroke="black"
-      stroke-width="2"
-      fill="none"
-      @click="onClick"
+    :d="pathData"
+    stroke="black"
+    stroke-width="2"
+    fill="none"
+    @click="onClick"
   />
 </template>
 
 <script>
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent } from "vue";
 
 export default defineComponent({
   props: {
@@ -26,7 +26,7 @@ export default defineComponent({
 
     const onClick = () => {
       // Handle click event to edit or show edge details
-      console.log('Edge clicked:', props.data);
+      console.log("Edge clicked:", props.data);
     };
 
     return { pathData, onClick };

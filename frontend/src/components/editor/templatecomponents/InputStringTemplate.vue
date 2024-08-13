@@ -1,8 +1,10 @@
 <template>
   <TemplateCompWrapper :id="id" :data="data" v-slot="slotProps">
-    <InputShortStringComp :data="data" :update-output-value="slotProps.updateOutputValue"/>
+    <InputShortStringComp
+      :data="data"
+      :update-output-value="slotProps.updateOutputValue"
+    />
   </TemplateCompWrapper>
-
 </template>
 
 <script>
@@ -11,19 +13,17 @@ import TemplateCompWrapper from "./TemplateCompWrapper.vue";
 
 export default {
   name: "InputStringTemplate",
-  components: {InputShortStringComp, TemplateCompWrapper},
+  components: { InputShortStringComp, TemplateCompWrapper },
   props: {
     id: {
       type: String,
       required: true,
     },
     data: {
-      type: Object
+      type: Object,
     },
   },
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

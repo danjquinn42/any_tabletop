@@ -1,41 +1,42 @@
 <template>
-  <el-container
-      class="container"
-  >
+  <el-container class="container">
     <el-header class="header">
-
-      <el-menu class="menu" popper-class="popper-sub-menu" :default-active="$router.path" mode="horizontal" router>
-        <el-sub-menu
-            index="components">
+      <el-menu
+        class="menu"
+        popper-class="popper-sub-menu"
+        :default-active="$router.path"
+        mode="horizontal"
+        router
+      >
+        <el-sub-menu index="components">
           <template #title>Components</template>
           <el-menu-item
-              v-if="isEditMode"
-              class="menu-item"
-              :index="getRoute(`component/new`)"
-          >Create New Component
+            v-if="isEditMode"
+            class="menu-item"
+            :index="getRoute(`component/new`)"
+            >Create New Component
           </el-menu-item>
           <el-menu-item
-              v-for="component in Object.values(modStore.components)"
-              class="menu-item"
-              :index="getRoute(`component/${component.id}`)"
-          >{{ component.name }}
+            v-for="component in Object.values(modStore.components)"
+            class="menu-item"
+            :index="getRoute(`component/${component.id}`)"
+            >{{ component.name }}
           </el-menu-item>
-
         </el-sub-menu>
       </el-menu>
     </el-header>
-      <el-main class="main">
-    <el-scrollbar class="scroll" always>
-        <RouterView :key="$route.fullPath"/>
-    </el-scrollbar>
-      </el-main>
+    <el-main class="main">
+      <el-scrollbar class="scroll" always>
+        <RouterView :key="$route.fullPath" />
+      </el-scrollbar>
+    </el-main>
   </el-container>
 </template>
 <script>
 import "element-plus/theme-chalk/el-menu.css";
 import "element-plus/theme-chalk/el-menu-item.css";
 import "element-plus/theme-chalk/el-sub-menu.css";
-import {useModStore} from "../../store/modStore";
+import { useModStore } from "../../store/modStore";
 import {
   ElMain,
   ElAside,
@@ -45,7 +46,7 @@ import {
   ElMenuItem,
   ElScrollbar,
   ElSubMenu,
-  ElHeader
+  ElHeader,
 } from "element-plus";
 
 export default {
@@ -57,7 +58,7 @@ export default {
   },
   setup() {
     const modStore = useModStore();
-    return {modStore};
+    return { modStore };
   },
   methods: {
     getRoute(index) {
@@ -78,7 +79,6 @@ export default {
 };
 </script>
 <style>
-
 /* class is used but Webstorm linter doesn't pick it up.*/
 .popper-sub-menu {
   max-height: 25rem;
@@ -87,7 +87,6 @@ export default {
 </style>
 
 <style scoped>
-
 .header {
   height: fit-content;
   padding-bottom: 0;

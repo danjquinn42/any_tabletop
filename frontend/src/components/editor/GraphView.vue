@@ -1,18 +1,23 @@
 <template>
-  <el-container class="dnd-flow" @drop="onDrop" @dragover="onDragOver" @dragleave="onDragLeave">
-    <GraphSidebar/>
+  <el-container
+    class="dnd-flow"
+    @drop="onDrop"
+    @dragover="onDragOver"
+    @dragleave="onDragLeave"
+  >
+    <GraphSidebar />
     <el-main class="at-flow-main">
       <VueFlow
-          class="at-flow"
-          :node-types="nodeTypes"
-          v-model:nodes="graphStore.graphs.onlyGraph.nodes"
-          v-model:edges="graphStore.graphs.onlyGraph.edges"
-          edge-types="arrowclosed"
-          @connect="onConnect"
-          :default-viewport="{ zoom: 0.8 }"
+        class="at-flow"
+        :node-types="nodeTypes"
+        v-model:nodes="graphStore.graphs.onlyGraph.nodes"
+        v-model:edges="graphStore.graphs.onlyGraph.edges"
+        edge-types="arrowclosed"
+        @connect="onConnect"
+        :default-viewport="{ zoom: 0.8 }"
       >
         <DropzoneBackground
-            :style="{
+          :style="{
             backgroundColor: isDragOver ? '#e7f3ff' : 'transparent',
             transition: 'background-color 0.2s ease',
           }"
@@ -23,30 +28,36 @@
   </el-container>
 </template>
 <script>
-import {VueFlow} from "@vue-flow/core";
-import {ElContainer, ElMain} from "element-plus";
-import DropzoneBackground from "./DropzoneBackground.vue"
-import GraphSidebar from "./GraphSidebar.vue"
-import {useGraphStore} from "../../store/graphStore";
+import { VueFlow } from "@vue-flow/core";
+import { ElContainer, ElMain } from "element-plus";
+import DropzoneBackground from "./DropzoneBackground.vue";
+import GraphSidebar from "./GraphSidebar.vue";
+import { useGraphStore } from "../../store/graphStore";
 import useDragAndDrop from "./useDnD";
 export default {
-  name: 'GraphView',
-  components: {VueFlow, ElMain, ElContainer, DropzoneBackground, GraphSidebar},
+  name: "GraphView",
+  components: {
+    VueFlow,
+    ElMain,
+    ElContainer,
+    DropzoneBackground,
+    GraphSidebar,
+  },
   setup() {
     const graphStore = useGraphStore();
-    const {onDragOver, onDrop, onDragLeave, isDragOver} = useDragAndDrop();
+    const { onDragOver, onDrop, onDragLeave, isDragOver } = useDragAndDrop();
 
-    return { graphStore, onDragOver, onDrop, onDragLeave, isDragOver }
+    return { graphStore, onDragOver, onDrop, onDragLeave, isDragOver };
   },
   props: {
     nodeTypes: {},
     onConnect: {},
-  }
-}
+  },
+};
 </script>
 <style>
-@import '@vue-flow/core/dist/style.css';
-@import '@vue-flow/core/dist/theme-default.css';
+@import "@vue-flow/core/dist/style.css";
+@import "@vue-flow/core/dist/theme-default.css";
 
 /* WARNING: styles are NOT scoped to this component
 Be sure to use specific and uncommon class names*/

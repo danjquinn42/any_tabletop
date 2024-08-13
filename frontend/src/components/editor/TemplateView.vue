@@ -5,89 +5,108 @@
       <el-scrollbar class="scrollbar" always height="100vh">
         <!-- Draggable Components -->
         <div
-            v-for="(node, index) in nodeList"
-            :key="node.id"
-            class="draggable-element"
-            draggable="true"
-            @dragstart="dragStart(node, index)"
+          v-for="(node, index) in nodeList"
+          :key="node.id"
+          class="draggable-element"
+          draggable="true"
+          @dragstart="dragStart(node, index)"
         >
           <component
-              v-if="templateTypes[node.type]"
-              :is="templateTypes[node.type]"
-              v-bind="node"
-              class="comp"
+            v-if="templateTypes[node.type]"
+            :is="templateTypes[node.type]"
+            v-bind="node"
+            class="comp"
           ></component>
         </div>
       </el-scrollbar>
     </el-aside>
 
     <el-main>
-      <el-card v-if="modelView === 'form'" body-class="at-card-body"  @dragover.prevent @drop="(e) => onDrop(e, 'editGrid')">
+      <el-card
+        v-if="modelView === 'form'"
+        body-class="at-card-body"
+        @dragover.prevent
+        @drop="(e) => onDrop(e, 'editGrid')"
+      >
         <grid-layout
-            class="grid-layout"
-            ref="editGrid"
-            :layout.sync="graphStore.graphs.onlyGraph.layout.editGrid"
-            :col-number="colCount"
-            :row-height="60"
-            :is-draggable="true"
-            :is-resizable="true"
-            :use-css-transforms="true"
+          class="grid-layout"
+          ref="editGrid"
+          :layout.sync="graphStore.graphs.onlyGraph.layout.editGrid"
+          :col-number="colCount"
+          :row-height="60"
+          :is-draggable="true"
+          :is-resizable="true"
+          :use-css-transforms="true"
         >
           <grid-item
-              class="layout-item"
-              v-for="item in graphStore.graphs.onlyGraph.layout.editGrid"
-              :static="item.static"
-              :x="item.x"
-              :y="item.y"
-              :w="item.w"
-              :h="item.h"
-              :i="item.i"
-              :key="item.i"
+            class="layout-item"
+            v-for="item in graphStore.graphs.onlyGraph.layout.editGrid"
+            :static="item.static"
+            :x="item.x"
+            :y="item.y"
+            :w="item.w"
+            :h="item.h"
+            :i="item.i"
+            :key="item.i"
           >
-            <el-icon @click="removeComponent(item, 'editGrid')" class="trash-icon" :size="15"><Delete /></el-icon>
+            <el-icon
+              @click="removeComponent(item, 'editGrid')"
+              class="trash-icon"
+              :size="15"
+              ><Delete
+            /></el-icon>
             <component
-                v-if="item.component"
-                :is="item.component"
-                v-bind="item.props"
-                class="comp"
+              v-if="item.component"
+              :is="item.component"
+              v-bind="item.props"
+              class="comp"
             ></component>
           </grid-item>
         </grid-layout>
       </el-card>
 
-      <el-card v-if="modelView === 'display'" body-class="at-card-body"  @dragover.prevent @drop="(e) => onDrop(e, 'viewGrid')">
+      <el-card
+        v-if="modelView === 'display'"
+        body-class="at-card-body"
+        @dragover.prevent
+        @drop="(e) => onDrop(e, 'viewGrid')"
+      >
         <grid-layout
-            class="grid-layout"
-            ref="viewGrid"
-            :layout.sync="graphStore.graphs.onlyGraph.layout.viewGrid"
-            :col-number="colCount"
-            :row-height="60"
-            :is-draggable="true"
-            :is-resizable="true"
-            :use-css-transforms="true"
+          class="grid-layout"
+          ref="viewGrid"
+          :layout.sync="graphStore.graphs.onlyGraph.layout.viewGrid"
+          :col-number="colCount"
+          :row-height="60"
+          :is-draggable="true"
+          :is-resizable="true"
+          :use-css-transforms="true"
         >
           <grid-item
-              class="layout-item"
-              v-for="item in graphStore.graphs.onlyGraph.layout.viewGrid"
-              :static="item.static"
-              :x="item.x"
-              :y="item.y"
-              :w="item.w"
-              :h="item.h"
-              :i="item.i"
-              :key="item.i"
+            class="layout-item"
+            v-for="item in graphStore.graphs.onlyGraph.layout.viewGrid"
+            :static="item.static"
+            :x="item.x"
+            :y="item.y"
+            :w="item.w"
+            :h="item.h"
+            :i="item.i"
+            :key="item.i"
           >
-            <el-icon @click="removeComponent(item, 'viewGrid')" class="trash-icon" :size="15"><Delete /></el-icon>
+            <el-icon
+              @click="removeComponent(item, 'viewGrid')"
+              class="trash-icon"
+              :size="15"
+              ><Delete
+            /></el-icon>
             <component
-                v-if="item.component"
-                :is="item.component"
-                v-bind="item.props"
-                class="comp"
+              v-if="item.component"
+              :is="item.component"
+              v-bind="item.props"
+              class="comp"
             ></component>
           </grid-item>
         </grid-layout>
       </el-card>
-
 
       <div class="empty-padder"></div>
     </el-main>
@@ -95,39 +114,56 @@
 </template>
 
 <script>
-import {Delete} from "@element-plus/icons-vue";
-import {ElAside, ElCard, ElContainer, ElMain, ElScrollbar, ElIcon} from "element-plus";
-import {remove} from "lodash";
-import {GridItem, GridLayout} from "vue3-grid-layout";
-import {reactive} from "vue";
-import {useGraphStore} from "../../store/graphStore";
+import { Delete } from "@element-plus/icons-vue";
+import {
+  ElAside,
+  ElCard,
+  ElContainer,
+  ElMain,
+  ElScrollbar,
+  ElIcon,
+} from "element-plus";
+import { remove } from "lodash";
+import { GridItem, GridLayout } from "vue3-grid-layout";
+import { reactive } from "vue";
+import { useGraphStore } from "../../store/graphStore";
 export default {
   name: "TemplateView",
-  components: {ElIcon, Delete, ElScrollbar, ElCard, ElAside, ElMain, ElContainer, GridItem, GridLayout},
+  components: {
+    ElIcon,
+    Delete,
+    ElScrollbar,
+    ElCard,
+    ElAside,
+    ElMain,
+    ElContainer,
+    GridItem,
+    GridLayout,
+  },
   props: {
     templateTypes: Object,
     modelView: {
       type: String,
       required: true,
-    }
+    },
   },
   setup(props) {
     const graphStore = useGraphStore();
 
-    const nodeList = []
+    const nodeList = [];
     graphStore.graphs.onlyGraph.nodes.forEach((node) => {
       if (props.templateTypes[node.type]) {
         nodeList.push(node);
       }
-    })
-    return {graphStore};
+    });
+    return { graphStore };
   },
   mounted() {
     this.graphStore.graphs.onlyGraph.nodes.forEach((node) => {
       if (this.templateTypes[node.type]) {
         this.nodeList.push(node);
       }
-    })
+    });
   },
   data() {
     return {
@@ -166,22 +202,28 @@ export default {
           props: {
             id: this.draggingNode.id,
             data: reactive(this.draggingNode.data),
-            type: this.draggingNode.type
+            type: this.draggingNode.type,
           },
         });
-        remove(this.nodeList, n => n.id === this.draggingNode.id);
+        remove(this.nodeList, (n) => n.id === this.draggingNode.id);
       }
-
 
       this.draggingNode = null;
       this.draggingIndex = null;
       this.graphStore.storeLayoutLocally();
     },
     removeComponent(item, targetGrid) {
-      remove(this.graphStore.graphs.onlyGraph.layout[targetGrid], comp => comp.i === item.i);
-      this.nodeList.push({ id: item.i, type: item.props.type, data: item.props.data });
+      remove(
+        this.graphStore.graphs.onlyGraph.layout[targetGrid],
+        (comp) => comp.i === item.i,
+      );
+      this.nodeList.push({
+        id: item.i,
+        type: item.props.type,
+        data: item.props.data,
+      });
       this.graphStore.storeLayoutLocally();
-    }
+    },
   },
 };
 </script>
@@ -201,11 +243,9 @@ export default {
 .at-card-body {
   padding: 0;
 }
-
 </style>
 
 <style scoped>
-
 .aside {
   overflow: hidden;
   width: 16rem;

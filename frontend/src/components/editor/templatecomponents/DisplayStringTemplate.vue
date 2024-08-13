@@ -11,19 +11,17 @@ import TemplateCompWrapper from "./TemplateCompWrapper.vue";
 
 export default {
   name: "InputStringTemplate",
-  components: {DisplayData, InputShortStringComp, TemplateCompWrapper},
+  components: { DisplayData, InputShortStringComp, TemplateCompWrapper },
   props: {
     id: {
       type: String,
       required: true,
     },
     data: {
-      type: Object
+      type: Object,
     },
   },
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

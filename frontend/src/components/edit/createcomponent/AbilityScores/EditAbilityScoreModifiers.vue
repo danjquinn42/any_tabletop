@@ -249,14 +249,7 @@ import {
   ElRadio,
   ElRadioGroup,
 } from "element-plus";
-import {
-  dropRight,
-  find,
-  isEmpty,
-  keyBy,
-  random,
-  replace,
-} from "lodash";
+import { dropRight, find, isEmpty, keyBy, random, replace } from "lodash";
 import AbilityScoreModifiers from "./AbilityScoreModifiers.vue";
 import { create, all } from "mathjs";
 import { useModStore } from "../../../../store/modStore";
@@ -369,7 +362,7 @@ export default {
         stats: scrubbedStats,
       };
       await this.modStore.updateComponent(payload);
-      this.closeDialog()
+      this.closeDialog();
     },
     updateProps() {
       this.numberOfElements = this.form.stats.length;
