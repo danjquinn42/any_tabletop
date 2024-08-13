@@ -86,7 +86,7 @@ export default {
         updateNodeData(source.id, {nodeData: sourceData});
 
         const targetData = target.data.nodeData;
-        targetData.setInput(sourceData.getOutput())
+        targetData.setInputValue(sourceData.getOutputValue());
         updateNodeData(target.id, {nodeData: targetData});
       }
     }

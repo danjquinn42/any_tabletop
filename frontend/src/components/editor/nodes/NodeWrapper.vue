@@ -19,7 +19,7 @@
         :is-valid-connection="isValidConnection"
         type="target"
     ></Handle>
-    <el-form-item v-if="!anonymous" label="name" size="small">
+    <el-form-item v-if="!anonymous" label="label" size="small">
       <el-input v-model="data.nodeData.input.label" ></el-input>
     </el-form-item>
     <h5 v-if="!anonymous">preview</h5>

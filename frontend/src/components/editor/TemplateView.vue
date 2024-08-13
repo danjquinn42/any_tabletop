@@ -26,7 +26,7 @@
         <grid-layout
             class="grid-layout"
             ref="editGrid"
-            :layout.sync="graphStore.graphs.onlyGraph.layout['editGrid']"
+            :layout.sync="graphStore.graphs.onlyGraph.layout.editGrid"
             :col-number="colCount"
             :row-height="60"
             :is-draggable="true"
@@ -35,7 +35,7 @@
         >
           <grid-item
               class="layout-item"
-              v-for="item in graphStore.graphs.onlyGraph.layout['editGrid']"
+              v-for="item in graphStore.graphs.onlyGraph.layout.editGrid"
               :static="item.static"
               :x="item.x"
               :y="item.y"
@@ -59,7 +59,7 @@
         <grid-layout
             class="grid-layout"
             ref="viewGrid"
-            :layout.sync="graphStore.graphs.onlyGraph.layout['viewGrid']"
+            :layout.sync="graphStore.graphs.onlyGraph.layout.viewGrid"
             :col-number="colCount"
             :row-height="60"
             :is-draggable="true"
@@ -68,7 +68,7 @@
         >
           <grid-item
               class="layout-item"
-              v-for="item in graphStore.graphs.onlyGraph.layout['viewGrid']"
+              v-for="item in graphStore.graphs.onlyGraph.layout.viewGrid"
               :static="item.static"
               :x="item.x"
               :y="item.y"
@@ -175,10 +175,12 @@ export default {
 
       this.draggingNode = null;
       this.draggingIndex = null;
+      this.graphStore.storeLayoutLocally();
     },
     removeComponent(item, targetGrid) {
       remove(this.graphStore.graphs.onlyGraph.layout[targetGrid], comp => comp.i === item.i);
-      this.nodeList.push({ id: item.i, type: item.props.type, data: item.props.data })
+      this.nodeList.push({ id: item.i, type: item.props.type, data: item.props.data });
+      this.graphStore.storeLayoutLocally();
     }
   },
 };

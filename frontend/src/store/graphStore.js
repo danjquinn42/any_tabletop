@@ -29,8 +29,15 @@ export const useGraphStore = defineStore("graphs", {
       console.log(`graph size: ${kb}KB`);
       localStorage.setItem("graph", graphJSON);
     }, 100),
+    storeLayoutLocally: debounce(function () {
+      const layout = JSON.stringify(this.graphs.onlyGraph.layout);
+      const kb = (layout.length / 512).toFixed(2);
+      console.log(`layout size: ${kb}KB`);
+      localStorage.setItem("layout", layout);
+    }, 100),
     loadLocally() {
       const graph = JSON.parse(localStorage.getItem("graph"));
+      const layout = JSON.parse(localStorage.getItem("layout"));
       if (graph) {
         graph.nodes = graph.nodes.map((n) => {
           n.data.nodeData = ATNodeData.fromNodeData(n.data.nodeData);
@@ -45,6 +52,10 @@ export const useGraphStore = defineStore("graphs", {
           }
           return n;
         });
+        if (layout) {
+          console.log("Layout from storage", layout);
+          graph.layout = layout;
+        }
         this.graphs.onlyGraph = graph;
       }
     },
