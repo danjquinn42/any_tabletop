@@ -48,27 +48,6 @@ export class ATNodeData {
     return this;
   }
 
-  setInput(input) {
-    if (this.input.type === input.type) {
-      this.input = input;
-      this.afterUpdateInput(input);
-    } else {
-      console.error(
-        `Input type ${input.type} cannot be assigned to input ${this.input.type}`,
-      );
-    }
-  }
-
-  setOutput(output) {
-    if (this.output.type === output.type) {
-      this.output = output;
-    } else {
-      console.error(
-        `Output type ${output.type} cannot be assigned to output ${this.output.type}`,
-      );
-    }
-  }
-
   getOutput() {
     return this.output;
   }
@@ -78,34 +57,12 @@ export class ATNodeData {
   }
 
   setOutputValue(value) {
-    if (typeof value === typeof this.output.value) {
-      this.output.setValue(value);
-    } else {
-      console.error(
-        `Output value ${typeof value} cannot be value of ${typeof this.output.value}`,
-      );
-    }
+    this.output.setValue(value);
   }
 
   setInputValue(value) {
-    if (typeof value === typeof this.input.value) {
-      this.input.setValue(value);
-      this.afterUpdateInput(this.input);
-    }
-    console.error(
-      `input value ${typeof value} cannot be value of ${typeof this.input.value}`,
-    );
-  }
-
-  withInputValue(value) {
-    if (typeof value === typeof this.input.value) {
-      this.input.setValue(value);
-      this.afterUpdateInput(this.input);
-      return this;
-    }
-    console.error(
-      `input value ${typeof value} cannot be value of ${typeof this.input.value}`,
-    );
+    this.input.setValue(value);
+    this.afterUpdateInput(this.input);
   }
 
   getInputValue() {

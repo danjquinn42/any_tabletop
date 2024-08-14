@@ -11,7 +11,7 @@
 
   <!-- GRAPH VIEW  -->
   <div v-if="modelView === 'graph'">
-    <GraphView :node-types="nodeTypes" :on-connect="onConnect" />
+    <GraphView :node-types="nodeTypes" />
   </div>
 
   <!-- TEMPLATE VIEW  -->
@@ -23,9 +23,7 @@
 </template>
 
 <script>
-import { useVueFlow } from "@vue-flow/core";
 import { ElAffix, ElRadioButton, ElRadioGroup } from "element-plus";
-import { cloneDeep } from "lodash";
 import { markRaw } from "vue";
 import { useGraphStore } from "../../store/graphStore";
 import GraphView from "./GraphView.vue";
@@ -60,14 +58,6 @@ export default {
     const graphStore = useGraphStore();
     // TODO remove local storage
     graphStore.loadLocally();
-    const {
-      addEdges,
-      findNode,
-      updateNodeData,
-      toObject,
-      onEdgesChange,
-      onNodesChange,
-    } = useVueFlow();
 
     graphStore.logGraphs();
     const nodeTypes = {
@@ -87,59 +77,15 @@ export default {
       inputNumberMap: markRaw(InputNumberMapTemplate),
     };
 
-    function onConnect(params) {
-      params.arrowHeadType = "arrow";
-      params.markerEnd = { type: "arrow" };
-      const source = findNode(params.source);
-      const target = findNode(params.target);
-      if (source && target && source.data) {
-        const sourceData = source.data.nodeData;
-        sourceData.addChild(target.id);
-        updateNodeData(source.id, { nodeData: sourceData });
-
-        const targetData = target.data.nodeData;
-        targetData.setInputValue(sourceData.getOutputValue());
-        updateNodeData(target.id, { nodeData: targetData });
-      }
-    }
-
-    onNodesChange(() => {
-      graphStore.storeLocally(toObject());
-    });
-
-    onEdgesChange((change) => {
-      change.forEach((c) => {
-        if (c.type === "remove") {
-          const source = findNode(c.source);
-          const target = findNode(c.target);
-          const sourceWithoutTarget = source.data.nodeData.withoutChild(
-            c.target,
-          );
-          updateNodeData(c.target, {
-            nodeData: cloneDeep(target.data.nodeData),
-          });
-          updateNodeData(c.source, { nodeData: sourceWithoutTarget });
-        }
-      });
-      graphStore.storeLocally(toObject());
-    });
-
     return {
       nodeTypes,
       templateTypes,
-      onConnect,
     };
   },
 };
 </script>
 
-<style>
-@import "@vue-flow/core/dist/style.css";
-@import "@vue-flow/core/dist/theme-default.css";
-
-/* WARNING: styles are NOT scoped to this component
-Be sure to use specific and uncommon class names*/
-
+<style scoped>
 .at-flow-switch-container {
   padding: 1rem;
   position: fixed;

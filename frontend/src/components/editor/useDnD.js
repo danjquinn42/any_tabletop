@@ -1,4 +1,4 @@
-import { isNil } from "lodash";
+import { cloneDeep, isNil } from "lodash";
 import { ref, watch, onUnmounted, reactive } from "vue";
 import { useVueFlow } from "@vue-flow/core";
 import { ATNilData } from "./types/ATNilData";
@@ -80,7 +80,7 @@ export default function useDragAndDrop() {
       id: nodeId,
       type: draggedType.value,
       position,
-      data: reactive({ nodeData: draggedData.value }),
+      data: reactive({ nodeData: cloneDeep(draggedData.value) }),
     };
 
     const { off } = onNodesInitialized(() => {

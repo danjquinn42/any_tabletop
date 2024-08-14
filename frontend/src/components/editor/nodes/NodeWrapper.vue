@@ -102,11 +102,11 @@ export default {
   setup(props) {
     const { updateNodeData, findNode, getConnectedEdges } = useVueFlow();
     function updateChildrenDeep(nodeId, newInputValue) {
-      const target =
-        findNode(nodeId).data.nodeData.withInputValue(newInputValue);
-      updateNodeData(nodeId, { nodeData: target });
-      target.forEachChild((child) =>
-        updateChildrenDeep(child, target.getOutputValue()),
+      const targetNodeData = findNode(nodeId).data.nodeData;
+      targetNodeData.setInputValue(newInputValue);
+      updateNodeData(nodeId, { nodeData: targetNodeData });
+      targetNodeData.forEachChild((child) =>
+        updateChildrenDeep(child, targetNodeData.getOutputValue()),
       );
     }
     function updateOutputValue(outputValue) {

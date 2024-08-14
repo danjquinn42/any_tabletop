@@ -28,8 +28,9 @@
   </el-container>
 </template>
 <script>
-import { VueFlow } from "@vue-flow/core";
+import { useVueFlow, VueFlow } from "@vue-flow/core";
 import { ElContainer, ElMain } from "element-plus";
+import { cloneDeep } from "lodash";
 import DropzoneBackground from "./DropzoneBackground.vue";
 import GraphSidebar from "./GraphSidebar.vue";
 import { useGraphStore } from "../../store/graphStore";
@@ -46,12 +47,64 @@ export default {
   setup() {
     const graphStore = useGraphStore();
     const { onDragOver, onDrop, onDragLeave, isDragOver } = useDragAndDrop();
+    const {
+      addEdges,
+      findNode,
+      updateNodeData,
+      toObject,
+      onEdgesChange,
+      onNodesChange,
+    } = useVueFlow();
 
-    return { graphStore, onDragOver, onDrop, onDragLeave, isDragOver };
+    function onConnect(params) {
+      params.arrowHeadType = "arrow";
+      params.markerEnd = { type: "arrow" };
+      addEdges(params);
+      const source = findNode(params.source);
+      const target = findNode(params.target);
+      if (source && target && source.data) {
+        const sourceData = source.data.nodeData;
+        sourceData.addChild(target.id);
+        updateNodeData(source.id, { nodeData: sourceData });
+
+        const targetData = target.data.nodeData;
+        targetData.setInputValue(sourceData.getOutputValue());
+        updateNodeData(target.id, { nodeData: targetData });
+      }
+    }
+
+    onNodesChange(() => {
+      graphStore.storeLocally(toObject());
+    });
+
+    onEdgesChange((change) => {
+      change.forEach((c) => {
+        if (c.type === "remove") {
+          const source = findNode(c.source);
+          const target = findNode(c.target);
+          const sourceWithoutTarget = source.data.nodeData.withoutChild(
+            c.target,
+          );
+          updateNodeData(c.target, {
+            nodeData: cloneDeep(target.data.nodeData),
+          });
+          updateNodeData(c.source, { nodeData: sourceWithoutTarget });
+        }
+      });
+      graphStore.storeLocally(toObject());
+    });
+
+    return {
+      graphStore,
+      onDragOver,
+      onDrop,
+      onDragLeave,
+      isDragOver,
+      onConnect,
+    };
   },
   props: {
     nodeTypes: {},
-    onConnect: {},
   },
 };
 </script>
@@ -81,5 +134,15 @@ Be sure to use specific and uncommon class names*/
 .vue-flow__edge.selected .vue-flow__edge-path {
   stroke-width: 0.2rem;
   stroke: var(--el-color-warning-dark-2);
+}
+
+.vue-flow__node-input,
+.vue-flow__node-output {
+  padding: 10px;
+  border: 1px solid var(--el-border-color);
+  border-radius: 4px;
+  color: var(--el-text-color);
+  background-color: var(--el-fill-color);
+  cursor: pointer;
 }
 </style>
