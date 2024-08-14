@@ -55,6 +55,8 @@ export const useGraphStore = defineStore("graphs", {
         if (layout) {
           console.log("Layout from storage", layout);
           graph.layout = layout;
+        } else {
+          graph.layout = { editGrid: [], viewGrid: [] };
         }
         this.graphs.onlyGraph = graph;
       }

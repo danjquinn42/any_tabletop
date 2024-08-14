@@ -21,7 +21,7 @@
       >Remove Row -</el-button
     >
     <el-button
-      :disabled="elementList.length >= maxRows"
+      :disabled="elementList.length >= data.nodeData.options.maxRows"
       size="small"
       @click="addRow"
       type="primary"
@@ -58,12 +58,8 @@ export default {
     data: {
       type: Object,
       default: () => {
-        nodeData: new ATNodeData(new ATKeyValuePairs(), new ATKeyValuePairs());
+        nodeData: new ATNodeData(new ATKeyValuePairs(), new ATKeyValuePairs(), {maxRow: 10});
       },
-    },
-    maxRows: {
-      type: Number,
-      required: true,
     },
     updateOutputValue: { type: Function },
     rowCount: {

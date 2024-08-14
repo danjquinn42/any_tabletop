@@ -9,9 +9,6 @@
       >{{ profileStore.displayName }}
     </el-text>
     <el-text size="large"></el-text>
-    <el-menu-item index="/">Map</el-menu-item>
-    <el-menu-item index="/docs/about">Docs</el-menu-item>
-    <el-menu-item index="/edit/docs">Create</el-menu-item>
     <el-menu-item index="/edit/graph">Template Editor</el-menu-item>
     <el-form class="form">
       <el-form-item>

@@ -79,8 +79,9 @@ export default {
       inputComponent: new ATNodeData(new ATNilData(), new ATStringData()),
       inputNumber: new ATNodeData(new ATNilData(), new ATNumberData()),
       inputNumberMap: new ATNodeData(
-        new ATKeyValuePairs(),
-        new ATKeyValuePairs(),
+          new ATKeyValuePairs(),
+          new ATKeyValuePairs(),
+          {maxRow: 10}
       ),
       displayShortText: new ATNodeData(new ATStringData(), new ATNilData()),
       displayNumber: new ATNodeData(new ATNumberData(), new ATNilData()),

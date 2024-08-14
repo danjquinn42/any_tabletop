@@ -12,7 +12,7 @@
       <el-form-item label="max rows">
         <el-input-number
           :controls="false"
-          v-model="data.maxRows"
+          v-model="data.nodeData.options.maxRows"
           :step="1"
         ></el-input-number>
       </el-form-item>
@@ -20,7 +20,6 @@
       <NumberMapInput
         :data="data"
         :update-output-value="slotProps.updateOutputValue"
-        :max-rows="data.maxRows"
         :row-count="rowCount"
       />
     </div>
@@ -61,14 +60,13 @@ export default {
     data: {
       type: Object,
       default: () => ({
-        nodeData: new ATNodeData(new ATKeyValuePairs(), new ATKeyValuePairs()),
-        maxRows: 10,
+        nodeData: new ATNodeData(new ATKeyValuePairs(), new ATKeyValuePairs(), { maxRows: 10 }),
       }),
     },
   },
   setup(props) {
-    if (!props.data.maxRows) {
-      props.data.maxRows = 10;
+    if (!props.data.nodeData.options.maxRows) {
+      props.data.nodeData.options.maxRows = 10;
     }
   },
   data() {

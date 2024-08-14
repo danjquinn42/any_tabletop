@@ -90,7 +90,6 @@ export default {
     function onConnect(params) {
       params.arrowHeadType = "arrow";
       params.markerEnd = { type: "arrow" };
-      addEdges(params);
       const source = findNode(params.source);
       const target = findNode(params.target);
       if (source && target && source.data) {

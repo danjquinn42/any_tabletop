@@ -1,10 +1,9 @@
 <template>
-  <TemplateCompWrapper id="id" data="data" v-slot="slotProps">
+  <TemplateCompWrapper id="id" :data="data" v-slot="slotProps">
     <NumberMapInput
       :data="data"
       :update-output-value="slotProps.updateOutputValue"
-    >
-    </NumberMapInput>
+    />
   </TemplateCompWrapper>
 </template>
 

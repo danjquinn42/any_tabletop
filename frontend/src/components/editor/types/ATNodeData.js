@@ -6,27 +6,31 @@ export class ATNodeData {
 
   output;
 
+  options;
+
   children = [];
 
   afterUpdateInput = () => {
     this.setOutputValue(this.getInputValue());
   };
 
-  constructor(input, output) {
+  constructor(input, output, options = {}) {
     this.input = input;
     this.output = output;
+    this.options = options;
   }
 
   static fromNodeData(nodeData) {
     const input = nodeData.input;
     const output = nodeData.output;
+    const options = nodeData.options;
     const atInput = new ATDataType(input.type);
     atInput.setValue(input.value);
     atInput.setLabel(input.label);
     const atOutput = new ATDataType(output.type);
     atOutput.setValue(output.value);
     atOutput.setLabel(output.label);
-    const atNode = new ATNodeData(atInput, atOutput);
+    const atNode = new ATNodeData(atInput, atOutput, options);
     atNode.children = nodeData.children;
     return atNode;
   }
