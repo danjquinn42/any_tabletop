@@ -8,21 +8,31 @@
         <div
           class="vue-flow__node-input"
           draggable="true"
-          @dragstart="onDragStart($event, 'input', inputComponent)"
+          @dragstart="
+            onDragStart($event, 'input', NODE_DATA_DEFAULT.inputShortString)
+          "
         >
           Input Short Text
         </div>
         <div
           class="vue-flow__node-input"
           draggable="true"
-          @dragstart="onDragStart($event, 'inputNumber', inputNumber)"
+          @dragstart="
+            onDragStart($event, 'inputNumber', NODE_DATA_DEFAULT.inputNumber)
+          "
         >
           Input Number
         </div>
         <div
           class="vue-flow__node-input"
           draggable="true"
-          @dragstart="onDragStart($event, 'inputNumberMap', inputNumberMap)"
+          @dragstart="
+            onDragStart(
+              $event,
+              'inputNumberMap',
+              NODE_DATA_DEFAULT.inputNumberMap,
+            )
+          "
         >
           Input Number Map
         </div>
@@ -31,14 +41,26 @@
         <div
           class="vue-flow__node-input"
           draggable="true"
-          @dragstart="onDragStart($event, 'displayString', displayShortText)"
+          @dragstart="
+            onDragStart(
+              $event,
+              'displayString',
+              NODE_DATA_DEFAULT.displayShortText,
+            )
+          "
         >
           Display Short Text
         </div>
         <div
           class="vue-flow__node-output"
           draggable="true"
-          @dragstart="onDragStart($event, 'displayNumber', displayNumber)"
+          @dragstart="
+            onDragStart(
+              $event,
+              'displayNumber',
+              NODE_DATA_DEFAULT.displayNumber,
+            )
+          "
         >
           Display Number
         </div>
@@ -47,7 +69,9 @@
         <div
           class="vue-flow__node-input"
           draggable="true"
-          @dragstart="onDragStart($event, 'applyFormula', applyFormula)"
+          @dragstart="
+            onDragStart($event, 'applyFormula', NODE_DATA_DEFAULT.applyFormula)
+          "
         >
           Apply Formula
         </div>
@@ -61,32 +85,19 @@
 
 <script>
 import { ElAside, ElScrollbar } from "element-plus";
-import { ATKeyValuePairs } from "./types/ATKeyValuePairs";
-import { ATNilData } from "./types/ATNilData";
-import { ATNodeData } from "./types/ATNodeData";
-import { ATNumberData } from "./types/ATNumberData";
-import { ATStringData } from "./types/ATStringData";
+import { NODE_DATA_DEFAULT } from "../../util/constants";
 import useDragAndDrop from "./useDnD";
 
 export default {
   name: "GraphSidebar",
+  computed: {
+    NODE_DATA_DEFAULT() {
+      return NODE_DATA_DEFAULT;
+    },
+  },
   components: {
     ElScrollbar,
     ElAside,
-  },
-  data: function () {
-    return {
-      inputComponent: new ATNodeData(new ATNilData(), new ATStringData()),
-      inputNumber: new ATNodeData(new ATNilData(), new ATNumberData()),
-      inputNumberMap: new ATNodeData(
-        new ATKeyValuePairs(),
-        new ATKeyValuePairs(),
-        { maxRow: 10 },
-      ),
-      displayShortText: new ATNodeData(new ATStringData(), new ATStringData()),
-      displayNumber: new ATNodeData(new ATNumberData(), new ATNilData()),
-      applyFormula: new ATNodeData(new ATNumberData(), new ATNumberData()),
-    };
   },
   setup() {
     const { onDragStart } = useDragAndDrop();

@@ -10,8 +10,13 @@
   >
     <el-form-item label="x =">
       <el-input
-        v-model="data.formula"
-        @input="updateFormula(slotProps.updateOutputValue, data.formula)"
+        v-model="data.nodeData.options.formula"
+        @input="
+          updateFormula(
+            slotProps.updateOutputValue,
+            data.nodeData.options.formula,
+          )
+        "
       ></el-input>
     </el-form-item>
   </NodeWrapper>
@@ -20,8 +25,7 @@
 <script>
 import { useVueFlow } from "@vue-flow/core";
 import { ElFormItem, ElInput } from "element-plus";
-import { ATNodeData } from "../../types/ATNodeData";
-import { ATNumberData } from "../../types/ATNumberData";
+import { NODE_DATA_DEFAULT } from "../../../../util/constants";
 import NodeWrapper from "../NodeWrapper.vue";
 import { create, all } from "mathjs";
 
@@ -38,8 +42,7 @@ export default {
     data: {
       type: Object,
       default: () => ({
-        nodeData: new ATNodeData(new ATNumberData(), new ATNumberData()),
-        formula: "x",
+        nodeData: NODE_DATA_DEFAULT.applyFormula,
       }),
     },
   },

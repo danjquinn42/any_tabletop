@@ -16,9 +16,7 @@
 </template>
 
 <script>
-import { ATNilData } from "../../types/ATNilData";
-import { ATNodeData } from "../../types/ATNodeData";
-import { ATNumberData } from "../../types/ATNumberData";
+import { NODE_DATA_DEFAULT } from "../../../../util/constants";
 import NodeWrapper from "../NodeWrapper.vue";
 import InputNumberComp from "../../elements/InputNumberComp.vue";
 
@@ -33,7 +31,7 @@ export default {
     data: {
       type: Object,
       default: () => {
-        nodeData: new ATNodeData(new ATNilData(), new ATNumberData());
+        nodeData: NODE_DATA_DEFAULT.inputNumber;
       },
     },
   },

@@ -12,9 +12,7 @@
 
 <script>
 import { ElFormItem, ElInput } from "element-plus";
-import { ATNilData } from "../../types/ATNilData";
-import { ATNodeData } from "../../types/ATNodeData";
-import { ATNumberData } from "../../types/ATNumberData";
+import { NODE_DATA_DEFAULT } from "../../../../util/constants";
 import NodeWrapper from "../NodeWrapper.vue";
 import DisplayData from "../../elements/DisplayData.vue";
 
@@ -29,7 +27,7 @@ export default {
     data: {
       type: Object,
       default: () => {
-        nodeData: new ATNodeData(new ATNumberData(), new ATNilData());
+        nodeData: NODE_DATA_DEFAULT.displayNumber;
       },
     },
   },

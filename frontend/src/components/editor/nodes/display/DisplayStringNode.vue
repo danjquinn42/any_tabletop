@@ -11,9 +11,7 @@
 </template>
 
 <script>
-import { ATNilData } from "../../types/ATNilData";
-import { ATNodeData } from "../../types/ATNodeData";
-import { ATStringData } from "../../types/ATStringData";
+import { NODE_DATA_DEFAULT } from "../../../../util/constants";
 import NodeWrapper from "../NodeWrapper.vue";
 import DisplayData from "../../elements/DisplayData.vue";
 
@@ -28,7 +26,7 @@ export default {
     data: {
       type: Object,
       default: () => {
-        nodeData: new ATNodeData(new ATStringData(), new ATNilData());
+        nodeData: NODE_DATA_DEFAULT.displayShortText;
       },
     },
   },

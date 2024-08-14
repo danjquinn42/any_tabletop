@@ -35,9 +35,8 @@ import {
   ElButton,
   ElButtonGroup,
 } from "element-plus";
+import { NODE_DATA_DEFAULT } from "../../../../util/constants";
 import NumberMapInput from "../../elements/NumberMapInput.vue";
-import { ATKeyValuePairs } from "../../types/ATKeyValuePairs";
-import { ATNodeData } from "../../types/ATNodeData";
 import NodeWrapper from "../NodeWrapper.vue";
 
 export default {
@@ -60,9 +59,7 @@ export default {
     data: {
       type: Object,
       default: () => ({
-        nodeData: new ATNodeData(new ATKeyValuePairs(), new ATKeyValuePairs(), {
-          maxRows: 10,
-        }),
+        nodeData: NODE_DATA_DEFAULT.inputNumberMap,
       }),
     },
   },

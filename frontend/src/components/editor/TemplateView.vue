@@ -136,7 +136,6 @@ import {
 } from "element-plus";
 import { find, remove } from "lodash";
 import { GridItem, GridLayout } from "vue3-grid-layout";
-import { reactive } from "vue";
 import { useGraphStore } from "../../store/graphStore";
 export default {
   name: "TemplateView",
@@ -158,7 +157,7 @@ export default {
       required: true,
     },
   },
-  setup(props) {
+  setup() {
     const graphStore = useGraphStore();
     return { graphStore };
   },
@@ -168,7 +167,6 @@ export default {
         this.nodeMap[node.id] = node;
       }
     });
-    console.log("NODE MAP", this.nodeMap);
   },
   data() {
     return {
@@ -185,14 +183,11 @@ export default {
       this.draggingIndex = index;
     },
     onDrop(event, targetGrid) {
-      console.log("DROPPED", event);
-
       const renderedElement = document.getElementById(this.draggingNode.id);
       console.log(renderedElement);
       const elementHeight = renderedElement
         ? renderedElement.offsetHeight
         : 256;
-      const elementWidth = renderedElement ? renderedElement.offsetWidth : 256;
 
       const grid = this.$refs[targetGrid].$el;
       const layout = this.graphStore.graphs.onlyGraph.layout;

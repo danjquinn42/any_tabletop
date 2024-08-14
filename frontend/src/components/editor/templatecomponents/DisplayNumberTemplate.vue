@@ -5,10 +5,8 @@
 </template>
 
 <script>
+import { NODE_DATA_DEFAULT } from "../../../util/constants";
 import DisplayData from "../elements/DisplayData.vue";
-import { ATNilData } from "../types/ATNilData";
-import { ATNodeData } from "../types/ATNodeData";
-import { ATNumberData } from "../types/ATNumberData";
 import TemplateCompWrapper from "./TemplateCompWrapper.vue";
 
 export default {
@@ -22,7 +20,7 @@ export default {
     data: {
       type: Object,
       default: () => {
-        nodeData: new ATNodeData(new ATNumberData(), new ATNilData());
+        nodeData: NODE_DATA_DEFAULT.displayNumber;
       },
     },
   },
