@@ -2,9 +2,9 @@ import { remove } from "lodash";
 import { ATDataType } from "./ATDataType";
 
 export class ATNodeData {
-  input = { type: "undefined ", label: "", value: undefined };
+  input;
 
-  output = { type: "undefined ", label: "", value: undefined };
+  output;
 
   children = [];
 

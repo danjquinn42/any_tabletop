@@ -32,10 +32,12 @@ import GraphView from "./GraphView.vue";
 import DisplayNumberNode from "./nodes/display/DisplayNumberNode.vue";
 import DisplayStringNode from "./nodes/display/DisplayStringNode.vue";
 import InputNode from "./nodes/input/InputNode.vue";
+import InputNumberMapNode from "./nodes/input/InputNumberMapNode.vue";
 import InputNumberNode from "./nodes/input/InputNumberNode.vue";
 import FormulaNode from "./nodes/transform/FormulaNode.vue";
 import DisplayNumberTemplate from "./templatecomponents/DisplayNumberTemplate.vue";
 import DisplayStringTemplate from "./templatecomponents/DisplayStringTemplate.vue";
+import InputNumberMapTemplate from "./templatecomponents/InputNumberMapTemplate.vue";
 import InputNumberTemplate from "./templatecomponents/InputNumberTemplate.vue";
 import InputStringTemplate from "./templatecomponents/InputStringTemplate.vue";
 import TemplateView from "./TemplateView.vue";
@@ -74,6 +76,7 @@ export default {
       displayNumber: markRaw(DisplayNumberNode),
       displayString: markRaw(DisplayStringNode),
       applyFormula: markRaw(FormulaNode),
+      inputNumberMap: markRaw(InputNumberMapNode),
     };
 
     const templateTypes = {
@@ -81,6 +84,7 @@ export default {
       inputNumber: markRaw(InputNumberTemplate),
       displayNumber: markRaw(DisplayNumberTemplate),
       displayString: markRaw(DisplayStringTemplate),
+      inputNumberMap: markRaw(InputNumberMapTemplate),
     };
 
     function onConnect(params) {

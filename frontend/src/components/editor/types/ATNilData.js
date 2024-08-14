@@ -2,7 +2,7 @@ import { ATDataType } from "./ATDataType";
 
 export class ATNilData extends ATDataType {
   value = null;
-  label = "nil";
+  label = "";
 
   constructor() {
     super("nil");

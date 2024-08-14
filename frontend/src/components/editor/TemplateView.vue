@@ -32,10 +32,10 @@
           class="grid-layout"
           ref="editGrid"
           :layout.sync="graphStore.graphs.onlyGraph.layout.editGrid"
-          :col-number="colCount"
-          :row-height="60"
-          :is-draggable="true"
-          :is-resizable="true"
+          :colNum="colCount"
+          :rowHeight="60"
+          :isDraggable="true"
+          :isResizable="true"
           :use-css-transforms="true"
         >
           <grid-item
@@ -103,14 +103,14 @@
               ><Delete
             /></el-icon>
             <component
-                v-if="templateTypes[nodeMap[item.i]?.type]"
-                :is="templateTypes[nodeMap[item.i].type]"
-                v-bind="{
+              v-if="templateTypes[nodeMap[item.i]?.type]"
+              :is="templateTypes[nodeMap[item.i].type]"
+              v-bind="{
                 id: item.i,
                 data: nodeMap[item.i].data,
                 type: nodeMap[item.i].type,
               }"
-                class="comp"
+              class="comp"
             ></component>
           </grid-item>
         </grid-layout>
@@ -129,9 +129,10 @@ import {
   ElContainer,
   ElMain,
   ElScrollbar,
-  ElIcon, ElNotification,
+  ElIcon,
+  ElNotification,
 } from "element-plus";
-import {find, remove} from "lodash";
+import { find, remove } from "lodash";
 import { GridItem, GridLayout } from "vue3-grid-layout";
 import { reactive } from "vue";
 import { useGraphStore } from "../../store/graphStore";
@@ -170,14 +171,13 @@ export default {
   data() {
     return {
       nodeMap: {},
-      colCount: 6,
+      colCount: 12,
       draggingNode: null,
       draggingIndex: null,
     };
   },
   methods: {
     dragStart(node, index) {
-      console.log("DRAG START", node, index);
       this.draggingNode = node;
       this.draggingIndex = index;
     },
@@ -193,19 +193,22 @@ export default {
       const col = Math.floor((offsetX / gridRect.width) * this.colCount);
       const row = Math.floor((offsetY / gridRect.height) * this.colCount);
 
-      const isNodeInTargetGrid = find(layout[targetGrid], item => item.i === this.draggingNode?.id);
+      const isNodeInTargetGrid = find(
+        layout[targetGrid],
+        (item) => item.i === this.draggingNode?.id,
+      );
 
       if (this.draggingNode && this.templateTypes[this.draggingNode.type]) {
-        isNodeInTargetGrid ?
-            this.notifyComponentHasBeenAdded()
-            : layout[targetGrid].push({
-          x: col,
-          y: row,
-          w: 4,
-          h: 1,
-          i: `${this.draggingNode.id}`,
-          static: false,
-        });
+        isNodeInTargetGrid
+          ? this.notifyComponentHasBeenAdded()
+          : layout[targetGrid].push({
+              x: col,
+              y: row,
+              w: 3,
+              h: 2,
+              i: `${this.draggingNode.id}`,
+              static: false,
+            });
       }
 
       this.draggingNode = null;
@@ -215,9 +218,10 @@ export default {
     notifyComponentHasBeenAdded() {
       ElNotification({
         title: "Component already in use",
-        message: "The component you copied is already present in the template and cannot be placed twice",
+        message:
+          "The component you copied is already present in the template and cannot be placed twice",
         duration: 3000,
-      })
+      });
     },
     removeComponent(item, targetGrid) {
       remove(

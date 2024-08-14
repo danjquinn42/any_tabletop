@@ -19,6 +19,13 @@
         >
           Input Number
         </div>
+        <div
+          class="vue-flow__node-input"
+          draggable="true"
+          @dragstart="onDragStart($event, 'inputNumberMap', inputNumberMap)"
+        >
+          Input Number Map
+        </div>
 
         <h6>Display Nodes</h6>
         <div
@@ -54,6 +61,7 @@
 
 <script>
 import { ElAside, ElScrollbar } from "element-plus";
+import { ATKeyValuePairs } from "./types/ATKeyValuePairs";
 import { ATNilData } from "./types/ATNilData";
 import { ATNodeData } from "./types/ATNodeData";
 import { ATNumberData } from "./types/ATNumberData";
@@ -70,6 +78,10 @@ export default {
     return {
       inputComponent: new ATNodeData(new ATNilData(), new ATStringData()),
       inputNumber: new ATNodeData(new ATNilData(), new ATNumberData()),
+      inputNumberMap: new ATNodeData(
+        new ATKeyValuePairs(),
+        new ATKeyValuePairs(),
+      ),
       displayShortText: new ATNodeData(new ATStringData(), new ATNilData()),
       displayNumber: new ATNodeData(new ATNumberData(), new ATNilData()),
       applyFormula: new ATNodeData(new ATNumberData(), new ATNumberData()),
