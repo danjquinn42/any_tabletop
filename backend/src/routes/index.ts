@@ -1,9 +1,6 @@
 import neo4j from "neo4j-driver";
 import express, { NextFunction, Request, Response, Router } from "express";
 import { getAllHexes } from "./hex/get";
-import { createScoreComponentConfig } from "./component/create";
-import { getModsChildren } from "./mod/get";
-import { getInitialStateFromUserRoot } from "./clientInit/get";
 import { UserProfile } from "../types/schema";
 import { getEnvVar } from "../util/util";
 import { getUserById } from "./user/get";
@@ -44,24 +41,6 @@ router.get("/", (req: Request, res: Response) => {
   res.send("Welcome to Any Tabletop!");
 });
 
-router.get("/init", async (req: Request, res: Response) => {
-  const session = driver.session();
-  try {
-    const user = req.user as UserProfile;
-    if (user) {
-      const initialState = await getInitialStateFromUserRoot(session, user.id);
-      res.send(initialState);
-    } else {
-      res.send({ message: "Dan, make sure to implement default state method" });
-    }
-  } catch (error) {
-    console.error("Failed to fetch initial state", error);
-    res.status(500).send("Unable to initialize application state");
-  } finally {
-    await session.close();
-  }
-});
-
 router.get("/hex/all", async (req: Request, res: Response) => {
   const session = driver.session();
   try {
@@ -77,36 +56,6 @@ router.get("/hex/all", async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Error fetching hexes:", error);
     res.status(500).send("Error fetching hexes");
-  } finally {
-    await session.close();
-  }
-});
-
-router.put("/component/new/:modId", async (req: Request, res: Response) => {
-  const session = driver.session();
-  const modId: string = req.params.modId;
-  try {
-    const { config } = req.body;
-    const result = await createScoreComponentConfig(session, config, modId);
-    res.status(201).send(result);
-  } catch (error) {
-    console.error("FAILED TO CREATE", error);
-    res.status(500).send(`Error creating Config on Mod ${modId}`);
-  } finally {
-    await session.close();
-  }
-});
-
-router.get("/mod/children", async (req: Request, res: Response) => {
-  const session = driver.session();
-  // TODO: replace modName with mod ID in query path
-  const modName: string = "DnD 5e Game Setup";
-  try {
-    const modAndChildren = await getModsChildren(session, modName);
-    res.send(modAndChildren);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send(`Error fetching mod and children ${modName}`);
   } finally {
     await session.close();
   }
