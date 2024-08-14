@@ -58,7 +58,9 @@ export default {
     data: {
       type: Object,
       default: () => {
-        nodeData: new ATNodeData(new ATKeyValuePairs(), new ATKeyValuePairs(), {maxRow: 10});
+        nodeData: new ATNodeData(new ATKeyValuePairs(), new ATKeyValuePairs(), {
+          maxRow: 10,
+        });
       },
     },
     updateOutputValue: { type: Function },

@@ -71,52 +71,52 @@
         </grid-layout>
       </el-card>
 
-<!--      <el-card-->
-<!--        v-if="modelView === 'display'"-->
-<!--        body-class="at-card-body"-->
-<!--        @dragover.prevent-->
-<!--        @drop="(e) => onDrop(e, 'viewGrid')"-->
-<!--      >-->
-<!--        <grid-layout-->
-<!--          class="grid-layout"-->
-<!--          ref="viewGrid"-->
-<!--          :layout.sync="graphStore.graphs.onlyGraph.layout.viewGrid"-->
-<!--          :col-number="colCount"-->
-<!--          :row-height="60"-->
-<!--          :is-draggable="true"-->
-<!--          :is-resizable="true"-->
-<!--          :use-css-transforms="true"-->
-<!--        >-->
-<!--          <grid-item-->
-<!--            class="layout-item"-->
-<!--            v-for="item in graphStore.graphs.onlyGraph.layout.viewGrid"-->
-<!--            :static="item.static"-->
-<!--            :x="item.x"-->
-<!--            :y="item.y"-->
-<!--            :w="item.w"-->
-<!--            :h="item.h"-->
-<!--            :i="item.i"-->
-<!--            :key="item.i"-->
-<!--          >-->
-<!--            <el-icon-->
-<!--              @click="removeComponent(item, 'viewGrid')"-->
-<!--              class="trash-icon"-->
-<!--              :size="15"-->
-<!--              ><Delete-->
-<!--            /></el-icon>-->
-<!--            <component-->
-<!--              v-if="templateTypes[nodeMap[item.i]?.type]"-->
-<!--              :is="templateTypes[nodeMap[item.i].type]"-->
-<!--              v-bind="{-->
-<!--                id: item.i,-->
-<!--                data: nodeMap[item.i].data,-->
-<!--                type: nodeMap[item.i].type,-->
-<!--              }"-->
-<!--              class="comp"-->
-<!--            ></component>-->
-<!--          </grid-item>-->
-<!--        </grid-layout>-->
-<!--      </el-card>-->
+      <!--      <el-card-->
+      <!--        v-if="modelView === 'display'"-->
+      <!--        body-class="at-card-body"-->
+      <!--        @dragover.prevent-->
+      <!--        @drop="(e) => onDrop(e, 'viewGrid')"-->
+      <!--      >-->
+      <!--        <grid-layout-->
+      <!--          class="grid-layout"-->
+      <!--          ref="viewGrid"-->
+      <!--          :layout.sync="graphStore.graphs.onlyGraph.layout.viewGrid"-->
+      <!--          :col-number="colCount"-->
+      <!--          :row-height="60"-->
+      <!--          :is-draggable="true"-->
+      <!--          :is-resizable="true"-->
+      <!--          :use-css-transforms="true"-->
+      <!--        >-->
+      <!--          <grid-item-->
+      <!--            class="layout-item"-->
+      <!--            v-for="item in graphStore.graphs.onlyGraph.layout.viewGrid"-->
+      <!--            :static="item.static"-->
+      <!--            :x="item.x"-->
+      <!--            :y="item.y"-->
+      <!--            :w="item.w"-->
+      <!--            :h="item.h"-->
+      <!--            :i="item.i"-->
+      <!--            :key="item.i"-->
+      <!--          >-->
+      <!--            <el-icon-->
+      <!--              @click="removeComponent(item, 'viewGrid')"-->
+      <!--              class="trash-icon"-->
+      <!--              :size="15"-->
+      <!--              ><Delete-->
+      <!--            /></el-icon>-->
+      <!--            <component-->
+      <!--              v-if="templateTypes[nodeMap[item.i]?.type]"-->
+      <!--              :is="templateTypes[nodeMap[item.i].type]"-->
+      <!--              v-bind="{-->
+      <!--                id: item.i,-->
+      <!--                data: nodeMap[item.i].data,-->
+      <!--                type: nodeMap[item.i].type,-->
+      <!--              }"-->
+      <!--              class="comp"-->
+      <!--            ></component>-->
+      <!--          </grid-item>-->
+      <!--        </grid-layout>-->
+      <!--      </el-card>-->
 
       <div class="empty-padder"></div>
     </el-main>
@@ -189,8 +189,10 @@ export default {
 
       const renderedElement = document.getElementById(this.draggingNode.id);
       console.log(renderedElement);
-      const elementHeight = renderedElement? renderedElement.offsetHeight : 256;
-      const elementWidth = renderedElement? renderedElement.offsetWidth : 256;
+      const elementHeight = renderedElement
+        ? renderedElement.offsetHeight
+        : 256;
+      const elementWidth = renderedElement ? renderedElement.offsetWidth : 256;
 
       const grid = this.$refs[targetGrid].$el;
       const layout = this.graphStore.graphs.onlyGraph.layout;

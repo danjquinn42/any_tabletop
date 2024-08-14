@@ -60,7 +60,9 @@ export default {
     data: {
       type: Object,
       default: () => ({
-        nodeData: new ATNodeData(new ATKeyValuePairs(), new ATKeyValuePairs(), { maxRows: 10 }),
+        nodeData: new ATNodeData(new ATKeyValuePairs(), new ATKeyValuePairs(), {
+          maxRows: 10,
+        }),
       }),
     },
   },
