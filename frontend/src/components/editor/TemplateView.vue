@@ -172,7 +172,7 @@ export default {
     return {
       nodeMap: {},
       colCount: 12,
-      rowHeight: 32,
+      rowHeight: 16,
       draggingNode: null,
       draggingIndex: null,
     };
@@ -278,7 +278,7 @@ export default {
 }
 
 .layout-item {
-  height: content-box;
+  height: fit-content;
   width: fit-content;
   min-height: 30px;
   background-color: var(--el-bg-color);

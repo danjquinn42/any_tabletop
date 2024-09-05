@@ -1,12 +1,18 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Editor from "../components/editor/Editor.vue";
+import Map from "../components/map/Map.vue";
 import Login from "../components/Login.vue";
 
 const routes = [
   {
     path: "/",
-    name: "map",
+    name: "root",
     component: Editor,
+  },
+  {
+    path: "/map",
+    name: "map",
+    component: Map,
   },
   {
     path: "/login",
