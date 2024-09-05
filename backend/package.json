@@ -32,7 +32,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "neo4j": "docker run --restart always --publish=7474:7474 --publish=7687:7687 --env NEO4J_AUTH=neo4j/localDev --volume=/path/to/your/data:/data neo4j:5.21.0",
+    "neo4j": "docker run --restart always --publish=7474:7474 --publish=7687:7687 --env NEO4J_AUTH=neo4j/localDev --volume=$(grep '^LOCAL_VOLUME' .env | cut -d '=' -f2):/data neo4j:5.21.0",
     "start": "nodemon src/main.ts"
   }
 }
