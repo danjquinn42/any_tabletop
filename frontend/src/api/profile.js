@@ -3,6 +3,7 @@ export const getCurrentUser = () =>
   fetch(apiRoot + `profile`, {
     method: "GET",
     credentials: "include",
+    sameSite: "Strict",
   })
     .then((response) => {
       if (!response.ok) {

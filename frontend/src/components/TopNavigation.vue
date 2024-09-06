@@ -2,9 +2,6 @@
   <el-menu :default-active="$router.path" mode="horizontal" router>
     <el-text size="large" class="title">Any Tabletop</el-text>
     <el-image class="map-icon" src="/assets/favicon.png"></el-image>
-    <el-menu-item v-if="!profileStore.loggedIn" index="/login"
-      >Log In</el-menu-item
-    >
     <el-text type="success" v-if="profileStore.loggedIn"
       >{{ profileStore.displayName }}
     </el-text>
