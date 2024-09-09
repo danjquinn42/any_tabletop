@@ -1,4 +1,11 @@
-To run:
+Any Tabletop is a web app for game designers who want to create interactive manuals for tabletop games without writing any code.
+This is a work in progress and not yet launched.
+
+The app is built with a VueJs frontend, Node.js backend, and a neo4j storage layer. Maps, game elements, and rules documents can be built using a drag and drop interface. Game rules are defined in another drag and drop graph interface. Other users can submit additional content for your game in the form of installable mods. 
+
+
+---
+Instructions if another dev joints to help me build this (not currently looking for collaborators)
 
 install docker desktop
 
